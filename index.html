@@ -30,7 +30,7 @@
     --green-800: #1e4700;
     --green-700: #255a01;
     --green-600: #2a6e01;
-    --green-500: #2a9c01;  /* ← corrigido */
+    --green-500: #2a9c01;
     --green-400: #4fc41e;
     --green-300: #7dd44f;
     --green-200: #a9e284;
@@ -65,9 +65,230 @@
 
   html, body {
     height: 100%;
-    background: #87CEEB;
+    background: #0a0a1a;
     color: var(--text-0);
     overflow: hidden;
+    transition: background 2s ease;
+  }
+
+  /* ================= LOADING SCREEN ================= */
+  .loading-screen {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 40%, #0d1f2e 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    overflow: hidden;
+  }
+  .loading-screen.hidden {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+
+  .loading-bg-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(42, 156, 1, 0.25) 0%, transparent 70%);
+    animation: loadingGlow 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes loadingGlow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  .loading-bg-glow.glow-2 {
+    background: radial-gradient(circle, rgba(240, 180, 41, 0.15) 0%, transparent 70%);
+    animation-delay: 2s;
+    width: 800px; height: 800px;
+  }
+
+  .loading-particles {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .loading-particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--green-400);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green-400);
+    animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) scale(1); opacity: 0; }
+  }
+
+  .loading-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 30px;
+    padding: 20px;
+  }
+
+  .loading-mascot {
+    width: 160px; height: 160px;
+    position: relative;
+    animation: mascotBounce 2s ease-in-out infinite;
+  }
+  @keyframes mascotBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .loading-mascot-head {
+    width: 100px; height: 90px;
+    border-radius: 45% 45% 40% 40% / 50% 50% 45% 45%;
+    background: linear-gradient(180deg, #9a9a9a 0%, #828282 50%, #5e5e5e 100%);
+    margin: 0 auto;
+    position: relative;
+    box-shadow: inset -6px -8px 16px rgba(0,0,0,0.4), inset 4px 4px 12px rgba(255,255,255,0.15), 0 10px 30px rgba(0,0,0,0.5), 0 0 40px rgba(42, 156, 1, 0.4);
+    border: 2px solid #5e5e5e;
+  }
+  .loading-mascot-ear {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 30px; border-radius: 6px;
+    background: linear-gradient(180deg, #9a9a9a, #5e5e5e);
+    border: 1.5px solid #5e5e5e;
+  }
+  .loading-mascot-ear.left { left: -10px; }
+  .loading-mascot-ear.right { right: -10px; }
+  .loading-mascot-face {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 80%; height: 65%;
+    background: #1a1a1a;
+    border-radius: 40% 40% 35% 35% / 45% 45% 40% 40%;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .loading-eye {
+    position: absolute; top: 30%;
+    width: 18px; height: 22px;
+    background: #d8c8f0;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(216, 200, 240, 0.8);
+    animation: loadingBlink 3s infinite;
+  }
+  .loading-eye.left { left: 22%; }
+  .loading-eye.right { right: 22%; }
+  @keyframes loadingBlink {
+    0%, 88%, 100% { transform: scaleY(1); }
+    92% { transform: scaleY(0.1); }
+  }
+  .loading-mouth {
+    position: absolute; bottom: 20%; left: 50%; transform: translateX(-50%);
+    width: 22px; height: 12px;
+    border-bottom: 3px solid #d8c8f0;
+    border-radius: 0 0 50% 50%;
+    animation: loadingSmile 1.5s ease-in-out infinite;
+  }
+  @keyframes loadingSmile {
+    0%, 100% { width: 22px; height: 12px; }
+    50% { width: 28px; height: 16px; }
+  }
+
+  .loading-mascot-body {
+    width: 80px; height: 55px;
+    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+    border-radius: 40% 40% 25% 25% / 30% 30% 20% 20%;
+    margin: -8px auto 0;
+    box-shadow: inset -4px -5px 10px rgba(0,0,0,0.08), 0 6px 15px rgba(0,0,0,0.4);
+    border: 1.5px solid #d0d0d0;
+    position: relative;
+  }
+  .loading-mascot-logo {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 30px; height: 30px;
+    background: #fff; border-radius: 50%;
+    border: 1.5px solid var(--green-500);
+    display: grid; place-items: center;
+    font-size: 14px;
+  }
+
+  .loading-title {
+    font-size: 2rem; font-weight: 800;
+    background: linear-gradient(135deg, var(--green-400), var(--gold-400), var(--green-400));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: titleShine 3s ease infinite;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  @keyframes titleShine {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .loading-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    animation: subtitlePulse 2s ease-in-out infinite;
+  }
+  @keyframes subtitlePulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .loading-progress-wrap {
+    width: min(400px, 80vw);
+    display: flex; flex-direction: column;
+    gap: 10px; align-items: center;
+  }
+  .loading-progress-bar {
+    width: 100%; height: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--r-full);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .loading-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400), var(--green-300));
+    border-radius: var(--r-full);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 20px rgba(42, 156, 1, 0.8), inset 0 0 10px rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .loading-progress-fill::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: progressShine 1.5s linear infinite;
+  }
+  @keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .loading-percent {
+    font-size: 1.4rem; font-weight: 800;
+    color: var(--green-300);
+    text-shadow: 0 0 15px rgba(42, 156, 1, 0.6);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .loading-tip {
+    font-size: 0.82rem;
+    color: var(--text-3);
+    text-align: center;
+    max-width: 320px;
+    min-height: 20px;
+    transition: opacity 0.3s ease;
+    font-style: italic;
   }
 
   .scene { position: fixed; inset: 0; overflow: hidden; }
@@ -79,6 +300,17 @@
   .sky {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, #4a90d9 0%, #6ba8e0 25%, #8ec2ea 50%, #b8daf0 75%, #e0eef5 100%);
+    transition: background 3s ease;
+  }
+
+  .sky.night {
+    background: linear-gradient(180deg, #0a0a2e 0%, #0f1445 25%, #1a1f5a 50%, #2a2f6a 75%, #3a3f7a 100%);
+  }
+  .sky.sunset {
+    background: linear-gradient(180deg, #1a1a4a 0%, #3a2a5a 15%, #7a3a6a 30%, #c95a4a 50%, #e88a4a 70%, #f0b060 85%, #f5d080 100%);
+  }
+  .sky.dawn {
+    background: linear-gradient(180deg, #1a1a4a 0%, #3a2a6a 20%, #7a4a8a 40%, #c97a6a 60%, #e8a870 80%, #f5d090 100%);
   }
 
   .sun {
@@ -88,11 +320,44 @@
     box-shadow: 0 0 60px 20px rgba(255, 219, 77, 0.6), 0 0 120px 60px rgba(255, 219, 77, 0.25);
     animation: sunGlow 4s ease-in-out infinite;
     z-index: 2;
+    transition: top 3s ease, right 3s ease, opacity 2s ease;
   }
   @keyframes sunGlow {
     0%, 100% { box-shadow: 0 0 60px 20px rgba(255, 219, 77, 0.6), 0 0 120px 60px rgba(255, 219, 77, 0.25); }
     50%      { box-shadow: 0 0 80px 30px rgba(255, 219, 77, 0.75), 0 0 150px 80px rgba(255, 219, 77, 0.35); }
   }
+
+  .moon {
+    position: absolute; top: 60px; right: 120px;
+    width: 90px; height: 90px; border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #f5f5f0, #e0e0d8 60%, #c8c8c0 100%);
+    box-shadow: 0 0 40px 15px rgba(240, 240, 230, 0.5), 0 0 80px 40px rgba(240, 240, 230, 0.2);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 2s ease, top 3s ease, right 3s ease;
+  }
+  .moon::before {
+    content: '';
+    position: absolute;
+    top: 20%; left: 15%;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(200,200,190,0.4);
+    box-shadow: 25px 15px 0 -5px rgba(200,200,190,0.3), 15px 40px 0 -3px rgba(200,200,190,0.25);
+  }
+
+  .stars-container {
+    position: absolute; inset: 0; z-index: 1;
+    opacity: 0; transition: opacity 2s ease;
+    pointer-events: none;
+  }
+  .stars-container.visible { opacity: 1; }
+  .star-dot {
+    position: absolute; width: 3px; height: 3px;
+    background: #fff; border-radius: 50%;
+    box-shadow: 0 0 6px #fff;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
   .cloud { position: absolute; background: #fff; border-radius: 50%; opacity: 0.9; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); z-index: 3; }
   .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
@@ -108,7 +373,7 @@
   @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(calc(100vw + 500px)); } }
 
   .hills { position: absolute; bottom: 32%; left: 0; right: 0; height: 200px; z-index: 4; pointer-events: none; }
-  .hill { position: absolute; bottom: 0; border-radius: 50% 50% 0 0; }
+  .hill { position: absolute; bottom: 0; border-radius: 50% 50% 0 0; transition: filter 3s ease; }
   .hill.h1 { left: -5%; width: 45%; height: 180px; background: linear-gradient(180deg, #7cb342 0%, #558b2f 100%); opacity: 0.85; }
   .hill.h2 { left: 25%; width: 55%; height: 220px; background: linear-gradient(180deg, #8bc34a 0%, #689f38 100%); opacity: 0.9; }
   .hill.h3 { right: -5%; width: 45%; height: 190px; background: linear-gradient(180deg, #7cb342 0%, #558b2f 100%); opacity: 0.85; }
@@ -140,6 +405,7 @@
     position: absolute; bottom: 0; left: 0; right: 0; height: 32%;
     background: linear-gradient(180deg, #7cb342 0%, #689f38 30%, #558b2f 70%, #33691e 100%);
     z-index: 6; overflow: hidden;
+    transition: filter 3s ease;
   }
 
   .grass-blade {
@@ -192,309 +458,364 @@
     75%      { transform: translate(40px, -30px); opacity: 0.8; }
   }
 
-  /* ================= COZINHA (REPAGINADA) ================= */
+  /* === BORBOLETA === */
+  .butterfly {
+    position: absolute; z-index: 20;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .butterfly.flying {
+    animation: butterflyFly 12s linear forwards;
+  }
+  @keyframes butterflyFly {
+    0%   { opacity: 1; transform: translate(-100px, 0) scale(0.6); }
+    10%  { transform: translate(10vw, -60px) scale(0.8); }
+    25%  { transform: translate(25vw, -20px) scale(1); }
+    40%  { transform: translate(40vw, -80px) scale(0.9); }
+    55%  { transform: translate(55vw, -30px) scale(1.1); }
+    70%  { transform: translate(70vw, -70px) scale(0.95); }
+    85%  { transform: translate(85vw, -40px) scale(0.85); }
+    100% { opacity: 0.6; transform: translate(calc(100vw + 100px), -50px) scale(0.5); }
+  }
+  .butterfly-body {
+    position: relative;
+    width: 30px; height: 20px;
+  }
+  .butterfly-wing {
+    position: absolute;
+    width: 18px; height: 16px;
+    border-radius: 60% 40% 50% 50%;
+    animation: wingFlap 0.25s ease-in-out infinite alternate;
+    transform-origin: right center;
+  }
+  .butterfly-wing.left {
+    left: 0; top: 0;
+    background: radial-gradient(circle at 60% 40%, #ff9a56, #ff6b6b 60%, #e84393);
+    transform-origin: right center;
+  }
+  .butterfly-wing.right {
+    right: 0; top: 0;
+    background: radial-gradient(circle at 40% 40%, #ff9a56, #ff6b6b 60%, #e84393);
+    transform-origin: left center;
+    animation-name: wingFlapRight;
+  }
+  @keyframes wingFlap {
+    0% { transform: rotate(-15deg) scaleX(1); }
+    100% { transform: rotate(20deg) scaleX(0.6); }
+  }
+  @keyframes wingFlapRight {
+    0% { transform: rotate(15deg) scaleX(1); }
+    100% { transform: rotate(-20deg) scaleX(0.6); }
+  }
+  .butterfly-wing::after {
+    content: '';
+    position: absolute;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    top: 30%; left: 30%;
+  }
+  .butterfly-tail {
+    position: absolute;
+    left: 50%; bottom: -6px;
+    transform: translateX(-50%);
+    width: 2px; height: 8px;
+    background: #6a3a1a;
+    border-radius: 2px;
+  }
+  .butterfly-antenna {
+    position: absolute;
+    top: -8px; width: 1.5px; height: 8px;
+    background: #6a3a1a;
+  }
+  .butterfly-antenna.l { left: 12px; transform: rotate(-20deg); }
+  .butterfly-antenna.r { right: 12px; transform: rotate(20deg); }
+
+  /* ================= COZINHA ================= */
   .scene-kitchen {
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, #d4a574 0%, #c19468 50%, #a67c52 100%);
+    background: linear-gradient(180deg, #f5f0e8 0%, #ece5d8 50%, #e0d5c5 100%);
     opacity: 0; pointer-events: none;
     transition: opacity 0.6s ease;
   }
   .scene-kitchen.active { opacity: 1; pointer-events: auto; }
 
   .kitchen-wall {
-    position: absolute; inset: 0; bottom: 40%;
+    position: absolute; inset: 0; bottom: 42%;
     background:
-      repeating-linear-gradient(0deg, transparent 0px, transparent 48px, rgba(0,0,0,0.1) 48px, rgba(0,0,0,0.1) 50px),
-      repeating-linear-gradient(90deg, transparent 0px, transparent 48px, rgba(0,0,0,0.1) 48px, rgba(0,0,0,0.1) 50px),
-      linear-gradient(180deg, #f5e6d3 0%, #ecd5ba 100%);
+      repeating-linear-gradient(0deg, transparent 0px, transparent 58px, rgba(180,170,155,0.3) 58px, rgba(180,170,155,0.3) 60px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 58px, rgba(180,170,155,0.3) 58px, rgba(180,170,155,0.3) 60px),
+      linear-gradient(180deg, #faf7f2 0%, #f0ebe0 50%, #e8e0d0 100%);
   }
 
-  .kitchen-counter {
-    position: absolute; bottom: 40%; left: 0; right: 0; height: 30px;
-    background: linear-gradient(180deg, #8b6f47 0%, #6d5638 100%);
-    border-top: 6px solid #d4a574;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 5;
+  .kitchen-upper-cabinets {
+    position: absolute; top: 20px; left: 0; right: 0;
+    height: 100px;
+    display: flex; gap: 4px; padding: 0 20px;
+    z-index: 4;
+  }
+  .kitchen-cabinet-unit {
+    flex: 1;
+    background: linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 50%, #dcdcdc 100%);
+    border-radius: 6px;
+    box-shadow: inset -2px -2px 6px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+    border: 1px solid #d0d0d0;
+  }
+  .kitchen-cabinet-unit::before {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+    background: #c8c8c8;
+  }
+  .kitchen-cabinet-handle-v {
+    position: absolute;
+    width: 3px; height: 20px;
+    background: linear-gradient(180deg, #b0b0b0, #808080);
+    border-radius: 2px;
+  }
+  .kitchen-cabinet-handle-v.top { top: 25%; right: 12px; }
+  .kitchen-cabinet-handle-v.bottom { bottom: 25%; right: 12px; }
+
+  .kitchen-counter-top {
+    position: absolute; bottom: 42%; left: 0; right: 0;
+    height: 8px;
+    background: linear-gradient(180deg, #8a7a6a 0%, #6a5a4a 100%);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 6;
+  }
+
+  .kitchen-lower-cabinets {
+    position: absolute; bottom: 42%; left: 0; right: 0;
+    height: 90px;
+    display: flex; gap: 3px; padding: 0 20px;
+    z-index: 4;
+  }
+  .kitchen-lower-unit {
+    flex: 1;
+    background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 50%, #d5d5d5 100%);
+    border-radius: 0 0 6px 6px;
+    box-shadow: inset -2px -2px 6px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
+    border: 1px solid #c8c8c8;
+    border-top: none;
+  }
+  .kitchen-lower-unit::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: #b8b8b8;
+  }
+  .kitchen-lower-handle {
+    position: absolute;
+    top: 12px; left: 50%; transform: translateX(-50%);
+    width: 30px; height: 4px;
+    background: linear-gradient(180deg, #b0b0b0, #888);
+    border-radius: 2px;
   }
 
   .kitchen-floor {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
-    background: repeating-conic-gradient(#f5f5f5 0% 25%, #c9c9c9 0% 50%) 0 0 / 60px 60px;
-    box-shadow: inset 0 10px 20px rgba(0,0,0,0.15);
+    position: absolute; bottom: 0; left: 0; right: 0; height: 42%;
+    background: 
+      repeating-linear-gradient(45deg, transparent 0px, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 32px),
+      repeating-linear-gradient(-45deg, transparent 0px, transparent 30px, rgba(0,0,0,0.04) 30px, rgba(0,0,0,0.04) 32px),
+      linear-gradient(180deg, #e8e0d5 0%, #d8cfc0 100%);
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.1);
   }
 
-  /* Fruteira */
   .kitchen-fruit-bowl {
-    position: absolute; bottom: 40%; left: 30%;
-    width: 90px; height: 30px;
-    background: linear-gradient(180deg, #c98a4a, #8b5a24);
+    position: absolute; bottom: 42%; left: 32%;
+    width: 80px; height: 28px;
+    background: linear-gradient(180deg, #f0ebe0, #d8d0c0);
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
-    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.2);
-    z-index: 6;
+    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.1), 0 3px 8px rgba(0,0,0,0.15);
+    z-index: 7;
+    border: 1px solid #c8c0b0;
   }
   .kitchen-fruit {
     position: absolute; bottom: 100%;
-    width: 22px; height: 22px; border-radius: 50%;
-    box-shadow: inset -3px -3px 5px rgba(0,0,0,0.2);
+    width: 20px; height: 20px; border-radius: 50%;
+    box-shadow: inset -3px -3px 5px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1);
   }
   .kitchen-fruit.apple { left: 5px; background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a); }
-  .kitchen-fruit.orange { left: 30px; background: radial-gradient(circle at 30% 30%, #ffb347, #e07b00); }
+  .kitchen-fruit.orange { left: 28px; background: radial-gradient(circle at 30% 30%, #ffb347, #e07b00); }
   .kitchen-fruit.banana {
-    left: 55px; width: 26px; height: 14px;
+    left: 52px; width: 24px; height: 12px;
     border-radius: 40% 60% 60% 40%;
     background: radial-gradient(circle at 40% 30%, #fff59d, #f9a825);
   }
-  .kitchen-fruit.grape { left: 20px; bottom: 120%; background: radial-gradient(circle at 30% 30%, #b39ddb, #6a3fa0); width: 18px; height: 18px; }
-  .kitchen-fruit.grape2 { left: 32px; bottom: 120%; background: radial-gradient(circle at 30% 30%, #b39ddb, #6a3fa0); width: 18px; height: 18px; }
 
-  /* Panela no fogão */
   .kitchen-pot {
-    position: absolute; bottom: 40%; right: 10%;
-    width: 60px; height: 40px;
-    background: linear-gradient(180deg, #4a4a4a, #2e2e2e);
+    position: absolute; bottom: 42%; right: 12%;
+    width: 55px; height: 38px;
+    background: linear-gradient(180deg, #5a5a5a, #3a3a3a);
     border-radius: 0 0 50% 50% / 0 0 60% 60%;
-    border: 2px solid #1a1a1a;
-    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.3);
-    z-index: 6;
+    border: 2px solid #2a2a2a;
+    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 7;
   }
   .kitchen-pot::before {
     content: '';
     position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
-    width: 70px; height: 10px;
-    background: linear-gradient(180deg, #6a6a6a, #3a3a3a);
+    width: 64px; height: 10px;
+    background: linear-gradient(180deg, #7a7a7a, #4a4a4a);
     border-radius: 50%;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
   }
   .kitchen-pot::after {
     content: '';
-    position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
-    width: 50px; height: 6px;
-    background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 8px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.3), transparent 70%);
     border-radius: 50%;
     animation: steam 2s ease-in-out infinite;
   }
   @keyframes steam {
-    0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
-    50%      { opacity: 0.7; transform: translateX(-50%) translateY(-6px); }
+    0%, 100% { opacity: 0.2; transform: translateX(-50%) translateY(0) scaleX(1); }
+    50%      { opacity: 0.6; transform: translateX(-50%) translateY(-8px) scaleX(1.2); }
   }
 
-  /* Toalha de mesa quadriculada */
-  .kitchen-towel {
-    position: absolute; bottom: 40%; left: 46%;
-    width: 80px; height: 18px;
-    background: repeating-linear-gradient(90deg, #e53935 0 8px, #fff 8px 16px, #43a047 16px 24px, #fff 24px 32px);
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    z-index: 6;
-    transform: rotate(-3deg);
-  }
-
-  /* Quadro na parede */
-  .kitchen-painting {
-    position: absolute; top: 60px; left: 6%;
-    width: 90px; height: 70px;
-    background: linear-gradient(135deg, #ffe082, #ffb74d);
-    border: 5px solid #6d5638;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 3;
-    overflow: hidden;
-  }
-  .kitchen-painting::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0; height: 40%;
-    background: linear-gradient(180deg, #81c784, #388e3c);
-    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
-  }
-  .kitchen-painting::after {
-    content: '';
-    position: absolute;
-    top: 15%; right: 20%;
-    width: 18px; height: 18px;
-    background: radial-gradient(circle, #fff59d, #fbc02d);
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(255, 235, 59, 0.8);
-  }
-
-  /* Planta */
   .kitchen-plant {
-    position: absolute; bottom: 40%; right: 25%;
-    width: 40px; height: 50px;
-    z-index: 6;
+    position: absolute; bottom: 42%; right: 30%;
+    width: 36px; height: 45px;
+    z-index: 7;
   }
   .kitchen-plant-pot {
     position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 34px; height: 24px;
-    background: linear-gradient(180deg, #d4825a, #8b4a2a);
-    border-radius: 4px 4px 8px 8px;
-    box-shadow: inset -2px -3px 5px rgba(0,0,0,0.3);
+    width: 30px; height: 22px;
+    background: linear-gradient(180deg, #e8e0d0, #c8b8a0);
+    border-radius: 3px 3px 6px 6px;
+    box-shadow: inset -2px -3px 5px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1);
   }
   .kitchen-plant-leaf {
-    position: absolute; bottom: 20px;
-    width: 18px; height: 26px;
+    position: absolute; bottom: 18px;
+    width: 16px; height: 24px;
     background: radial-gradient(circle at 30% 30%, #aed581, #558b2f);
     border-radius: 50% 50% 50% 0 / 60% 60% 40% 0;
     transform-origin: bottom center;
   }
-  .kitchen-plant-leaf.l1 { left: 2px; transform: rotate(-25deg); }
-  .kitchen-plant-leaf.l2 { left: 12px; transform: rotate(0deg); }
-  .kitchen-plant-leaf.l3 { left: 20px; transform: rotate(25deg); }
+  .kitchen-plant-leaf.l1 { left: 1px; transform: rotate(-25deg); }
+  .kitchen-plant-leaf.l2 { left: 10px; transform: rotate(0deg); }
+  .kitchen-plant-leaf.l3 { left: 19px; transform: rotate(25deg); }
 
-  /* Relógio */
   .kitchen-clock {
-    position: absolute; top: 50px; right: 6%;
-    width: 70px; height: 70px;
-    background: radial-gradient(circle, #fff 60%, #e0e0e0 100%);
-    border: 5px solid #6d5638;
+    position: absolute; top: 40px; right: 5%;
+    width: 65px; height: 65px;
+    background: radial-gradient(circle, #fff 60%, #f0f0f0 100%);
+    border: 4px solid #d0c8b8;
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 3;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 0 10px rgba(0,0,0,0.05);
+    z-index: 5;
   }
   .kitchen-clock::before {
     content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 2px; height: 22px;
-    background: #333;
+    position: absolute; top: 50%; left: 50%;
+    width: 2px; height: 20px;
+    background: #444;
     transform-origin: bottom center;
     transform: translate(-50%, -100%) rotate(0deg);
     animation: clockHour 60s linear infinite;
+    border-radius: 1px;
   }
   .kitchen-clock::after {
     content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 1.5px; height: 28px;
+    position: absolute; top: 50%; left: 50%;
+    width: 1.5px; height: 26px;
     background: #c92a2a;
     transform-origin: bottom center;
     transform: translate(-50%, -100%) rotate(0deg);
     animation: clockMinute 10s linear infinite;
+    border-radius: 1px;
   }
   @keyframes clockHour { to { transform: translate(-50%, -100%) rotate(360deg); } }
   @keyframes clockMinute { to { transform: translate(-50%, -100%) rotate(360deg); } }
 
-  /* Micro-ondas */
-  .kitchen-microwave {
-    position: absolute;
-    bottom: 40%; left: 3%;
-    width: 90px; height: 55px;
-    background: linear-gradient(180deg, #d0d0d0, #909090);
-    border-radius: 6px;
-    border: 2px solid #606060;
-    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.25), 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 6;
-  }
-  .kitchen-microwave::before {
-    content: '';
-    position: absolute;
-    top: 8px; left: 8px;
-    width: 50px; height: 38px;
-    background: radial-gradient(circle at 40% 40%, #2a2a2a, #0a0a0a);
-    border-radius: 4px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
-  }
-  .kitchen-microwave::after {
-    content: '';
-    position: absolute;
-    top: 50%; right: 8px;
-    transform: translateY(-50%);
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #4ade80, #16a34a);
-    box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
-    animation: microLed 2s ease-in-out infinite;
-  }
-  @keyframes microLed { 50% { opacity: 0.5; } }
-
-  /* Geladeira clicável */
   .kitchen-fridge {
-    position: absolute; bottom: 40%; left: 6%;
-    width: 120px; height: 220px;
-    background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
-    border-radius: 12px 12px 4px 4px;
-    border: 2px solid #a8a8a8;
-    box-shadow: inset -8px 0 15px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.3);
-    z-index: 4;
+    position: absolute; bottom: 42%; left: 6%;
+    width: 110px; height: 200px;
+    background: linear-gradient(180deg, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
+    border-radius: 10px 10px 4px 4px;
+    border: 2px solid #b8b8b8;
+    box-shadow: inset -6px 0 12px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.2);
+    z-index: 5;
     cursor: pointer;
     transition: transform var(--t), box-shadow var(--t);
   }
   .kitchen-fridge:hover {
     transform: translateY(-3px);
-    box-shadow: inset -8px 0 15px rgba(0,0,0,0.1), 0 12px 28px rgba(0,0,0,0.4), 0 0 0 3px var(--gold-400);
+    box-shadow: inset -6px 0 12px rgba(0,0,0,0.06), 0 12px 28px rgba(0,0,0,0.3), 0 0 0 3px var(--gold-400);
   }
   .kitchen-fridge::before {
     content: '';
-    position: absolute; top: 45%; left: 0; right: 0; height: 2px;
-    background: #a8a8a8;
+    position: absolute; top: 42%; left: 0; right: 0; height: 2px;
+    background: #b8b8b8;
   }
   .kitchen-fridge::after {
     content: '';
-    position: absolute; top: 20%; right: 10px;
-    width: 6px; height: 30px;
-    background: #909090;
+    position: absolute; top: 15%; right: 12px;
+    width: 5px; height: 28px;
+    background: linear-gradient(180deg, #a0a0a0, #808080);
     border-radius: 3px;
   }
   .kitchen-fridge-handle-bottom {
     position: absolute;
-    top: 60%; right: 10px;
-    width: 6px; height: 30px;
-    background: #909090;
+    top: 58%; right: 12px;
+    width: 5px; height: 28px;
+    background: linear-gradient(180deg, #a0a0a0, #808080);
     border-radius: 3px;
   }
   .kitchen-fridge-shop-badge {
     position: absolute;
     top: 8px; left: 50%;
     transform: translateX(-50%);
-    padding: 3px 8px;
-    background: var(--gold-500);
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
     color: #3a2a00;
     font-size: 0.55rem;
     font-weight: 800;
     border-radius: var(--r-full);
     letter-spacing: 0.5px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(240,180,41,0.5);
     animation: shopBadgePulse 1.6s ease-in-out infinite;
     z-index: 10;
+    white-space: nowrap;
   }
   @keyframes shopBadgePulse {
     0%, 100% { transform: translateX(-50%) scale(1); }
-    50%      { transform: translateX(-50%) scale(1.1); }
+    50%      { transform: translateX(-50%) scale(1.08); }
   }
 
   .kitchen-stove {
-    position: absolute; bottom: 40%; right: 8%;
-    width: 140px; height: 100px;
-    background: linear-gradient(180deg, #4a4a4a 0%, #2e2e2e 100%);
+    position: absolute; bottom: 42%; right: 8%;
+    width: 130px; height: 90px;
+    background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 50%, #2e2e2e 100%);
     border-radius: 8px;
-    border: 2px solid #1a1a1a;
-    box-shadow: inset -4px 0 10px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.3);
-    z-index: 4;
+    border: 2px solid #2a2a2a;
+    box-shadow: inset -4px 0 10px rgba(0,0,0,0.2), 0 8px 18px rgba(0,0,0,0.2);
+    z-index: 5;
   }
   .kitchen-stove::before {
     content: '';
-    position: absolute; top: 8px; left: 8px;
-    width: 40px; height: 40px; border-radius: 50%;
-    background: radial-gradient(circle, #3a3a3a 30%, #1a1a1a 70%);
+    position: absolute; top: 8px; left: 10px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: radial-gradient(circle, #4a4a4a 30%, #2a2a2a 70%);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   }
   .kitchen-stove::after {
     content: '';
-    position: absolute; top: 8px; right: 8px;
-    width: 40px; height: 40px; border-radius: 50%;
-    background: radial-gradient(circle, #3a3a3a 30%, #1a1a1a 70%);
+    position: absolute; top: 8px; right: 10px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: radial-gradient(circle, #4a4a4a 30%, #2a2a2a 70%);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   }
   .kitchen-stove-flame {
     position: absolute;
-    top: 14px; left: 14px;
-    width: 28px; height: 28px;
+    top: 14px; left: 16px;
+    width: 24px; height: 24px;
     border-radius: 50%;
     background: radial-gradient(circle, #ffeb3b, #ff9800 50%, #f44336 90%);
     opacity: 0;
     animation: flamePulse 0.4s ease-in-out infinite alternate;
     filter: blur(2px);
-    z-index: 5;
+    z-index: 6;
   }
   .kitchen-stove-flame.on { opacity: 0.85; }
   @keyframes flamePulse {
@@ -503,52 +824,95 @@
   }
 
   .kitchen-sink {
-    position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%);
-    width: 180px; height: 40px;
-    background: linear-gradient(180deg, #b0b0b0 0%, #808080 100%);
-    border-radius: 8px;
-    border: 2px solid #606060;
-    box-shadow: inset 0 -6px 10px rgba(0,0,0,0.2);
-    z-index: 5;
+    position: absolute; bottom: 42%; left: 50%; transform: translateX(-50%);
+    width: 160px; height: 36px;
+    background: linear-gradient(180deg, #c0c0c0 0%, #a0a0a0 100%);
+    border-radius: 6px;
+    border: 2px solid #909090;
+    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15), 0 3px 8px rgba(0,0,0,0.1);
+    z-index: 6;
   }
   .kitchen-sink::before {
     content: '';
-    position: absolute; top: -60px; left: 50%;
+    position: absolute; top: -55px; left: 50%;
     transform: translateX(-50%);
-    width: 8px; height: 60px;
-    background: linear-gradient(90deg, #c0c0c0, #909090, #c0c0c0);
-    border-radius: 4px;
+    width: 6px; height: 55px;
+    background: linear-gradient(90deg, #d0d0d0, #a0a0a0, #d0d0d0);
+    border-radius: 3px;
   }
   .kitchen-sink::after {
     content: '';
-    position: absolute; top: -60px; left: 50%;
+    position: absolute; top: -55px; left: 50%;
     transform: translateX(-50%) translateY(-6px) rotate(180deg);
     width: 0; height: 0;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-top: 20px solid #c0c0c0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 18px solid #b0b0b0;
   }
 
-  .kitchen-cabinet {
-    position: absolute; top: 20px; right: 10%;
-    width: 200px; height: 120px;
-    background: linear-gradient(180deg, #8b6f47 0%, #6d5638 100%);
-    border-radius: 8px;
-    border: 2px solid #4a3a24;
-    box-shadow: inset -4px -4px 10px rgba(0,0,0,0.3);
-    z-index: 3;
+  .kitchen-towel {
+    position: absolute; bottom: 42%; left: 48%;
+    width: 70px; height: 14px;
+    background: repeating-linear-gradient(90deg, #e53935 0 7px, #fff 7px 14px, #43a047 14px 21px, #fff 21px 28px);
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    z-index: 7;
+    transform: rotate(-3deg);
   }
-  .kitchen-cabinet::before {
+
+  .kitchen-painting {
+    position: absolute; top: 50px; left: 5%;
+    width: 80px; height: 60px;
+    background: linear-gradient(135deg, #ffe082, #ffb74d);
+    border: 4px solid #c8b8a0;
+    border-radius: 3px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 4;
+    overflow: hidden;
+  }
+  .kitchen-painting::before {
     content: '';
-    position: absolute; top: 50%; left: 0; right: 0; height: 2px;
-    background: #4a3a24;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(180deg, #81c784, #388e3c);
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
   }
-  .kitchen-cabinet-handle {
-    position: absolute;
-    width: 20px; height: 4px;
-    background: #d0d0d0;
-    border-radius: 2px;
+  .kitchen-painting::after {
+    content: '';
+    position: absolute; top: 15%; right: 20%;
+    width: 16px; height: 16px;
+    background: radial-gradient(circle, #fff59d, #fbc02d);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
   }
+
+  .kitchen-microwave {
+    position: absolute; bottom: 42%; left: 2%;
+    width: 80px; height: 50px;
+    background: linear-gradient(180deg, #d8d8d8, #b0b0b0);
+    border-radius: 5px;
+    border: 2px solid #909090;
+    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.15);
+    z-index: 7;
+  }
+  .kitchen-microwave::before {
+    content: '';
+    position: absolute; top: 6px; left: 6px;
+    width: 44px; height: 34px;
+    background: radial-gradient(circle at 40% 40%, #2a2a2a, #0a0a0a);
+    border-radius: 3px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+  }
+  .kitchen-microwave::after {
+    content: '';
+    position: absolute; top: 50%; right: 6px;
+    transform: translateY(-50%);
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #4ade80, #16a34a);
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+    animation: microLed 2s ease-in-out infinite;
+  }
+  @keyframes microLed { 50% { opacity: 0.5; } }
 
   /* ================= QUARTO ================= */
   .scene-bedroom {
@@ -595,7 +959,6 @@
     box-shadow: 0 0 6px #fff;
     animation: twinkle 3s ease-in-out infinite;
   }
-  @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
   .bedroom-bed { position: absolute; bottom: 35%; right: 8%; width: 340px; height: 180px; z-index: 4; }
   .bedroom-bed-frame { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(180deg, #6d5638 0%, #4a3a24 100%); border-radius: 8px; }
@@ -610,6 +973,62 @@
 
   .bedroom-floor { position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: repeating-linear-gradient(90deg, #6d5638 0px, #6d5638 80px, #5a4630 80px, #5a4630 82px); box-shadow: inset 0 10px 20px rgba(0,0,0,0.4); }
   .bedroom-rug { position: absolute; bottom: 20px; left: 20%; width: 300px; height: 100px; background: radial-gradient(ellipse, var(--green-500) 0%, var(--green-700) 70%); border-radius: 50%; box-shadow: inset 0 -6px 15px rgba(0,0,0,0.3); opacity: 0.85; }
+
+  /* === GUARDA-ROUPA CLICÁVEL === */
+  .bedroom-wardrobe {
+    position: absolute; bottom: 35%; left: 35%;
+    width: 160px; height: 280px;
+    background: linear-gradient(180deg, #8b6f47 0%, #6d5638 50%, #5a4630 100%);
+    border-radius: 10px 10px 4px 4px;
+    border: 2px solid #4a3a24;
+    box-shadow: inset -6px 0 15px rgba(0,0,0,0.2), 0 10px 25px rgba(0,0,0,0.4);
+    z-index: 5;
+    cursor: pointer;
+    transition: transform var(--t), box-shadow var(--t);
+  }
+  .bedroom-wardrobe:hover {
+    transform: translateY(-4px);
+    box-shadow: inset -6px 0 15px rgba(0,0,0,0.2), 0 14px 32px rgba(0,0,0,0.5), 0 0 0 3px var(--gold-400);
+  }
+  .bedroom-wardrobe::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 2px; height: 100%;
+    background: #4a3a24;
+  }
+  .bedroom-wardrobe::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 120px; height: 2px;
+    background: #4a3a24;
+  }
+  .wardrobe-handle {
+    position: absolute;
+    width: 6px; height: 30px;
+    background: linear-gradient(180deg, #d4a574, #a0784a);
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .wardrobe-handle.left { top: 25%; left: 20px; }
+  .wardrobe-handle.right { top: 25%; right: 20px; }
+  .wardrobe-handle.left-bottom { top: 60%; left: 20px; }
+  .wardrobe-handle.right-bottom { top: 60%; right: 20px; }
+  .wardrobe-badge {
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 10px;
+    background: linear-gradient(135deg, var(--green-500), var(--green-700));
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 800;
+    border-radius: var(--r-full);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(42, 156, 1, 0.5);
+    animation: shopBadgePulse 1.6s ease-in-out infinite;
+    z-index: 10;
+    white-space: nowrap;
+  }
 
   /* ================= BANHEIRO ================= */
   .scene-bathroom {
@@ -929,7 +1348,6 @@
     filter: drop-shadow(0 0 6px rgba(216, 200, 240, 0.6));
   }
 
-  /* --- ESTADOS DE ANIMAÇÃO --- */
   .billy-body.talking .billy-mouth { animation: talk 0.25s infinite alternate; }
   @keyframes talk {
     from { height: 12px; width: 36px; }
@@ -1010,6 +1428,7 @@
     box-shadow: inset -8px -10px 20px rgba(0,0,0,0.08), 0 10px 25px rgba(0,0,0,0.4);
     border: 2px solid #d0d0d0;
     z-index: 2;
+    transition: background 0.5s ease, border-color 0.5s ease;
   }
   @media (max-width: 600px) { .billy-torso { width: 155px; height: 115px; top: 150px; } }
 
@@ -1019,12 +1438,14 @@
     background: linear-gradient(180deg, var(--green-500), var(--green-700));
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background 0.5s ease;
   }
   .billy-hem {
     position: absolute; bottom: 0; left: 0; right: 0; height: 12px;
     background: linear-gradient(180deg, var(--green-500), var(--green-700));
     border-radius: 0 0 40% 40% / 0 0 100% 100%;
     border-bottom: 2px solid var(--green-600);
+    transition: background 0.5s ease;
   }
   .billy-strap {
     position: absolute; top: 8px;
@@ -1033,45 +1454,59 @@
     border-radius: 12px;
     box-shadow: inset -2px -3px 6px rgba(0,0,0,0.3);
     z-index: 3;
+    transition: background 0.5s ease;
   }
   .billy-strap.left  { left: 20px; }
   .billy-strap.right { right: 20px; }
 
   .billy-logo {
     position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
-    width: 52px; height: 52px;
-    background: #fff; border-radius: 50%;
-    border: 2px solid var(--green-500);
+    width: 70px; height: 70px;
+    background: #fff;
+    border-radius: 50%;
+    border: 2.5px solid var(--green-500);
     display: grid; place-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     z-index: 4;
+    overflow: hidden;
   }
   .billy-logo-inner {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: #fff;
-    border: 1.5px solid var(--green-500);
+    width: 100%; height: 100%;
     display: grid; place-items: center;
     position: relative;
+    background: #fff;
+  }
+  .billy-logo-inner .escola-icon {
+    font-size: 28px;
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
   }
   .billy-logo-inner::before {
     content: '';
     position: absolute;
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 1.5px solid var(--green-500);
+    width: 50px; height: 50px;
+    border: 1.5px dashed var(--green-500);
+    border-radius: 50%;
+    opacity: 0.4;
   }
   .billy-logo-inner::after {
     content: '';
     position: absolute;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--green-500);
+    width: 30px; height: 30px;
+    border: 1.5px solid var(--green-400);
+    border-radius: 50%;
+    opacity: 0.3;
   }
   .billy-logo-text {
-    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
-    font-size: 6px; font-weight: 700;
-    color: var(--gray-800);
-    letter-spacing: 0.3px;
-    text-align: center; line-height: 1.1;
+    position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+    font-size: 7px; font-weight: 800;
+    color: var(--green-700);
+    letter-spacing: 0.5px;
+    text-align: center; line-height: 1.15;
     z-index: 4; white-space: nowrap;
+    text-transform: uppercase;
   }
 
   .billy-arm {
@@ -1092,12 +1527,14 @@
     border-radius: 22px 22px 10px 10px;
     border: 2px solid #d0d0d0;
     border-bottom: none;
+    transition: background 0.5s ease, border-color 0.5s ease;
   }
   .billy-sleeve::after {
     content: '';
     position: absolute; bottom: -2px; left: 0; right: 0; height: 6px;
     background: linear-gradient(180deg, var(--green-500), var(--green-600));
     border-radius: 3px;
+    transition: background 0.5s ease;
   }
   .billy-glove {
     position: absolute; bottom: 0; left: 0;
@@ -1113,6 +1550,7 @@
     width: 20px; height: 3px;
     background: var(--green-500);
     border-radius: 2px;
+    transition: background 0.5s ease;
   }
 
   .billy-legs {
@@ -1130,6 +1568,7 @@
     border-radius: 18px 18px 12px 12px;
     border: 2px solid var(--gray-600);
     box-shadow: inset -4px -5px 10px rgba(0,0,0,0.25);
+    transition: background 0.5s ease;
   }
   .billy-leg::after {
     content: '';
@@ -1146,6 +1585,7 @@
     background: var(--green-500);
     border-radius: 4px 10px 0 0;
     z-index: 1;
+    transition: background 0.5s ease;
   }
   .billy-leg.left::after  { right: auto; left: -4px; border-radius: 10px 4px 4px 10px; }
   .billy-leg.left::before { right: auto; left: -4px; border-radius: 10px 4px 0 0; }
@@ -1157,6 +1597,7 @@
     border-radius: 40% 40% 30% 30% / 60% 60% 40% 40%;
     border: 2px solid var(--gray-600);
     box-shadow: inset -3px -4px 8px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.4);
+    transition: background 0.5s ease;
   }
   .billy-boot::before {
     content: '';
@@ -1165,6 +1606,138 @@
     background: var(--green-500);
     border-radius: 50%;
     opacity: 0.8;
+    transition: background 0.5s ease;
+  }
+
+  /* === ACESSÓRIOS === */
+  .billy-hat {
+    position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+    width: 140px; height: 60px;
+    z-index: 10;
+    display: none;
+    pointer-events: none;
+  }
+  .billy-hat.equipped { display: block; }
+  .billy-hat-base {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 140px; height: 20px;
+    background: linear-gradient(180deg, #4a4a4a, #2a2a2a);
+    border-radius: 50% 50% 10px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  }
+  .billy-hat-top {
+    position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 55px;
+    background: linear-gradient(180deg, #5a5a5a, #3a3a3a);
+    border-radius: 10px 10px 0 0;
+    border: 2px solid #2a2a2a;
+  }
+  .billy-hat-band {
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    width: 92px; height: 6px;
+    background: var(--green-500);
+    border-radius: 3px;
+    z-index: 2;
+  }
+
+  .billy-glasses {
+    position: absolute; top: 55px; left: 50%; transform: translateX(-50%);
+    width: 140px; height: 40px;
+    z-index: 11;
+    display: none;
+    pointer-events: none;
+  }
+  .billy-glasses.equipped { display: flex; justify-content: space-between; }
+  .billy-glasses-lens {
+    width: 55px; height: 40px;
+    background: radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.4), rgba(60, 120, 200, 0.5));
+    border: 3px solid #2a2a2a;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.3), 0 4px 8px rgba(0,0,0,0.3);
+  }
+  .billy-glasses-bridge {
+    position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 3px;
+    background: #2a2a2a;
+    border-radius: 2px;
+  }
+
+  .billy-cape {
+    position: absolute; top: 180px; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 200px;
+    z-index: 0;
+    display: none;
+    pointer-events: none;
+  }
+  .billy-cape.equipped { display: block; }
+  .billy-cape-cloth {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, #c92a2a 0%, #8a1a1a 100%);
+    border-radius: 30% 30% 20% 20% / 40% 40% 60% 60%;
+    box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 6px 15px rgba(0,0,0,0.4);
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  }
+  .billy-cape-cloth::after {
+    content: '';
+    position: absolute;
+    top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 2px dashed rgba(255, 215, 0, 0.4);
+    border-radius: 30% 30% 20% 20% / 40% 40% 60% 60%;
+    clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  }
+
+  .billy-scarf {
+    position: absolute; top: 155px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 30px;
+    z-index: 5;
+    display: none;
+    pointer-events: none;
+  }
+  .billy-scarf.equipped { display: block; }
+  .billy-scarf-band {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; height: 20px;
+    background: repeating-linear-gradient(90deg, #c92a2a 0 15px, #fff 15px 30px, #c92a2a 30px 45px);
+    border-radius: 10px;
+    box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), 0 3px 8px rgba(0,0,0,0.3);
+  }
+  .billy-scarf-tail {
+    position: absolute; top: 15px; right: 10px;
+    width: 25px; height: 40px;
+    background: repeating-linear-gradient(180deg, #c92a2a 0 8px, #fff 8px 16px);
+    border-radius: 3px 3px 8px 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    transform: rotate(5deg);
+  }
+
+  .billy-bowtie {
+    position: absolute; top: 168px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 26px;
+    z-index: 5;
+    display: none;
+    pointer-events: none;
+  }
+  .billy-bowtie.equipped { display: flex; align-items: center; justify-content: center; }
+  .billy-bowtie-left, .billy-bowtie-right {
+    width: 20px; height: 26px;
+    background: linear-gradient(180deg, #f0b429, #c98a0c);
+    box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2);
+  }
+  .billy-bowtie-left {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    border-radius: 4px 0 0 4px;
+  }
+  .billy-bowtie-right {
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    border-radius: 0 4px 4px 0;
+  }
+  .billy-bowtie-center {
+    width: 10px; height: 20px;
+    background: linear-gradient(180deg, #f7c948, #d4a017);
+    border-radius: 3px;
+    z-index: 2;
+    margin: 0 -3px;
   }
 
   .billy-mood-bubble {
@@ -1551,6 +2124,7 @@
     margin-bottom: 14px;
     border-bottom: 1px solid var(--gray-700);
     padding-bottom: 10px;
+    flex-wrap: wrap;
   }
   .shop-tab {
     padding: 8px 14px;
@@ -1655,6 +2229,85 @@
     padding: 1px 6px;
     border-radius: var(--r-full);
     font-weight: 800;
+  }
+
+  /* === LOJA DE ROUPAS === */
+  .outfit-preview {
+    display: flex; justify-content: center; align-items: center;
+    padding: 16px;
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.1), rgba(0,0,0,0.2));
+    border-radius: var(--r-md);
+    margin-bottom: 16px;
+    border: 1px solid var(--gray-700);
+    min-height: 120px;
+  }
+  .outfit-preview-icon {
+    font-size: 64px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    animation: outfitPreviewFloat 2s ease-in-out infinite;
+  }
+  @keyframes outfitPreviewFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .outfit-preview-text {
+    text-align: center;
+    color: var(--text-2);
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  .outfit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 500px) { .outfit-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .outfit-item {
+    padding: 12px 6px;
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+    border-radius: var(--r-md);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    cursor: pointer;
+    transition: all var(--t);
+    color: var(--text-0);
+    position: relative;
+  }
+  .outfit-item:hover:not(.owned) {
+    background: var(--gray-700);
+    border-color: var(--gold-500);
+    transform: translateY(-3px);
+  }
+  .outfit-item.owned {
+    border-color: var(--green-600);
+  }
+  .outfit-item.equipped {
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.3), rgba(42, 156, 1, 0.15));
+    border-color: var(--green-400);
+    box-shadow: 0 0 0 2px rgba(42, 156, 1, 0.3);
+  }
+  .outfit-item.cant-afford { opacity: 0.5; cursor: not-allowed; }
+  .outfit-item .outfit-emoji { font-size: 34px; }
+  .outfit-item .outfit-name {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--text-1); text-align: center;
+  }
+  .outfit-item .outfit-price {
+    font-size: 0.72rem; font-weight: 800;
+    color: var(--gold-400);
+  }
+  .outfit-item .outfit-status {
+    position: absolute; top: 6px; right: 6px;
+    font-size: 0.6rem; font-weight: 700;
+    padding: 2px 6px; border-radius: var(--r-full);
+  }
+  .outfit-item .outfit-status.owned-badge {
+    background: var(--green-600); color: #fff;
+  }
+  .outfit-item .outfit-status.equipped-badge {
+    background: var(--gold-500); color: #3a2a00;
   }
 
   /* ============ FEEDBACK ============ */
@@ -1967,6 +2620,7 @@
 
   @media (max-width: 600px) {
     .sun { width: 70px; height: 70px; top: 30px; right: 40px; }
+    .moon { width: 55px; height: 55px; top: 30px; right: 40px; }
     .tree.t-left { width: 100px; height: 170px; }
     .tree.t-right { width: 110px; height: 190px; }
     .kitchen-fridge { width: 80px; height: 150px; }
@@ -1977,17 +2631,58 @@
     .bathroom-sink { width: 80px; }
     .bathroom-toilet { width: 70px; height: 90px; }
     .bathroom-box { width: 160px; height: 170px; }
+    .bedroom-wardrobe { width: 110px; height: 200px; left: 30%; }
+    .loading-title { font-size: 1.5rem; }
+    .loading-mascot { width: 120px; height: 120px; }
   }
 </style>
 </head>
 <body>
 
+<!-- ================= TELA DE CARREGAMENTO ================= -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-bg-glow"></div>
+  <div class="loading-bg-glow glow-2"></div>
+  <div class="loading-particles" id="loadingParticles"></div>
+
+  <div class="loading-content">
+    <div class="loading-mascot">
+      <div class="loading-mascot-head">
+        <div class="loading-mascot-ear left"></div>
+        <div class="loading-mascot-ear right"></div>
+        <div class="loading-mascot-face">
+          <div class="loading-eye left"></div>
+          <div class="loading-eye right"></div>
+          <div class="loading-mouth"></div>
+        </div>
+      </div>
+      <div class="loading-mascot-body">
+        <div class="loading-mascot-logo">🏫</div>
+      </div>
+    </div>
+
+    <div class="loading-title">BILLY BYTE</div>
+    <div class="loading-subtitle">Mascote das Escolas do Futuro</div>
+
+    <div class="loading-progress-wrap">
+      <div class="loading-progress-bar">
+        <div class="loading-progress-fill" id="loadingProgressFill"></div>
+      </div>
+      <div class="loading-percent" id="loadingPercent">0%</div>
+    </div>
+
+    <div class="loading-tip" id="loadingTip">Carregando...</div>
+  </div>
+</div>
+
 <div class="scene" id="scene">
 
   <!-- ============ JARDIM ============ -->
   <div class="scene-garden" id="sceneGarden">
-    <div class="sky"></div>
-    <div class="sun"></div>
+    <div class="sky" id="skyElement"></div>
+    <div class="stars-container" id="starsContainer"></div>
+    <div class="sun" id="sunElement"></div>
+    <div class="moon" id="moonElement"></div>
     <div class="cloud c1"></div>
     <div class="cloud c2"></div>
     <div class="cloud c3"></div>
@@ -1998,7 +2693,7 @@
       <div class="hill h3"></div>
     </div>
 
-    <div class="ground">
+    <div class="ground" id="groundElement">
       <div class="bush" style="left: 8%; width: 90px; height: 50px;"></div>
       <div class="bush" style="left: 78%; width: 110px; height: 60px;"></div>
       <div class="bush" style="left: 42%; width: 70px; height: 40px;"></div>
@@ -2022,60 +2717,64 @@
     <div class="tree t-right"><div class="tree-trunk"></div><div class="tree-crown"></div></div>
 
     <div id="pollenContainer"></div>
+    <div id="butterflyContainer"></div>
   </div>
 
   <!-- ============ COZINHA ============ -->
   <div class="scene-kitchen" id="sceneKitchen">
     <div class="kitchen-wall"></div>
-
-    <!-- quadro -->
     <div class="kitchen-painting"></div>
-    <!-- relógio -->
     <div class="kitchen-clock"></div>
-    <!-- armário superior -->
-    <div class="kitchen-cabinet">
-      <div class="kitchen-cabinet-handle" style="top: 20%; left: 12px;"></div>
-      <div class="kitchen-cabinet-handle" style="top: 70%; left: 12px;"></div>
-      <div class="kitchen-cabinet-handle" style="top: 20%; right: 12px;"></div>
-      <div class="kitchen-cabinet-handle" style="top: 70%; right: 12px;"></div>
+
+    <div class="kitchen-upper-cabinets">
+      <div class="kitchen-cabinet-unit">
+        <div class="kitchen-cabinet-handle-v top"></div>
+        <div class="kitchen-cabinet-handle-v bottom"></div>
+      </div>
+      <div class="kitchen-cabinet-unit">
+        <div class="kitchen-cabinet-handle-v top"></div>
+        <div class="kitchen-cabinet-handle-v bottom"></div>
+      </div>
+      <div class="kitchen-cabinet-unit">
+        <div class="kitchen-cabinet-handle-v top"></div>
+        <div class="kitchen-cabinet-handle-v bottom"></div>
+      </div>
+      <div class="kitchen-cabinet-unit">
+        <div class="kitchen-cabinet-handle-v top"></div>
+        <div class="kitchen-cabinet-handle-v bottom"></div>
+      </div>
     </div>
 
-    <!-- geladeira (clicável - abre loja) -->
+    <div class="kitchen-microwave"></div>
+
     <div class="kitchen-fridge" id="fridge" title="Clique para abrir a loja">
       <div class="kitchen-fridge-shop-badge">🛒 LOJA</div>
       <div class="kitchen-fridge-handle-bottom"></div>
     </div>
 
-    <!-- micro-ondas -->
-    <div class="kitchen-microwave"></div>
-
-    <!-- fogão -->
     <div class="kitchen-stove">
       <div class="kitchen-stove-flame" id="stoveFlame"></div>
     </div>
 
-    <!-- panela -->
     <div class="kitchen-pot"></div>
-
-    <!-- pia -->
     <div class="kitchen-sink"></div>
+    <div class="kitchen-counter-top"></div>
 
-    <!-- bancada -->
-    <div class="kitchen-counter"></div>
+    <div class="kitchen-lower-cabinets">
+      <div class="kitchen-lower-unit"><div class="kitchen-lower-handle"></div></div>
+      <div class="kitchen-lower-unit"><div class="kitchen-lower-handle"></div></div>
+      <div class="kitchen-lower-unit"><div class="kitchen-lower-handle"></div></div>
+      <div class="kitchen-lower-unit"><div class="kitchen-lower-handle"></div></div>
+    </div>
 
-    <!-- fruteira -->
     <div class="kitchen-fruit-bowl">
       <div class="kitchen-fruit apple"></div>
       <div class="kitchen-fruit orange"></div>
       <div class="kitchen-fruit banana"></div>
-      <div class="kitchen-fruit grape"></div>
-      <div class="kitchen-fruit grape2"></div>
     </div>
 
-    <!-- toalha de mesa -->
     <div class="kitchen-towel"></div>
 
-    <!-- planta -->
     <div class="kitchen-plant">
       <div class="kitchen-plant-leaf l1"></div>
       <div class="kitchen-plant-leaf l2"></div>
@@ -2095,6 +2794,16 @@
       <div class="bedroom-star" style="top: 70%; left: 40%; animation-delay: 2s;"></div>
       <div class="bedroom-star" style="top: 80%; left: 75%; animation-delay: 0.5s;"></div>
     </div>
+
+    <!-- GUARDA-ROUPA CLICÁVEL -->
+    <div class="bedroom-wardrobe" id="wardrobe" title="Clique para abrir o guarda-roupa">
+      <div class="wardrobe-badge">👕 ROUPAS</div>
+      <div class="wardrobe-handle left"></div>
+      <div class="wardrobe-handle right"></div>
+      <div class="wardrobe-handle left-bottom"></div>
+      <div class="wardrobe-handle right-bottom"></div>
+    </div>
+
     <div class="bedroom-bed">
       <div class="bedroom-bed-frame"></div>
       <div class="bedroom-mattress"></div>
@@ -2113,37 +2822,20 @@
   <!-- ============ BANHEIRO ============ -->
   <div class="scene-bathroom" id="sceneBathroom">
     <div class="bathroom-wall"></div>
-
-    <!-- espelho -->
     <div class="bathroom-mirror"></div>
-
-    <!-- toalha -->
     <div class="bathroom-towel"></div>
-
-    <!-- chuveiro -->
     <div class="bathroom-shower-head"></div>
-
-    <!-- jatos de água -->
     <div class="bathroom-water" id="bathroomWater"></div>
-
-    <!-- box -->
     <div class="bathroom-box"></div>
-
-    <!-- pia -->
     <div class="bathroom-sink">
       <div class="bathroom-sink-basin"></div>
       <div class="bathroom-sink-faucet"></div>
     </div>
-
-    <!-- vaso -->
     <div class="bathroom-toilet">
       <div class="bathroom-toilet-tank"></div>
       <div class="bathroom-toilet-seat"></div>
     </div>
-
-    <!-- bolhas -->
     <div class="bathroom-bubbles" id="bathroomBubbles"></div>
-
     <div class="bathroom-floor"></div>
   </div>
 
@@ -2154,9 +2846,23 @@
       <div class="billy-mood-bubble" id="moodBubble">✨</div>
 
       <div class="billy-body" id="billyBody">
+        <div class="billy-cape" id="billyCape">
+          <div class="billy-cape-cloth"></div>
+        </div>
+
         <div class="billy-head">
           <div class="billy-ear left"></div>
           <div class="billy-ear right"></div>
+          <div class="billy-hat" id="billyHat">
+            <div class="billy-hat-base"></div>
+            <div class="billy-hat-top"></div>
+            <div class="billy-hat-band"></div>
+          </div>
+          <div class="billy-glasses" id="billyGlasses">
+            <div class="billy-glasses-lens"></div>
+            <div class="billy-glasses-bridge"></div>
+            <div class="billy-glasses-lens"></div>
+          </div>
           <div class="billy-face">
             <div class="billy-eye left"><div class="billy-pupil" id="pupilL"></div></div>
             <div class="billy-eye right"><div class="billy-pupil" id="pupilR"></div></div>
@@ -2164,12 +2870,25 @@
           </div>
         </div>
 
-        <div class="billy-torso">
+        <div class="billy-torso" id="billyTorso">
+          <div class="billy-scarf" id="billyScarf">
+            <div class="billy-scarf-band"></div>
+            <div class="billy-scarf-tail"></div>
+          </div>
+          <div class="billy-bowtie" id="billyBowtie">
+            <div class="billy-bowtie-left"></div>
+            <div class="billy-bowtie-center"></div>
+            <div class="billy-bowtie-right"></div>
+          </div>
           <div class="billy-collar"></div>
           <div class="billy-strap left"></div>
           <div class="billy-strap right"></div>
-          <div class="billy-logo"><div class="billy-logo-inner"></div></div>
-          <div class="billy-logo-text">BILLY<br>BYTE</div>
+          <div class="billy-logo">
+            <div class="billy-logo-inner">
+              <span class="escola-icon">🏫</span>
+            </div>
+            <div class="billy-logo-text">ESCOLAS<br>DO FUTURO</div>
+          </div>
           <div class="billy-hem"></div>
         </div>
 
@@ -2215,6 +2934,7 @@
 
 <!-- CONTROLES TOPO -->
 <div class="top-controls">
+  <button class="ctrl-btn" id="btnShop" title="Loja">🛍️</button>
   <button class="ctrl-btn" id="btnChat" title="Conversar">💬</button>
   <button class="ctrl-btn" id="btnSurprise" title="Surpresa">✨</button>
   <button class="ctrl-btn" id="btnReset" title="Reiniciar">↻</button>
@@ -2262,7 +2982,7 @@
   </div>
 </div>
 
-<!-- LOJA (abre pela geladeira) -->
+<!-- LOJA (comida + roupas) -->
 <div class="modal-overlay" id="shopModal">
   <div class="modal">
     <div class="modal-head">
@@ -2275,14 +2995,34 @@
     </div>
     <div class="modal-body">
       <div class="shop-header">
-        <div class="shop-title">🛍️ Compre comidinhas pro Billy</div>
+        <div class="shop-title">🛍️ Compre comidinhas e roupas pro Billy</div>
         <div class="shop-coins">🪙 <span id="shopCoins">0</span></div>
       </div>
       <div class="shop-tabs">
-        <div class="shop-tab active" data-tab="shop">Loja</div>
-        <div class="shop-tab" data-tab="inventory">Inventário</div>
+        <div class="shop-tab active" data-tab="shop">🍎 Comida</div>
+        <div class="shop-tab" data-tab="outfits">👕 Roupas</div>
+        <div class="shop-tab" data-tab="inventory">🎒 Inventário</div>
       </div>
       <div id="shopContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GUARDA-ROUPA -->
+<div class="modal-overlay" id="wardrobeModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>
+        <span>👕</span>
+        <span>Guarda-Roupa do Billy</span>
+        <span class="badge">vestir</span>
+      </h3>
+      <button class="close-btn" id="btnCloseWardrobe">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="outfit-preview">
+        <div id="wardrobeContent"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -2300,7 +3040,7 @@
 
 <script>
 /* ================================================================
-   BILLY BYTE — Mascote das Escolas do Futuro (v2)
+   BILLY BYTE — Mascote das Escolas do Futuro (v4)
    ================================================================ */
 (function () {
   'use strict';
@@ -2325,6 +3065,13 @@
   const SUJEIRA_DURACAO_MS = 60 * 60 * 1000;
 
   /* ============================================================
+     CICLO DIA/NOITE — 5 min dia + 4 min noite = 9 min ciclo
+     ============================================================ */
+  const DIA_DURACAO_MS = 5 * 60 * 1000;   // 5 minutos de dia
+  const NOITE_DURACAO_MS = 4 * 60 * 1000; // 4 minutos de noite
+  const CICLO_TOTAL_MS = DIA_DURACAO_MS + NOITE_DURACAO_MS;
+
+  /* ============================================================
      ESTADO
      ============================================================ */
   const state = {
@@ -2332,13 +3079,93 @@
     happy: 80,
     sleep: 100,
     clean: 100,
-    coins: 30,
+    coins: 100,
     sleeping: false,
     currentScene: 'garden',
     lastTick: Date.now(),
-    inventory: {},   // { foodId: qtd }
-    ownedFoods: []   // ids já comprados pelo menos 1 vez
+    inventory: {},
+    ownedFoods: [],
+    ownedOutfits: [],
+    equipped: {
+      hat: null,
+      glasses: null,
+      cape: null,
+      scarf: null,
+      bowtie: null,
+      outfit: null
+    },
+    lastButterflyTime: 0,
+    gameStartTime: Date.now()
   };
+
+  /* ============================================================
+     TELA DE CARREGAMENTO
+     ============================================================ */
+  const loadingScreen = $('#loadingScreen');
+  const loadingProgressFill = $('#loadingProgressFill');
+  const loadingPercent = $('#loadingPercent');
+  const loadingTip = $('#loadingTip');
+  const loadingParticles = $('#loadingParticles');
+
+  const loadingTips = [
+    "Dica: Toque no Billy para fazer carinho! 💚",
+    "Dica: Você pode comprar roupas novas na loja! 👕",
+    "Dica: Cuidar do Billy dá moedas! 🪙",
+    "Dica: Encontre o guarda-roupa no quarto! 🚪",
+    "Dica: Tem 3 minigames esperando por você! 🎮",
+    "Dica: O Billy adora tomar banho! 🛁",
+    "Dica: Diga 'oi' no chat e veja o que acontece! 💬",
+    "Dica: Ele fica com fome depois de um tempo! 🍎",
+    "Dica: A borboleta aparece de vez em quando! 🦋",
+    "Dica: O ciclo dia/noite muda a paisagem! 🌙"
+  ];
+
+  function initLoadingParticles() {
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.className = 'loading-particle';
+      p.style.left = rand(0, 100) + '%';
+      p.style.animationDuration = (4 + Math.random() * 6) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      if (Math.random() > 0.5) {
+        p.style.background = 'var(--gold-400)';
+        p.style.boxShadow = '0 0 8px var(--gold-400)';
+      }
+      loadingParticles.appendChild(p);
+    }
+  }
+
+  function runLoadingScreen() {
+    let progress = 0;
+    let tipIndex = 0;
+    loadingTip.textContent = pick(loadingTips);
+
+    const tipInterval = setInterval(() => {
+      tipIndex++;
+      if (tipIndex >= loadingTips.length) tipIndex = 0;
+      loadingTip.style.opacity = '0';
+      setTimeout(() => {
+        loadingTip.textContent = loadingTips[tipIndex];
+        loadingTip.style.opacity = '1';
+      }, 300);
+    }, 2500);
+
+    const interval = setInterval(() => {
+      const increment = rand(1, 4);
+      progress = Math.min(100, progress + increment);
+      loadingProgressFill.style.width = progress + '%';
+      loadingPercent.textContent = progress + '%';
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        clearInterval(tipInterval);
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          setTimeout(() => loadingScreen.remove(), 1000);
+        }, 500);
+      }
+    }, 80);
+  }
 
   /* ============================================================
      CENÁRIOS
@@ -2368,7 +3195,6 @@
     }
     state.currentScene = sceneName;
 
-    // liga/desliga água
     const water = $('#bathroomWater');
     if (water) water.classList.toggle('on', sceneName === 'bathroom' && state.showering);
   }
@@ -2392,6 +3218,121 @@
   const hintEl = $('#hint');
   const toastContainer = $('#toastContainer');
   const coinsDisplay = $('#coinsDisplay');
+
+  /* ============================================================
+     CICLO DIA/NOITE
+     ============================================================ */
+  const skyElement = $('#skyElement');
+  const sunElement = $('#sunElement');
+  const moonElement = $('#moonElement');
+  const starsContainer = $('#starsContainer');
+  const groundElement = $('#groundElement');
+
+  function initStars() {
+    starsContainer.innerHTML = '';
+    for (let i = 0; i < 60; i++) {
+      const star = document.createElement('div');
+      star.className = 'star-dot';
+      star.style.left = rand(0, 100) + '%';
+      star.style.top = rand(0, 60) + '%';
+      star.style.animationDelay = (Math.random() * 3) + 's';
+      star.style.animationDuration = (2 + Math.random() * 3) + 's';
+      const size = rand(2, 4);
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      starsContainer.appendChild(star);
+    }
+  }
+
+  function updateDayNightCycle() {
+    const now = Date.now();
+    const cycleTime = (now - state.gameStartTime) % CICLO_TOTAL_MS;
+    const isDay = cycleTime < DIA_DURACAO_MS;
+
+    let t; // progresso 0-1 do ciclo
+    if (isDay) {
+      t = cycleTime / DIA_DURACAO_MS; // 0 a 1 durante o dia
+    } else {
+      t = (cycleTime - DIA_DURACAO_MS) / NOITE_DURACAO_MS; // 0 a 1 durante a noite
+    }
+
+    // Atualiza céu
+    skyElement.classList.remove('night', 'sunset', 'dawn');
+
+    if (isDay) {
+      if (t < 0.15) {
+        skyElement.classList.add('dawn');
+      } else if (t > 0.85) {
+        skyElement.classList.add('sunset');
+      }
+    } else {
+      skyElement.classList.add('night');
+    }
+
+    // Sol visível durante o dia
+    if (isDay) {
+      const sunProgress = t;
+      const sunX = 80 - sunProgress * 60;
+      const sunY = 20 - Math.sin(sunProgress * Math.PI) * 15;
+      sunElement.style.right = sunX + '%';
+      sunElement.style.top = Math.max(10, sunY) + '%';
+      sunElement.style.opacity = '1';
+      moonElement.style.opacity = '0';
+    } else {
+      sunElement.style.opacity = '0';
+      const moonProgress = t;
+      const moonX = 80 - moonProgress * 60;
+      const moonY = 20 - Math.sin(moonProgress * Math.PI) * 15;
+      moonElement.style.right = moonX + '%';
+      moonElement.style.top = Math.max(10, moonY) + '%';
+      moonElement.style.opacity = '1';
+    }
+
+    // Estrelas visíveis à noite
+    starsContainer.classList.toggle('visible', !isDay);
+
+    // Escurece o chão à noite
+    const nightIntensity = isDay ? 0 : 0.4;
+    groundElement.style.filter = `brightness(${1 - nightIntensity})`;
+  }
+
+  setInterval(updateDayNightCycle, 100);
+
+  /* ============================================================
+     BORBOLETA
+     ============================================================ */
+  const butterflyContainer = $('#butterflyContainer');
+  const BUTTERFLY_INTERVAL = 10 * 60 * 1000;
+
+  function spawnButterfly() {
+    const b = document.createElement('div');
+    b.className = 'butterfly flying';
+    b.style.top = rand(15, 45) + '%';
+    b.style.left = '0';
+
+    b.innerHTML = `
+      <div class="butterfly-body">
+        <div class="butterfly-wing left"></div>
+        <div class="butterfly-wing right"></div>
+        <div class="butterfly-antenna l"></div>
+        <div class="butterfly-antenna r"></div>
+        <div class="butterfly-tail"></div>
+      </div>
+    `;
+
+    butterflyContainer.appendChild(b);
+    setTimeout(() => b.remove(), 13000);
+  }
+
+  function scheduleButterfly() {
+    const now = Date.now();
+    if (now - state.lastButterflyTime >= BUTTERFLY_INTERVAL) {
+      state.lastButterflyTime = now;
+      spawnButterfly();
+    }
+  }
+
+  setInterval(scheduleButterfly, 60000);
 
   /* ============================================================
      TOAST
@@ -2451,6 +3392,156 @@
   }
 
   /* ============================================================
+     ROUPAS / ACESSÓRIOS
+     ============================================================ */
+  const outfitsCatalog = [
+    { id: 'hat_cap',      emoji: '🧢', name: 'Boné',        price: 20, slot: 'hat',     type: 'hat_cap' },
+    { id: 'hat_cowboy',   emoji: '🤠', name: 'Chapéu Cowboy', price: 35, slot: 'hat',   type: 'hat_cowboy' },
+    { id: 'hat_wizard',   emoji: '🎩', name: 'Cartola Mágica', price: 50, slot: 'hat', type: 'hat_wizard' },
+    { id: 'glasses_sun',  emoji: '🕶️', name: 'Óculos de Sol', price: 25, slot: 'glasses', type: 'glasses_sun' },
+    { id: 'glasses_vr',   emoji: '🥽', name: 'Óculos VR',   price: 45, slot: 'glasses', type: 'glasses_vr' },
+    { id: 'cape_hero',    emoji: '🦸', name: 'Capa de Herói', price: 60, slot: 'cape', type: 'cape_hero' },
+    { id: 'scarf_winter', emoji: '🧣', name: 'Cachecol',    price: 30, slot: 'scarf',   type: 'scarf_winter' },
+    { id: 'bowtie_gold',  emoji: '🎀', name: 'Gravata Borboleta', price: 28, slot: 'bowtie', type: 'bowtie_gold' },
+    { id: 'shirt_green',  emoji: '🟢', name: 'Camisa Verde', price: 40, slot: 'outfit', type: 'shirt_green' },
+    { id: 'shirt_blue',   emoji: '🔵', name: 'Camisa Azul',  price: 40, slot: 'outfit', type: 'shirt_blue' },
+    { id: 'shirt_red',    emoji: '🔴', name: 'Camisa Vermelha', price: 40, slot: 'outfit', type: 'shirt_red' },
+    { id: 'shirt_purple', emoji: '🟣', name: 'Camisa Roxa',  price: 45, slot: 'outfit', type: 'shirt_purple' }
+  ];
+
+  const outfitColors = {
+    shirt_green:  { main: '#2a9c01', dark: '#1e4700' },
+    shirt_blue:   { main: '#3b82f6', dark: '#1e40af' },
+    shirt_red:    { main: '#ef4444', dark: '#991b1b' },
+    shirt_purple: { main: '#a855f7', dark: '#6b21a8' }
+  };
+
+  function applyEquippedOutfits() {
+    // Reset
+    const billyHat = $('#billyHat');
+    const billyGlasses = $('#billyGlasses');
+    const billyCape = $('#billyCape');
+    const billyScarf = $('#billyScarf');
+    const billyBowtie = $('#billyBowtie');
+    const billyTorso = $('#billyTorso');
+
+    // Reset classes
+    [billyHat, billyGlasses, billyCape, billyScarf, billyBowtie].forEach(el => {
+      if (el) el.classList.remove('equipped');
+    });
+
+    // Reset torso colors
+    const collar = $('.billy-collar');
+    const hem = $('.billy-hem');
+    const straps = $$('.billy-strap');
+    const sleeveAfter = $$('.billy-sleeve');
+
+    // Reset to default colors
+    if (collar) collar.style.background = '';
+    if (hem) hem.style.background = '';
+    straps.forEach(s => s.style.background = '');
+    sleeveAfter.forEach(s => {
+      const afterStyle = s.style;
+      // Não podemos resetar ::after diretamente, então removemos a classe custom
+      s.classList.remove('custom-shirt');
+    });
+    if (billyTorso) billyTorso.style.background = '';
+
+    // Apply equipped items
+    if (state.equipped.hat) {
+      const item = outfitsCatalog.find(o => o.id === state.equipped.hat);
+      if (item && billyHat) {
+        billyHat.classList.add('equipped');
+        applyHatStyle(billyHat, item.type);
+      }
+    }
+    if (state.equipped.glasses) {
+      const item = outfitsCatalog.find(o => o.id === state.equipped.glasses);
+      if (item && billyGlasses) {
+        billyGlasses.classList.add('equipped');
+        applyGlassesStyle(billyGlasses, item.type);
+      }
+    }
+    if (state.equipped.cape) {
+      if (billyCape) billyCape.classList.add('equipped');
+    }
+    if (state.equipped.scarf) {
+      if (billyScarf) billyScarf.classList.add('equipped');
+    }
+    if (state.equipped.bowtie) {
+      if (billyBowtie) billyBowtie.classList.add('equipped');
+    }
+    if (state.equipped.outfit) {
+      const colors = outfitColors[state.equipped.outfit];
+      if (colors) {
+        if (billyTorso) billyTorso.style.background = `linear-gradient(180deg, ${colors.main} 0%, ${colors.dark} 100%)`;
+        if (collar) collar.style.background = `linear-gradient(180deg, ${colors.main}, ${colors.dark})`;
+        if (hem) hem.style.background = `linear-gradient(180deg, ${colors.main}, ${colors.dark})`;
+        straps.forEach(s => s.style.background = `linear-gradient(180deg, ${colors.main}, ${colors.dark})`);
+      }
+    }
+  }
+
+  function applyHatStyle(hatEl, type) {
+    const base = hatEl.querySelector('.billy-hat-base');
+    const top = hatEl.querySelector('.billy-hat-top');
+    const band = hatEl.querySelector('.billy-hat-band');
+    if (!base || !top || !band) return;
+
+    // Reset
+    base.style.background = '';
+    base.style.borderRadius = '';
+    top.style.background = '';
+    top.style.width = '';
+    top.style.height = '';
+    top.style.borderRadius = '';
+
+    if (type === 'hat_cap') {
+      base.style.background = 'linear-gradient(180deg, #1e40af, #1e3a8a)';
+      top.style.background = 'linear-gradient(180deg, #3b82f6, #1e40af)';
+      top.style.width = '110px';
+      top.style.height = '40px';
+      top.style.borderRadius = '50% 50% 10px 10px';
+      band.style.background = '#fbbf24';
+    } else if (type === 'hat_cowboy') {
+      base.style.background = 'linear-gradient(180deg, #92400e, #78350f)';
+      base.style.borderRadius = '50% 50% 20% 20%';
+      top.style.background = 'linear-gradient(180deg, #b45309, #92400e)';
+      top.style.width = '80px';
+      top.style.height = '50px';
+      top.style.borderRadius = '40% 40% 20% 20%';
+      band.style.background = '#fbbf24';
+    } else if (type === 'hat_wizard') {
+      base.style.background = 'linear-gradient(180deg, #1e1b4b, #0f0a2e)';
+      top.style.background = 'linear-gradient(180deg, #312e81, #1e1b4b)';
+      top.style.width = '70px';
+      top.style.height = '70px';
+      top.style.borderRadius = '50% 50% 10px 10px';
+      band.style.background = '#fbbf24';
+    }
+  }
+
+  function applyGlassesStyle(glassesEl, type) {
+    const lenses = glassesEl.querySelectorAll('.billy-glasses-lens');
+    lenses.forEach(lens => {
+      lens.style.background = '';
+      lens.style.borderColor = '';
+    });
+
+    if (type === 'glasses_sun') {
+      lenses.forEach(lens => {
+        lens.style.background = 'linear-gradient(180deg, #1a1a1a, #000)';
+        lens.style.borderColor = '#000';
+      });
+    } else if (type === 'glasses_vr') {
+      lenses.forEach(lens => {
+        lens.style.background = 'linear-gradient(180deg, #1e3a8a, #0f172a)';
+        lens.style.borderColor = '#3b82f6';
+      });
+    }
+  }
+
+  /* ============================================================
      ANIMAÇÕES
      ============================================================ */
   function animateBilly(cls, dur = 800) {
@@ -2470,7 +3561,6 @@
   function billyShake() { animateBilly('shaking', 500); }
   function billyLaugh() { animateBilly('laughing', 1400); }
   function billyEat() { animateBilly('eating', 1200); }
-  function billySad() { animateBilly('sad', 1800); }
   function billyExcited() { animateBilly('excited', 1500); }
 
   /* ============================================================
@@ -2556,7 +3646,9 @@
     sleepy: ["Tô com soninho... 😴", "Preciso dormir...", "Que sono!", "Meus olhinhos estão pesados..."],
     dirty: ["Tô precisando de banho! 🚿", "Que sujinha!", "Me leva pro banheiro!", "Tô cheirando mal! 😅"],
     bath: ["Ai que delícia! 🛁", "Água quentinha!", "Limpinho de novo!", "Adoro banho! 🫧", "Splash splash!"],
-    bathDone: ["Prontinho! Cheiroso!", "Que banho gostoso!", "Agora sim, limpinho! ✨"]
+    bathDone: ["Prontinho! Cheiroso!", "Que banho gostoso!", "Agora sim, limpinho! ✨"],
+    newOutfit: ["Olha minha roupa nova! 👕", "Que estilo!", "Adorei o look!", "Tô fashion! ✨", "Combina comigo?"],
+    noOutfit: ["Tirei a roupa!", "Voltei ao normal!", "Fico bem de qualquer jeito! 😊"]
   };
 
   function billySpeak(key) {
@@ -2568,7 +3660,7 @@
   }
 
   /* ============================================================
-     COMIDAS / LOJA
+     COMIDAS
      ============================================================ */
   const foodsCatalog = [
     { id: 'apple',    emoji: '🍎', name: 'Maçã',        price: 5,  value: 15 },
@@ -2618,6 +3710,38 @@
         grid.appendChild(item);
       });
       content.appendChild(grid);
+    } else if (shopTab === 'outfits') {
+      const desc = document.createElement('div');
+      desc.className = 'game-desc';
+      desc.innerHTML = '👕 Compre roupas e acessórios! Depois vá ao <strong>guarda-roupa no quarto</strong> para equipar.';
+      content.appendChild(desc);
+
+      const grid = document.createElement('div');
+      grid.className = 'outfit-grid';
+      outfitsCatalog.forEach(outfit => {
+        const item = document.createElement('div');
+        item.className = 'outfit-item';
+        const owned = state.ownedOutfits.includes(outfit.id);
+        const equipped = state.equipped[outfit.slot] === outfit.id;
+        const canAfford = state.coins >= outfit.price;
+        if (!canAfford && !owned) item.classList.add('cant-afford');
+        if (owned) item.classList.add('owned');
+        if (equipped) item.classList.add('equipped');
+
+        let statusBadge = '';
+        if (equipped) statusBadge = '<div class="outfit-status equipped-badge">✓ Usando</div>';
+        else if (owned) statusBadge = '<div class="outfit-status owned-badge">✓</div>';
+
+        item.innerHTML = `
+          ${statusBadge}
+          <div class="outfit-emoji">${outfit.emoji}</div>
+          <div class="outfit-name">${outfit.name}</div>
+          ${!owned ? `<div class="outfit-price">🪙 ${outfit.price}</div>` : '<div class="outfit-price" style="color:var(--green-300)">Comprado</div>'}
+        `;
+        item.addEventListener('click', () => buyOutfit(outfit));
+        grid.appendChild(item);
+      });
+      content.appendChild(grid);
     } else {
       const inv = state.inventory;
       const ids = Object.keys(inv).filter(k => inv[k] > 0);
@@ -2664,6 +3788,38 @@
     renderShop();
   }
 
+  function buyOutfit(outfit) {
+    const owned = state.ownedOutfits.includes(outfit.id);
+
+    if (owned) {
+      // Equipar / desequipar
+      if (state.equipped[outfit.slot] === outfit.id) {
+        state.equipped[outfit.slot] = null;
+        showToast(`Removeu ${outfit.emoji} ${outfit.name}`, 1500);
+        billySpeak('noOutfit');
+      } else {
+        state.equipped[outfit.slot] = outfit.id;
+        showToast(`Equipou ${outfit.emoji} ${outfit.name}!`, 1500, true);
+        billySpeak('newOutfit');
+        showMood('✨');
+      }
+      applyEquippedOutfits();
+      renderShop();
+      return;
+    }
+
+    if (state.coins < outfit.price) {
+      showToast('Moedas insuficientes! 🪙');
+      billyShake();
+      return;
+    }
+    state.coins -= outfit.price;
+    state.ownedOutfits.push(outfit.id);
+    updateStats();
+    showToast(`Comprou ${outfit.emoji} ${outfit.name}!`, 1800, true);
+    renderShop();
+  }
+
   function consumeFood(food) {
     if (state.hunger >= 100) { showToast('Billy já está satisfeito! 😊'); return; }
     if ((state.inventory[food.id] || 0) <= 0) return;
@@ -2682,6 +3838,71 @@
     }, 900);
   }
 
+  /* ============================================================
+     GUARDA-ROUPA
+     ============================================================ */
+  function openWardrobe() {
+    $('#wardrobeModal').classList.add('active');
+    renderWardrobe();
+  }
+  function closeWardrobe() { $('#wardrobeModal').classList.remove('active'); }
+
+  function renderWardrobe() {
+    const content = $('#wardrobeContent');
+    content.innerHTML = '';
+
+    const owned = state.ownedOutfits;
+    if (owned.length === 0) {
+      content.innerHTML = `
+        <div class="outfit-preview-icon">🛍️</div>
+        <div class="outfit-preview-text">Você ainda não tem roupas!<br>Compre na loja 🛍️</div>
+      `;
+      return;
+    }
+
+    const desc = document.createElement('div');
+    desc.className = 'game-desc';
+    desc.style.marginBottom = '12px';
+    desc.innerHTML = '👆 Clique numa roupa para <strong>equipar</strong> ou <strong>remover</strong>.';
+    content.appendChild(desc);
+
+    const grid = document.createElement('div');
+    grid.className = 'outfit-grid';
+    owned.forEach(id => {
+      const outfit = outfitsCatalog.find(o => o.id === id);
+      if (!outfit) return;
+      const equipped = state.equipped[outfit.slot] === outfit.id;
+
+      const item = document.createElement('div');
+      item.className = 'outfit-item owned';
+      if (equipped) item.classList.add('equipped');
+      item.innerHTML = `
+        ${equipped ? '<div class="outfit-status equipped-badge">✓ Usando</div>' : ''}
+        <div class="outfit-emoji">${outfit.emoji}</div>
+        <div class="outfit-name">${outfit.name}</div>
+      `;
+      item.addEventListener('click', () => {
+        if (equipped) {
+          state.equipped[outfit.slot] = null;
+          showToast(`Removeu ${outfit.name}`, 1400);
+          billySpeak('noOutfit');
+        } else {
+          state.equipped[outfit.slot] = outfit.id;
+          showToast(`Equipou ${outfit.name}!`, 1400, true);
+          billySpeak('newOutfit');
+          showMood('✨');
+        }
+        applyEquippedOutfits();
+        renderWardrobe();
+      });
+      grid.appendChild(item);
+    });
+    content.appendChild(grid);
+  }
+
+  /* ============================================================
+     EVENT LISTENERS
+     ============================================================ */
   $('#btnCloseShop').addEventListener('click', closeShop);
   $('#shopModal').addEventListener('click', e => { if (e.target === $('#shopModal')) closeShop(); });
   $$('.shop-tab').forEach(tab => {
@@ -2693,10 +3914,20 @@
     });
   });
 
-  $('#fridge').addEventListener('click', () => {
-    if (state.currentScene !== 'kitchen') switchScene('kitchen');
+  $('#btnCloseWardrobe').addEventListener('click', closeWardrobe);
+  $('#wardrobeModal').addEventListener('click', e => { if (e.target === $('#wardrobeModal')) closeWardrobe(); });
+
+  $('#fridge').addEventListener('click', (e) => {
+    e.stopPropagation();
     openShop();
   });
+
+  $('#wardrobe').addEventListener('click', (e) => {
+    e.stopPropagation();
+    openWardrobe();
+  });
+
+  $('#btnShop').addEventListener('click', openShop);
 
   /* ============================================================
      AÇÕES
@@ -2787,9 +4018,7 @@
     billyBody.classList.add('showering');
     const water = $('#bathroomWater');
     if (water) water.classList.add('on');
-    // gera gotas
     generateWaterDrops();
-    // gera bolhas
     generateBathBubbles();
     billySpeak('bath');
     showMood('🫧');
@@ -3265,23 +4494,31 @@
       if (/(banho|tomar banho|limpar|sujo|sujeira)/.test(clean)) {
         return pick(["Preciso de banho! Clica em 🛁 pra me levar ao banheiro!", "O banheiro tá pronto! Vem me dar banho! 🚿", "Adoro banho! Clica em 🛁!"]);
       }
-      if (/(loja|comprar|mercado|geladeira)/.test(clean)) {
-        return pick(["Clica na geladeira 🧊 na cozinha pra abrir a loja!", "Tem comidinhas na loja! Clica na geladeira!", "Você pode comprar comida na geladeira! 🛒"]);
+      if (/(loja|comprar|mercado|geladeira|roupa|vestir)/.test(clean)) {
+        return pick([
+          "Clica no botão 🛍️ pra abrir a loja! Lá tem comidinhas e ROUPAS!",
+          "Você pode comprar roupas na loja! Clica em 🛍️!",
+          "Tem roupas legais na loja! Clica em 🛍️ pra ver!",
+          "Comprei uma roupa nova? Vai no guarda-roupa do quarto! 🚪"
+        ]);
       }
       if (/(moeda|dinheiro|coin)/.test(clean)) {
         return pick([`Você tem ${state.coins} moedas! 🪙`, "Ganhe moedas cuidando de mim! 💰", "Cada carinho dá moedinha! 🪙"]);
       }
       if (/(ajuda|help|o que (voce|vc) (faz|sabe))|(como funciona)/.test(clean)) {
-        return "Sou o Billy Byte! Posso conversar, jogar minigames, tomar banho e você pode comprar comida pra mim! 🎮🛁🛒";
+        return "Sou o Billy Byte! Posso conversar, jogar minigames, tomar banho, você pode comprar comida e ROUPAS pra mim! 🎮🛁🛒👕";
       }
       if (/(comida|comer|fome|alimento)/.test(clean)) {
-        return "Tô sempre com fome! Abre a geladeira 🧊 na cozinha e compra comida pra mim!";
+        return "Tô sempre com fome! Abre a loja 🛍️ e compra comida pra mim!";
       }
       if (/(dormir|sono|soninho)/.test(clean)) {
         return "Ando com soninho... Clica em 💤 pra eu tirar uma soneca!";
       }
       if (/(carinho|carinhoso|afeto)/.test(clean)) {
         return "Adoro carinho! Clica em 🤚 pra me dar um carinho! 💚";
+      }
+      if (/(guarda.?roupa|armario|armário)/.test(clean)) {
+        return pick(["O guarda-roupa fica no meu quarto! Vai lá pra trocar minha roupa! 🚪", "No quarto tem um guarda-roupa grandão! Clica nele pra vestir roupas!"]);
       }
       if (/(feliz|alegre|contente|felicidade)/.test(clean)) {
         return pick(["Fico feliz quando você conversa comigo! 😊", "Cada mensagem sua me deixa mais feliz!", "Adoro nossa amizade! 💚"]);
@@ -3417,7 +4654,6 @@
     if (state.clean < 25 && Math.random() > 0.75) { showMood('🧼'); if (Math.random() > 0.5) billySpeak('dirty'); }
     if (state.sleep <= 5 && !state.sleeping) { showToast("Billy dormiu de tanto sono! 💤"); putToSleep(); }
 
-    // idle animations
     if (Math.random() > 0.97 && !billyBody.classList.contains('jumping') && !billyBody.classList.contains('sleeping')) {
       billyJump();
     }
@@ -3465,13 +4701,21 @@
      INICIALIZAÇÃO
      ============================================================ */
   document.addEventListener('DOMContentLoaded', () => {
+    initLoadingParticles();
+    runLoadingScreen();
+
     generateGrass();
     generatePollen();
+    initStars();
     buildPicker();
     updateStats();
+    updateDayNightCycle();
+
+    state.lastButterflyTime = Date.now() - BUTTERFLY_INTERVAL + 5000;
+    setTimeout(() => { spawnButterfly(); state.lastButterflyTime = Date.now(); }, 5000);
 
     setTimeout(() => {
-      addChatMessage("Oi! Eu sou o Billy Byte! 🤖 Agora tenho banheiro, cozinha nova e uma LOJA! Clica na geladeira 🧊 pra comprar comida pra mim!", 'billy');
+      addChatMessage("Oi! Eu sou o Billy Byte! 🤖 Agora tenho LOJA com roupas e um GUARDA-ROUPA no quarto! Clica em 🛍️ pra ver!", 'billy');
     }, 800);
 
     setTimeout(() => { if (hintEl) hintEl.style.display = 'none'; }, 7000);
@@ -3481,6 +4725,7 @@
     if (e.key === 'Escape') {
       closeModal();
       closeShop();
+      closeWardrobe();
       gamePicker.classList.remove('active');
       chatPanel.classList.remove('open');
     }
