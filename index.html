@@ -6,9 +6,7 @@
 <title>Billy Byte · Mascote das Escolas do Futuro</title>
 <style>
   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; padding: 0; box-sizing: border-box;
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
@@ -32,11 +30,15 @@
     --green-800: #1e4700;
     --green-700: #255a01;
     --green-600: #2a6e01;
-    --green-500: #2anc01;
+    --green-500: #2a9c01;  /* ← corrigido */
     --green-400: #4fc41e;
     --green-300: #7dd44f;
     --green-200: #a9e284;
     --green-100: #d0f0bb;
+
+    --gold-500: #f0b429;
+    --gold-400: #f7c948;
+    --gold-600: #c98a0c;
 
     --text-0: #f5f5f5;
     --text-1: #d9d9d9;
@@ -49,7 +51,7 @@
     --sh-sm: 0 2px 6px rgba(0,0,0,0.35);
     --sh-md: 0 6px 18px rgba(0,0,0,0.5);
     --sh-lg: 0 20px 50px rgba(0,0,0,0.65);
-    --sh-glow: 0 0 0 3px rgba(42, 110, 1, 0.35);
+    --sh-glow: 0 0 0 3px rgba(42, 156, 1, 0.35);
 
     --r-sm: 10px;
     --r-md: 16px;
@@ -68,34 +70,20 @@
     overflow: hidden;
   }
 
-  /* ============================================================
-     CENA
-     ============================================================ */
-  .scene {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-  }
+  .scene { position: fixed; inset: 0; overflow: hidden; }
 
-  /* ============ CENÁRIO: JARDIM ============ */
-  .scene-garden {
-    position: absolute;
-    inset: 0;
-    transition: opacity 0.6s ease;
-  }
+  /* ================= JARDIM ================= */
+  .scene-garden { position: absolute; inset: 0; transition: opacity 0.6s ease; }
   .scene-garden.hidden { opacity: 0; pointer-events: none; }
 
   .sky {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: linear-gradient(180deg, #4a90d9 0%, #6ba8e0 25%, #8ec2ea 50%, #b8daf0 75%, #e0eef5 100%);
   }
 
   .sun {
-    position: absolute;
-    top: 60px; right: 120px;
-    width: 110px; height: 110px;
-    border-radius: 50%;
+    position: absolute; top: 60px; right: 120px;
+    width: 110px; height: 110px; border-radius: 50%;
     background: radial-gradient(circle at 40% 40%, #fff8c4, #ffdb4d 40%, #ffb347 80%);
     box-shadow: 0 0 60px 20px rgba(255, 219, 77, 0.6), 0 0 120px 60px rgba(255, 219, 77, 0.25);
     animation: sunGlow 4s ease-in-out infinite;
@@ -106,20 +94,8 @@
     50%      { box-shadow: 0 0 80px 30px rgba(255, 219, 77, 0.75), 0 0 150px 80px rgba(255, 219, 77, 0.35); }
   }
 
-  .cloud {
-    position: absolute;
-    background: #ffffff;
-    border-radius: 50%;
-    opacity: 0.9;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
-    z-index: 3;
-  }
-  .cloud::before, .cloud::after {
-    content: '';
-    position: absolute;
-    background: #ffffff;
-    border-radius: 50%;
-  }
+  .cloud { position: absolute; background: #fff; border-radius: 50%; opacity: 0.9; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08)); z-index: 3; }
+  .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
   .cloud.c1 { top: 80px; left: -200px; width: 120px; height: 50px; animation: cloudMove 45s linear infinite; }
   .cloud.c1::before { width: 70px; height: 70px; top: -30px; left: 12px; }
   .cloud.c1::after  { width: 55px; height: 55px; top: -22px; right: 12px; }
@@ -129,116 +105,56 @@
   .cloud.c3 { top: 200px; left: -250px; width: 100px; height: 42px; animation: cloudMove 55s linear infinite; animation-delay: -30s; opacity: 0.65; }
   .cloud.c3::before { width: 60px; height: 60px; top: -26px; left: 10px; }
   .cloud.c3::after  { width: 45px; height: 45px; top: -18px; right: 10px; }
-  @keyframes cloudMove {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(calc(100vw + 500px)); }
-  }
+  @keyframes cloudMove { 0% { transform: translateX(0); } 100% { transform: translateX(calc(100vw + 500px)); } }
 
-  .hills {
-    position: absolute;
-    bottom: 32%; left: 0; right: 0;
-    height: 200px;
-    z-index: 4;
-    pointer-events: none;
-  }
-  .hill {
-    position: absolute;
-    bottom: 0;
-    border-radius: 50% 50% 0 0;
-  }
+  .hills { position: absolute; bottom: 32%; left: 0; right: 0; height: 200px; z-index: 4; pointer-events: none; }
+  .hill { position: absolute; bottom: 0; border-radius: 50% 50% 0 0; }
   .hill.h1 { left: -5%; width: 45%; height: 180px; background: linear-gradient(180deg, #7cb342 0%, #558b2f 100%); opacity: 0.85; }
   .hill.h2 { left: 25%; width: 55%; height: 220px; background: linear-gradient(180deg, #8bc34a 0%, #689f38 100%); opacity: 0.9; }
   .hill.h3 { right: -5%; width: 45%; height: 190px; background: linear-gradient(180deg, #7cb342 0%, #558b2f 100%); opacity: 0.85; }
 
-  .tree {
-    position: absolute;
-    bottom: 30%;
-    z-index: 5;
-    pointer-events: none;
-  }
+  .tree { position: absolute; bottom: 30%; z-index: 5; pointer-events: none; }
   .tree-trunk {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
     width: 22px; height: 90px;
     background: linear-gradient(90deg, #5d4037 0%, #795548 50%, #4e342e 100%);
     border-radius: 6px 6px 0 0;
     box-shadow: inset -3px 0 6px rgba(0,0,0,0.3);
   }
-  .tree-trunk::before {
-    content: '';
-    position: absolute;
-    top: -8px; left: -12px;
-    width: 46px; height: 16px;
-    background: #4e342e;
-    border-radius: 50%;
-  }
+  .tree-trunk::before { content: ''; position: absolute; top: -8px; left: -12px; width: 46px; height: 16px; background: #4e342e; border-radius: 50%; }
   .tree-crown {
-    position: absolute;
-    bottom: 75px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 130px; height: 130px;
-    border-radius: 50%;
+    position: absolute; bottom: 75px; left: 50%; transform: translateX(-50%);
+    width: 130px; height: 130px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #aed581 0%, #7cb342 40%, #558b2f 100%);
     box-shadow: inset -12px -14px 30px rgba(0,0,0,0.25), inset 10px 10px 24px rgba(255,255,255,0.15);
   }
-  .tree-crown::before, .tree-crown::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #aed581, #689f38 80%);
-  }
+  .tree-crown::before, .tree-crown::after { content: ''; position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #aed581, #689f38 80%); }
   .tree-crown::before { width: 80px; height: 80px; top: 10px; left: -30px; }
   .tree-crown::after { width: 90px; height: 90px; top: 5px; right: -30px; }
-
   .tree.t-left { left: 4%; width: 140px; height: 240px; }
   .tree.t-left .tree-trunk { width: 26px; height: 110px; }
   .tree.t-right { right: 4%; width: 160px; height: 280px; }
   .tree.t-right .tree-trunk { width: 30px; height: 130px; }
 
   .ground {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 32%;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 32%;
     background: linear-gradient(180deg, #7cb342 0%, #689f38 30%, #558b2f 70%, #33691e 100%);
-    z-index: 6;
-    overflow: hidden;
+    z-index: 6; overflow: hidden;
   }
 
   .grass-blade {
-    position: absolute;
-    bottom: 0;
-    width: 3px;
+    position: absolute; bottom: 0; width: 3px;
     border-radius: 50% 50% 0 0;
     transform-origin: bottom center;
     animation: grassSway 3s ease-in-out infinite;
   }
-  @keyframes grassSway {
-    0%, 100% { transform: rotate(-3deg); }
-    50%      { transform: rotate(3deg); }
-  }
+  @keyframes grassSway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
 
-  .flower {
-    position: absolute;
-    bottom: 0;
-    width: 14px; height: 26px;
-    z-index: 7;
-  }
-  .flower-stem {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 2px; height: 16px;
-    background: #558b2f;
-  }
+  .flower { position: absolute; bottom: 0; width: 14px; height: 26px; z-index: 7; }
+  .flower-stem { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 16px; background: #558b2f; }
   .flower-petal {
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 14px;
-    border-radius: 50%;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 14px; border-radius: 50%;
     background: radial-gradient(circle at 40% 40%, #fff3e0, #ffb74d 60%, #f57c00);
     box-shadow: 0 0 8px rgba(255, 183, 77, 0.6);
   }
@@ -247,8 +163,7 @@
   .flower.f-yellow .flower-petal { background: radial-gradient(circle at 40% 40%, #fff9c4, #ffeb3b 60%, #f9a825); }
 
   .bush {
-    position: absolute;
-    bottom: 0;
+    position: absolute; bottom: 0;
     border-radius: 50% 50% 0 0;
     background: radial-gradient(circle at 40% 35%, #8bc34a, #558b2f);
     box-shadow: inset -4px -6px 12px rgba(0,0,0,0.2);
@@ -256,8 +171,7 @@
   }
 
   .rock {
-    position: absolute;
-    bottom: 0;
+    position: absolute; bottom: 0;
     background: linear-gradient(180deg, #9e9e9e, #616161);
     border-radius: 40% 40% 20% 20% / 60% 60% 40% 40%;
     box-shadow: inset -3px -4px 8px rgba(0,0,0,0.3);
@@ -265,13 +179,10 @@
   }
 
   .pollen {
-    position: absolute;
-    width: 6px; height: 6px;
-    border-radius: 50%;
+    position: absolute; width: 6px; height: 6px; border-radius: 50%;
     background: rgba(255, 255, 200, 0.7);
     box-shadow: 0 0 8px rgba(255, 255, 200, 0.8);
-    pointer-events: none;
-    z-index: 8;
+    pointer-events: none; z-index: 8;
     animation: pollenFloat 12s ease-in-out infinite;
   }
   @keyframes pollenFloat {
@@ -281,89 +192,279 @@
     75%      { transform: translate(40px, -30px); opacity: 0.8; }
   }
 
-  /* ============ CENÁRIO: COZINHA ============ */
+  /* ================= COZINHA (REPAGINADA) ================= */
   .scene-kitchen {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: linear-gradient(180deg, #d4a574 0%, #c19468 50%, #a67c52 100%);
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.6s ease;
   }
   .scene-kitchen.active { opacity: 1; pointer-events: auto; }
 
-  /* Parede com azulejos */
   .kitchen-wall {
-    position: absolute;
-    inset: 0;
-    bottom: 40%;
+    position: absolute; inset: 0; bottom: 40%;
     background:
       repeating-linear-gradient(0deg, transparent 0px, transparent 48px, rgba(0,0,0,0.1) 48px, rgba(0,0,0,0.1) 50px),
       repeating-linear-gradient(90deg, transparent 0px, transparent 48px, rgba(0,0,0,0.1) 48px, rgba(0,0,0,0.1) 50px),
       linear-gradient(180deg, #f5e6d3 0%, #ecd5ba 100%);
   }
 
-  /* Bancada */
   .kitchen-counter {
-    position: absolute;
-    bottom: 40%;
-    left: 0; right: 0;
-    height: 30px;
+    position: absolute; bottom: 40%; left: 0; right: 0; height: 30px;
     background: linear-gradient(180deg, #8b6f47 0%, #6d5638 100%);
     border-top: 6px solid #d4a574;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     z-index: 5;
   }
 
-  /* Piso xadrez */
   .kitchen-floor {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40%;
-    background:
-      repeating-conic-gradient(#f5f5f5 0% 25%, #c9c9c9 0% 50%) 0 0 / 60px 60px;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
+    background: repeating-conic-gradient(#f5f5f5 0% 25%, #c9c9c9 0% 50%) 0 0 / 60px 60px;
     box-shadow: inset 0 10px 20px rgba(0,0,0,0.15);
   }
 
-  /* Geladeira */
-  .kitchen-fridge {
+  /* Fruteira */
+  .kitchen-fruit-bowl {
+    position: absolute; bottom: 40%; left: 30%;
+    width: 90px; height: 30px;
+    background: linear-gradient(180deg, #c98a4a, #8b5a24);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.2);
+    z-index: 6;
+  }
+  .kitchen-fruit {
+    position: absolute; bottom: 100%;
+    width: 22px; height: 22px; border-radius: 50%;
+    box-shadow: inset -3px -3px 5px rgba(0,0,0,0.2);
+  }
+  .kitchen-fruit.apple { left: 5px; background: radial-gradient(circle at 30% 30%, #ff6b6b, #c92a2a); }
+  .kitchen-fruit.orange { left: 30px; background: radial-gradient(circle at 30% 30%, #ffb347, #e07b00); }
+  .kitchen-fruit.banana {
+    left: 55px; width: 26px; height: 14px;
+    border-radius: 40% 60% 60% 40%;
+    background: radial-gradient(circle at 40% 30%, #fff59d, #f9a825);
+  }
+  .kitchen-fruit.grape { left: 20px; bottom: 120%; background: radial-gradient(circle at 30% 30%, #b39ddb, #6a3fa0); width: 18px; height: 18px; }
+  .kitchen-fruit.grape2 { left: 32px; bottom: 120%; background: radial-gradient(circle at 30% 30%, #b39ddb, #6a3fa0); width: 18px; height: 18px; }
+
+  /* Panela no fogão */
+  .kitchen-pot {
+    position: absolute; bottom: 40%; right: 10%;
+    width: 60px; height: 40px;
+    background: linear-gradient(180deg, #4a4a4a, #2e2e2e);
+    border-radius: 0 0 50% 50% / 0 0 60% 60%;
+    border: 2px solid #1a1a1a;
+    box-shadow: inset -3px -3px 6px rgba(0,0,0,0.3);
+    z-index: 6;
+  }
+  .kitchen-pot::before {
+    content: '';
+    position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+    width: 70px; height: 10px;
+    background: linear-gradient(180deg, #6a6a6a, #3a3a3a);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .kitchen-pot::after {
+    content: '';
+    position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+    width: 50px; height: 6px;
+    background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
+    border-radius: 50%;
+    animation: steam 2s ease-in-out infinite;
+  }
+  @keyframes steam {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+    50%      { opacity: 0.7; transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* Toalha de mesa quadriculada */
+  .kitchen-towel {
+    position: absolute; bottom: 40%; left: 46%;
+    width: 80px; height: 18px;
+    background: repeating-linear-gradient(90deg, #e53935 0 8px, #fff 8px 16px, #43a047 16px 24px, #fff 24px 32px);
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 6;
+    transform: rotate(-3deg);
+  }
+
+  /* Quadro na parede */
+  .kitchen-painting {
+    position: absolute; top: 60px; left: 6%;
+    width: 90px; height: 70px;
+    background: linear-gradient(135deg, #ffe082, #ffb74d);
+    border: 5px solid #6d5638;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 3;
+    overflow: hidden;
+  }
+  .kitchen-painting::before {
+    content: '';
     position: absolute;
-    bottom: 40%;
-    left: 6%;
-    width: 120px;
-    height: 220px;
+    bottom: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(180deg, #81c784, #388e3c);
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  }
+  .kitchen-painting::after {
+    content: '';
+    position: absolute;
+    top: 15%; right: 20%;
+    width: 18px; height: 18px;
+    background: radial-gradient(circle, #fff59d, #fbc02d);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 235, 59, 0.8);
+  }
+
+  /* Planta */
+  .kitchen-plant {
+    position: absolute; bottom: 40%; right: 25%;
+    width: 40px; height: 50px;
+    z-index: 6;
+  }
+  .kitchen-plant-pot {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 34px; height: 24px;
+    background: linear-gradient(180deg, #d4825a, #8b4a2a);
+    border-radius: 4px 4px 8px 8px;
+    box-shadow: inset -2px -3px 5px rgba(0,0,0,0.3);
+  }
+  .kitchen-plant-leaf {
+    position: absolute; bottom: 20px;
+    width: 18px; height: 26px;
+    background: radial-gradient(circle at 30% 30%, #aed581, #558b2f);
+    border-radius: 50% 50% 50% 0 / 60% 60% 40% 0;
+    transform-origin: bottom center;
+  }
+  .kitchen-plant-leaf.l1 { left: 2px; transform: rotate(-25deg); }
+  .kitchen-plant-leaf.l2 { left: 12px; transform: rotate(0deg); }
+  .kitchen-plant-leaf.l3 { left: 20px; transform: rotate(25deg); }
+
+  /* Relógio */
+  .kitchen-clock {
+    position: absolute; top: 50px; right: 6%;
+    width: 70px; height: 70px;
+    background: radial-gradient(circle, #fff 60%, #e0e0e0 100%);
+    border: 5px solid #6d5638;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 3;
+  }
+  .kitchen-clock::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 2px; height: 22px;
+    background: #333;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotate(0deg);
+    animation: clockHour 60s linear infinite;
+  }
+  .kitchen-clock::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 1.5px; height: 28px;
+    background: #c92a2a;
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotate(0deg);
+    animation: clockMinute 10s linear infinite;
+  }
+  @keyframes clockHour { to { transform: translate(-50%, -100%) rotate(360deg); } }
+  @keyframes clockMinute { to { transform: translate(-50%, -100%) rotate(360deg); } }
+
+  /* Micro-ondas */
+  .kitchen-microwave {
+    position: absolute;
+    bottom: 40%; left: 3%;
+    width: 90px; height: 55px;
+    background: linear-gradient(180deg, #d0d0d0, #909090);
+    border-radius: 6px;
+    border: 2px solid #606060;
+    box-shadow: inset -3px -4px 8px rgba(0,0,0,0.25), 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 6;
+  }
+  .kitchen-microwave::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px;
+    width: 50px; height: 38px;
+    background: radial-gradient(circle at 40% 40%, #2a2a2a, #0a0a0a);
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+  }
+  .kitchen-microwave::after {
+    content: '';
+    position: absolute;
+    top: 50%; right: 8px;
+    transform: translateY(-50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #4ade80, #16a34a);
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.8);
+    animation: microLed 2s ease-in-out infinite;
+  }
+  @keyframes microLed { 50% { opacity: 0.5; } }
+
+  /* Geladeira clicável */
+  .kitchen-fridge {
+    position: absolute; bottom: 40%; left: 6%;
+    width: 120px; height: 220px;
     background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
     border-radius: 12px 12px 4px 4px;
     border: 2px solid #a8a8a8;
     box-shadow: inset -8px 0 15px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.3);
     z-index: 4;
+    cursor: pointer;
+    transition: transform var(--t), box-shadow var(--t);
+  }
+  .kitchen-fridge:hover {
+    transform: translateY(-3px);
+    box-shadow: inset -8px 0 15px rgba(0,0,0,0.1), 0 12px 28px rgba(0,0,0,0.4), 0 0 0 3px var(--gold-400);
   }
   .kitchen-fridge::before {
     content: '';
-    position: absolute;
-    top: 45%;
-    left: 0; right: 0;
-    height: 2px;
+    position: absolute; top: 45%; left: 0; right: 0; height: 2px;
     background: #a8a8a8;
   }
   .kitchen-fridge::after {
     content: '';
-    position: absolute;
-    top: 20%;
-    right: 10px;
-    width: 6px;
-    height: 30px;
+    position: absolute; top: 20%; right: 10px;
+    width: 6px; height: 30px;
     background: #909090;
     border-radius: 3px;
   }
-
-  /* Fogão */
-  .kitchen-stove {
+  .kitchen-fridge-handle-bottom {
     position: absolute;
-    bottom: 40%;
-    right: 8%;
-    width: 140px;
-    height: 100px;
+    top: 60%; right: 10px;
+    width: 6px; height: 30px;
+    background: #909090;
+    border-radius: 3px;
+  }
+  .kitchen-fridge-shop-badge {
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 8px;
+    background: var(--gold-500);
+    color: #3a2a00;
+    font-size: 0.55rem;
+    font-weight: 800;
+    border-radius: var(--r-full);
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    animation: shopBadgePulse 1.6s ease-in-out infinite;
+    z-index: 10;
+  }
+  @keyframes shopBadgePulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50%      { transform: translateX(-50%) scale(1.1); }
+  }
+
+  .kitchen-stove {
+    position: absolute; bottom: 40%; right: 8%;
+    width: 140px; height: 100px;
     background: linear-gradient(180deg, #4a4a4a 0%, #2e2e2e 100%);
     border-radius: 8px;
     border: 2px solid #1a1a1a;
@@ -372,31 +473,38 @@
   }
   .kitchen-stove::before {
     content: '';
-    position: absolute;
-    top: 8px; left: 8px;
-    width: 40px; height: 40px;
-    border-radius: 50%;
+    position: absolute; top: 8px; left: 8px;
+    width: 40px; height: 40px; border-radius: 50%;
     background: radial-gradient(circle, #3a3a3a 30%, #1a1a1a 70%);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   }
   .kitchen-stove::after {
     content: '';
-    position: absolute;
-    top: 8px; right: 8px;
-    width: 40px; height: 40px;
-    border-radius: 50%;
+    position: absolute; top: 8px; right: 8px;
+    width: 40px; height: 40px; border-radius: 50%;
     background: radial-gradient(circle, #3a3a3a 30%, #1a1a1a 70%);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
   }
-
-  /* Pia */
-  .kitchen-sink {
+  .kitchen-stove-flame {
     position: absolute;
-    bottom: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 40px;
+    top: 14px; left: 14px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ffeb3b, #ff9800 50%, #f44336 90%);
+    opacity: 0;
+    animation: flamePulse 0.4s ease-in-out infinite alternate;
+    filter: blur(2px);
+    z-index: 5;
+  }
+  .kitchen-stove-flame.on { opacity: 0.85; }
+  @keyframes flamePulse {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 0.95; }
+  }
+
+  .kitchen-sink {
+    position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%);
+    width: 180px; height: 40px;
     background: linear-gradient(180deg, #b0b0b0 0%, #808080 100%);
     border-radius: 8px;
     border: 2px solid #606060;
@@ -405,20 +513,15 @@
   }
   .kitchen-sink::before {
     content: '';
-    position: absolute;
-    top: -60px;
-    left: 50%;
+    position: absolute; top: -60px; left: 50%;
     transform: translateX(-50%);
-    width: 8px;
-    height: 60px;
+    width: 8px; height: 60px;
     background: linear-gradient(90deg, #c0c0c0, #909090, #c0c0c0);
     border-radius: 4px;
   }
   .kitchen-sink::after {
     content: '';
-    position: absolute;
-    top: -60px;
-    left: 50%;
+    position: absolute; top: -60px; left: 50%;
     transform: translateX(-50%) translateY(-6px) rotate(180deg);
     width: 0; height: 0;
     border-left: 12px solid transparent;
@@ -426,13 +529,9 @@
     border-top: 20px solid #c0c0c0;
   }
 
-  /* Armário superior */
   .kitchen-cabinet {
-    position: absolute;
-    top: 20px;
-    right: 10%;
-    width: 200px;
-    height: 120px;
+    position: absolute; top: 20px; right: 10%;
+    width: 200px; height: 120px;
     background: linear-gradient(180deg, #8b6f47 0%, #6d5638 100%);
     border-radius: 8px;
     border: 2px solid #4a3a24;
@@ -441,205 +540,290 @@
   }
   .kitchen-cabinet::before {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 0; right: 0;
-    height: 2px;
+    position: absolute; top: 50%; left: 0; right: 0; height: 2px;
     background: #4a3a24;
   }
-
-  /* ============ CENÁRIO: QUARTO ============ */
-  .scene-bedroom {
+  .kitchen-cabinet-handle {
     position: absolute;
-    inset: 0;
+    width: 20px; height: 4px;
+    background: #d0d0d0;
+    border-radius: 2px;
+  }
+
+  /* ================= QUARTO ================= */
+  .scene-bedroom {
+    position: absolute; inset: 0;
     background: linear-gradient(180deg, #4a5a8a 0%, #3a4a7a 50%, #2a3a6a 100%);
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.6s ease;
   }
   .scene-bedroom.active { opacity: 1; pointer-events: auto; }
 
-  /* Parede */
   .bedroom-wall {
-    position: absolute;
-    inset: 0;
-    bottom: 35%;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05), transparent 40%),
-      linear-gradient(180deg, #4a5a8a 0%, #3a4a7a 100%);
+    position: absolute; inset: 0; bottom: 35%;
+    background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05), transparent 40%),
+                linear-gradient(180deg, #4a5a8a 0%, #3a4a7a 100%);
   }
 
-  /* Janela com lua */
   .bedroom-window {
-    position: absolute;
-    top: 80px;
-    left: 10%;
-    width: 140px;
-    height: 160px;
+    position: absolute; top: 80px; left: 10%;
+    width: 140px; height: 160px;
     background: linear-gradient(180deg, #0a1a3a 0%, #1a2a5a 100%);
     border-radius: 8px;
     border: 6px solid #6d5638;
     box-shadow: inset 0 0 30px rgba(0,0,0,0.6), 0 8px 20px rgba(0,0,0,0.4);
-    z-index: 3;
-    overflow: hidden;
+    z-index: 3; overflow: hidden;
   }
   .bedroom-window::before {
     content: '';
-    position: absolute;
-    top: 30%;
-    right: 20%;
-    width: 40px;
-    height: 40px;
+    position: absolute; top: 30%; right: 20%;
+    width: 40px; height: 40px;
     background: radial-gradient(circle at 35% 35%, #fff9c4, #f5e87a);
     border-radius: 50%;
     box-shadow: 0 0 30px 8px rgba(245, 232, 122, 0.5);
   }
   .bedroom-window::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 0; right: 0;
-    height: 6px;
+    position: absolute; top: 50%; left: 0; right: 0; height: 6px;
     background: #6d5638;
     box-shadow: 0 80px 0 #6d5638;
   }
 
-  /* Estrelas */
   .bedroom-star {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #fff;
-    border-radius: 50%;
+    position: absolute; width: 3px; height: 3px;
+    background: #fff; border-radius: 50%;
     box-shadow: 0 0 6px #fff;
     animation: twinkle 3s ease-in-out infinite;
   }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.3; }
-    50%      { opacity: 1; }
+  @keyframes twinkle { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  .bedroom-bed { position: absolute; bottom: 35%; right: 8%; width: 340px; height: 180px; z-index: 4; }
+  .bedroom-bed-frame { position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(180deg, #6d5638 0%, #4a3a24 100%); border-radius: 8px; }
+  .bedroom-mattress { position: absolute; bottom: 40px; left: 10px; right: 10px; height: 60px; background: linear-gradient(180deg, #f5f5f5 0%, #d0d0d0 100%); border-radius: 12px; box-shadow: inset 0 -6px 12px rgba(0,0,0,0.15); }
+  .bedroom-pillow { position: absolute; bottom: 95px; left: 30px; width: 110px; height: 50px; background: linear-gradient(180deg, #e8f4ff 0%, #b8d8f0 100%); border-radius: 20px; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.1); transform: rotate(-5deg); }
+  .bedroom-blanket { position: absolute; bottom: 40px; right: 10px; width: 180px; height: 80px; background: linear-gradient(180deg, var(--green-500) 0%, var(--green-700) 100%); border-radius: 12px; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2); border: 2px solid var(--green-600); }
+
+  .bedroom-lamp { position: absolute; bottom: 35%; right: 4%; width: 60px; height: 130px; z-index: 3; }
+  .bedroom-lamp-base { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 10px; background: #4a3a24; border-radius: 4px; }
+  .bedroom-lamp-pole { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 6px; height: 70px; background: linear-gradient(90deg, #6d5638, #4a3a24); }
+  .bedroom-lamp-shade { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%); width: 60px; height: 50px; background: linear-gradient(180deg, #fff3b0 0%, #ffdb4d 100%); border-radius: 50% 50% 20% 20%; box-shadow: 0 0 40px 15px rgba(255, 219, 77, 0.4); }
+
+  .bedroom-floor { position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: repeating-linear-gradient(90deg, #6d5638 0px, #6d5638 80px, #5a4630 80px, #5a4630 82px); box-shadow: inset 0 10px 20px rgba(0,0,0,0.4); }
+  .bedroom-rug { position: absolute; bottom: 20px; left: 20%; width: 300px; height: 100px; background: radial-gradient(ellipse, var(--green-500) 0%, var(--green-700) 70%); border-radius: 50%; box-shadow: inset 0 -6px 15px rgba(0,0,0,0.3); opacity: 0.85; }
+
+  /* ================= BANHEIRO ================= */
+  .scene-bathroom {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #b8dce8 0%, #8ec2d4 50%, #6ba8ba 100%);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .scene-bathroom.active { opacity: 1; pointer-events: auto; }
+
+  .bathroom-wall {
+    position: absolute; inset: 0; bottom: 35%;
+    background:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 38px, rgba(0,0,0,0.08) 38px, rgba(0,0,0,0.08) 40px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 38px, rgba(0,0,0,0.08) 38px, rgba(0,0,0,0.08) 40px),
+      linear-gradient(180deg, #d4ecf5 0%, #a8d4e6 100%);
   }
 
-  /* Cama */
-  .bedroom-bed {
-    position: absolute;
-    bottom: 35%;
-    right: 8%;
-    width: 340px;
-    height: 180px;
+  .bathroom-shower-head {
+    position: absolute; top: 40px; left: 12%;
+    width: 100px; height: 14px;
+    background: linear-gradient(180deg, #d0d0d0, #909090);
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     z-index: 4;
   }
-  .bedroom-bed-frame {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(180deg, #6d5638 0%, #4a3a24 100%);
-    border-radius: 8px;
-  }
-  .bedroom-mattress {
-    position: absolute;
-    bottom: 40px;
-    left: 10px;
-    right: 10px;
-    height: 60px;
-    background: linear-gradient(180deg, #f5f5f5 0%, #d0d0d0 100%);
-    border-radius: 12px;
-    box-shadow: inset 0 -6px 12px rgba(0,0,0,0.15);
-  }
-  .bedroom-pillow {
-    position: absolute;
-    bottom: 95px;
-    left: 30px;
-    width: 110px;
-    height: 50px;
-    background: linear-gradient(180deg, #e8f4ff 0%, #b8d8f0 100%);
-    border-radius: 20px;
-    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.1);
-    transform: rotate(-5deg);
-  }
-  .bedroom-blanket {
-    position: absolute;
-    bottom: 40px;
-    right: 10px;
-    width: 180px;
-    height: 80px;
-    background: linear-gradient(180deg, var(--green-500) 0%, var(--green-700) 100%);
-    border-radius: 12px;
-    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.2);
-    border: 2px solid var(--green-600);
-  }
-
-  /* Abajur */
-  .bedroom-lamp {
-    position: absolute;
-    bottom: 35%;
-    right: 4%;
-    width: 60px;
-    height: 130px;
-    z-index: 3;
-  }
-  .bedroom-lamp-base {
-    position: absolute;
-    bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 10px;
-    background: #4a3a24;
+  .bathroom-shower-head::before {
+    content: '';
+    position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+    width: 8px; height: 40px;
+    background: linear-gradient(90deg, #c0c0c0, #808080);
     border-radius: 4px;
   }
-  .bedroom-lamp-pole {
-    position: absolute;
-    bottom: 10px; left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 70px;
-    background: linear-gradient(90deg, #6d5638, #4a3a24);
-  }
-  .bedroom-lamp-shade {
-    position: absolute;
-    bottom: 80px; left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 50px;
-    background: linear-gradient(180deg, #fff3b0 0%, #ffdb4d 100%);
-    border-radius: 50% 50% 20% 20%;
-    box-shadow: 0 0 40px 15px rgba(255, 219, 77, 0.4);
+  .bathroom-shower-head::after {
+    content: '';
+    position: absolute; bottom: -8px; left: 8px; right: 8px;
+    height: 6px;
+    background: radial-gradient(circle at 50% 0%, #909090, #606060);
+    border-radius: 0 0 50% 50%;
   }
 
-  /* Piso */
-  .bedroom-floor {
+  .bathroom-water {
+    position: absolute; top: 90px; left: 12%;
+    width: 100px; height: 200px;
+    z-index: 5; pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .bathroom-water.on { opacity: 1; }
+  .bathroom-drop {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 35%;
-    background: repeating-linear-gradient(90deg, #6d5638 0px, #6d5638 80px, #5a4630 80px, #5a4630 82px);
-    box-shadow: inset 0 10px 20px rgba(0,0,0,0.4);
+    width: 3px;
+    background: linear-gradient(180deg, rgba(180,220,255,0.8), rgba(120,180,255,0.5));
+    border-radius: 0 0 50% 50%;
+    animation: waterFall 0.8s linear infinite;
+  }
+  @keyframes waterFall {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(200px); opacity: 0; }
   }
 
-  /* Tapete */
-  .bedroom-rug {
-    position: absolute;
-    bottom: 20px;
-    left: 20%;
-    width: 300px;
-    height: 100px;
-    background: radial-gradient(ellipse, var(--green-500) 0%, var(--green-700) 70%);
+  .bathroom-box {
+    position: absolute; bottom: 35%; left: 8%;
+    width: 220px; height: 220px;
+    background: linear-gradient(180deg, rgba(180,220,240,0.4), rgba(120,180,210,0.6));
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 8px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.15);
+    z-index: 3;
+  }
+  .bathroom-box::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(180deg, #a8d4e6, #6ba8ba);
+    border-radius: 4px;
+  }
+
+  .bathroom-mirror {
+    position: absolute; top: 90px; right: 15%;
+    width: 130px; height: 160px;
+    background: radial-gradient(circle at 30% 30%, #e8f4ff, #b8d4e8 80%);
+    border: 6px solid #c0c0c0;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 0 30px rgba(255,255,255,0.5);
+    z-index: 3;
+  }
+  .bathroom-mirror::before {
+    content: '';
+    position: absolute; top: 10%; left: 15%;
+    width: 30%; height: 40%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.7), transparent);
     border-radius: 50%;
-    box-shadow: inset 0 -6px 15px rgba(0,0,0,0.3);
-    opacity: 0.85;
+    transform: rotate(-20deg);
   }
 
-  /* ============================================================
-     BILLY
-     ============================================================ */
-  .billy-stage {
+  .bathroom-sink {
+    position: absolute; bottom: 35%; right: 12%;
+    width: 120px; height: 70px;
+    z-index: 4;
+  }
+  .bathroom-sink-basin {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 30px;
+    background: linear-gradient(180deg, #ffffff, #d0d0d0);
+    border-radius: 50% 50% 40% 40% / 30% 30% 60% 60%;
+    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .bathroom-sink-basin::after {
+    content: '';
+    position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 6px;
+    background: #909090;
+    border-radius: 50%;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.4);
+  }
+  .bathroom-sink-faucet {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 22px;
+    background: linear-gradient(90deg, #d0d0d0, #909090, #d0d0d0);
+    border-radius: 3px;
+  }
+  .bathroom-sink-faucet::before {
+    content: '';
+    position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 6px;
+    background: linear-gradient(180deg, #d0d0d0, #909090);
+    border-radius: 3px;
+  }
+
+  .bathroom-toilet {
+    position: absolute; bottom: 35%; right: 4%;
+    width: 90px; height: 110px;
+    z-index: 4;
+  }
+  .bathroom-toilet-tank {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 50px;
+    background: linear-gradient(180deg, #ffffff, #e0e0e0);
+    border-radius: 6px 6px 2px 2px;
+    box-shadow: inset -2px -3px 6px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.15);
+  }
+  .bathroom-toilet-tank::after {
+    content: '';
+    position: absolute; top: 8px; right: 8px;
+    width: 8px; height: 4px;
+    background: #c0c0c0;
+    border-radius: 2px;
+  }
+  .bathroom-toilet-seat {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 76px; height: 46px;
+    background: linear-gradient(180deg, #ffffff, #d8d8d8);
+    border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
+    box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15), 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .bathroom-toilet-seat::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 44px; height: 22px;
+    background: radial-gradient(ellipse, #4a6a7a 60%, #2a4a5a);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+  }
+
+  .bathroom-towel {
+    position: absolute; top: 100px; right: 8%;
+    width: 40px; height: 90px;
+    background: linear-gradient(180deg, #ff8a80, #e53935);
+    border-radius: 4px;
+    box-shadow: inset -2px 0 5px rgba(0,0,0,0.2), 0 4px 10px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+  .bathroom-towel::before {
+    content: '';
+    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 6px;
+    background: #c0c0c0;
+    border-radius: 3px;
+  }
+  .bathroom-towel::after {
+    content: '';
+    position: absolute; top: 20px; left: 5px; right: 5px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    box-shadow: 0 8px 0 rgba(255,255,255,0.5), 0 16px 0 rgba(255,255,255,0.5);
+  }
+
+  .bathroom-floor {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+    background: repeating-conic-gradient(#d4ecf5 0% 25%, #8ec2d4 0% 50%) 0 0 / 70px 70px;
+    box-shadow: inset 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  .bathroom-bubbles { position: absolute; inset: 0; pointer-events: none; z-index: 7; }
+  .bathroom-bubble {
     position: absolute;
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(200,230,255,0.4));
+    border: 1px solid rgba(255,255,255,0.7);
+    animation: bathBubbleFloat 3s ease-in-out infinite;
+  }
+  @keyframes bathBubbleFloat {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-150px) scale(1.1); opacity: 0; }
+  }
+
+  /* ================= BILLY ================= */
+  .billy-stage {
+    position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
     transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     animation: billyEntrance 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -649,53 +833,41 @@
   }
 
   .billy-wrapper {
-    position: relative;
-    width: 320px;
-    height: 460px;
+    position: relative; width: 320px; height: 460px;
     cursor: pointer;
     transition: transform var(--t);
   }
-  @media (max-width: 600px) {
-    .billy-wrapper { width: 240px; height: 350px; }
-  }
+  @media (max-width: 600px) { .billy-wrapper { width: 240px; height: 350px; } }
 
   .billy-body {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: relative; width: 100%; height: 100%;
     transition: transform 0.15s ease;
+    animation: bodyIdleBreathe 3.2s ease-in-out infinite;
+  }
+  @keyframes bodyIdleBreathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.012); }
   }
 
-  /* Cabeça */
   .billy-head {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 220px;
-    height: 200px;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 200px;
     border-radius: 45% 45% 40% 40% / 50% 50% 45% 45%;
     background: linear-gradient(180deg, var(--gray-400) 0%, var(--gray-500) 50%, var(--gray-600) 100%);
-    box-shadow: inset -10px -14px 24px rgba(0,0,0,0.4), inset 8px 8px 20px rgba(255,255,255,0.15), 0 15px 35px rgba(0,0,0,0.5), 0 0 40px rgba(42, 110, 1, 0.2);
+    box-shadow: inset -10px -14px 24px rgba(0,0,0,0.4), inset 8px 8px 20px rgba(255,255,255,0.15), 0 15px 35px rgba(0,0,0,0.5), 0 0 40px rgba(42, 156, 1, 0.2);
     border: 3px solid var(--gray-600);
     animation: headBreathe 3.5s ease-in-out infinite;
     z-index: 3;
   }
-  @media (max-width: 600px) {
-    .billy-head { width: 165px; height: 150px; }
-  }
+  @media (max-width: 600px) { .billy-head { width: 165px; height: 150px; } }
   @keyframes headBreathe {
     0%, 100% { transform: translateX(-50%) translateY(0); }
     50%      { transform: translateX(-50%) translateY(-5px); }
   }
 
   .billy-ear {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 22px;
-    height: 50px;
-    border-radius: 8px;
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 22px; height: 50px; border-radius: 8px;
     background: linear-gradient(180deg, var(--gray-400), var(--gray-600));
     border: 2px solid var(--gray-600);
     box-shadow: inset -2px -3px 6px rgba(0,0,0,0.35);
@@ -705,12 +877,8 @@
   .billy-ear.right { right: -18px; }
 
   .billy-face {
-    position: absolute;
-    top: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 82%;
-    height: 68%;
+    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+    width: 82%; height: 68%;
     background: #1a1a1a;
     border-radius: 40% 40% 35% 35% / 45% 45% 40% 40%;
     box-shadow: inset 0 6px 12px rgba(0,0,0,0.6), inset 0 -4px 8px rgba(255,255,255,0.05), 0 4px 12px rgba(0,0,0,0.5);
@@ -719,34 +887,33 @@
   }
 
   .billy-eye {
-    position: absolute;
-    top: 30%;
-    width: 38px;
-    height: 44px;
+    position: absolute; top: 30%;
+    width: 38px; height: 44px;
     background: #d8c8f0;
     border-radius: 50%;
     box-shadow: 0 0 20px rgba(216, 200, 240, 0.6), inset 0 -4px 8px rgba(0,0,0,0.15);
     transition: all var(--t);
     overflow: hidden;
+    transform-origin: center;
+    animation: autoBlink 6s infinite;
   }
   .billy-eye.left  { left: 22%; }
   .billy-eye.right { right: 22%; }
+  @keyframes autoBlink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    94%           { transform: scaleY(0.1); }
+  }
 
   .billy-pupil {
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 18px;
-    height: 18px;
+    position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+    width: 18px; height: 18px;
     background: #2a1a3a;
     border-radius: 50%;
     transition: all 0.2s ease;
   }
   .billy-pupil::after {
     content: '';
-    position: absolute;
-    top: 3px; left: 3px;
+    position: absolute; top: 3px; left: 3px;
     width: 6px; height: 6px;
     background: #fff;
     border-radius: 50%;
@@ -754,78 +921,114 @@
   }
 
   .billy-mouth {
-    position: absolute;
-    bottom: 22%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 20px;
+    position: absolute; bottom: 22%; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 20px;
     border-bottom: 4px solid #d8c8f0;
     border-radius: 0 0 50% 50%;
     transition: all var(--t);
     filter: drop-shadow(0 0 6px rgba(216, 200, 240, 0.6));
   }
+
+  /* --- ESTADOS DE ANIMAÇÃO --- */
   .billy-body.talking .billy-mouth { animation: talk 0.25s infinite alternate; }
   @keyframes talk {
     from { height: 12px; width: 36px; }
     to   { height: 26px; width: 44px; }
   }
   .billy-body.happy .billy-mouth { height: 30px; width: 50px; border-bottom-width: 5px; }
-  .billy-body.sleeping .billy-mouth {
-    height: 4px; width: 26px;
-    border-bottom: 3px solid #d8c8f0;
-    border-radius: 50%;
+  .billy-body.sleeping .billy-mouth { height: 4px; width: 26px; border-bottom: 3px solid #d8c8f0; border-radius: 50%; }
+  .billy-body.sleeping .billy-eye { transform: scaleY(0.08); animation: none; }
+  .billy-body.sleeping { animation: sleepingBob 4s ease-in-out infinite; }
+  @keyframes sleepingBob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(4px) rotate(-1deg); }
+  }
+  .billy-body.jumping { animation: billyJump 0.6s ease; }
+  @keyframes billyJump {
+    0%, 100% { transform: translateY(0) scale(1); }
+    30%      { transform: translateY(-40px) scale(1.05); }
+    50%      { transform: translateY(-50px) scale(1.08); }
+    70%      { transform: translateY(-40px) scale(1.05); }
+  }
+  .billy-body.shaking { animation: billyShake 0.4s ease; }
+  @keyframes billyShake {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    20%      { transform: translateX(-8px) rotate(-3deg); }
+    40%      { transform: translateX(8px) rotate(3deg); }
+    60%      { transform: translateX(-6px) rotate(-2deg); }
+    80%      { transform: translateX(6px) rotate(2deg); }
+  }
+  .billy-body.laughing { animation: billyLaugh 0.3s ease-in-out infinite; }
+  @keyframes billyLaugh {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50%      { transform: translateY(-6px) rotate(1deg); }
+  }
+  .billy-body.laughing .billy-mouth {
+    height: 32px; width: 54px;
+    border-bottom-width: 5px;
+    animation: laughMouth 0.25s ease-in-out infinite;
+  }
+  @keyframes laughMouth {
+    0%, 100% { height: 28px; width: 48px; }
+    50%      { height: 34px; width: 56px; }
+  }
+  .billy-body.eating .billy-mouth { animation: eatMouth 0.18s ease-in-out infinite; }
+  @keyframes eatMouth {
+    0%, 100% { height: 8px; width: 30px; }
+    50%      { height: 24px; width: 42px; }
+  }
+  .billy-body.sad .billy-mouth {
+    height: 12px; width: 36px;
+    border-radius: 50% 50% 0 0;
+    border-bottom: none;
+    border-top: 4px solid #d8c8f0;
+  }
+  .billy-body.sad .billy-eye { transform: scaleY(0.7); animation: none; }
+  .billy-body.excited .billy-pupil { width: 22px; height: 22px; background: #4a2a6a; }
+  .billy-body.excited { animation: billyExcited 0.4s ease infinite; }
+  @keyframes billyExcited {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50%      { transform: translateY(-4px) rotate(1deg); }
+  }
+  .billy-body.waving .billy-arm.right { animation: wave 0.5s ease-in-out infinite alternate; }
+  @keyframes wave {
+    from { transform: rotate(-10deg); }
+    to   { transform: rotate(35deg); }
+  }
+  .billy-body.showering { animation: billyShower 0.3s ease infinite; }
+  @keyframes billyShower {
+    0%, 100% { transform: translateX(-1px) rotate(-0.5deg); }
+    50%      { transform: translateX(1px) rotate(0.5deg); }
   }
 
-  /* ============ CORPO COM DETALHES VERDES ============ */
+  /* ============ TORSO ============ */
   .billy-torso {
-    position: absolute;
-    top: 180px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 190px;
-    height: 140px;
+    position: absolute; top: 180px; left: 50%; transform: translateX(-50%);
+    width: 190px; height: 140px;
     background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
     border-radius: 40% 40% 25% 25% / 30% 30% 20% 20%;
     box-shadow: inset -8px -10px 20px rgba(0,0,0,0.08), 0 10px 25px rgba(0,0,0,0.4);
     border: 2px solid #d0d0d0;
     z-index: 2;
-    overflow: visible;
   }
-  @media (max-width: 600px) {
-    .billy-torso { width: 155px; height: 115px; top: 150px; }
-  }
+  @media (max-width: 600px) { .billy-torso { width: 155px; height: 115px; top: 150px; } }
 
-  /* Detalhes verdes: gola */
   .billy-collar {
-    position: absolute;
-    top: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 20px;
+    position: absolute; top: -2px; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 20px;
     background: linear-gradient(180deg, var(--green-500), var(--green-700));
     border-radius: 0 0 50% 50% / 0 0 100% 100%;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
-
-  /* Detalhes verdes: faixa inferior */
   .billy-hem {
-    position: absolute;
-    bottom: 0;
-    left: 0; right: 0;
-    height: 12px;
+    position: absolute; bottom: 0; left: 0; right: 0; height: 12px;
     background: linear-gradient(180deg, var(--green-500), var(--green-700));
     border-radius: 0 0 40% 40% / 0 0 100% 100%;
     border-bottom: 2px solid var(--green-600);
   }
-
-  /* Alças verdes */
   .billy-strap {
-    position: absolute;
-    top: 8px;
-    width: 24px;
-    height: 70%;
+    position: absolute; top: 8px;
+    width: 24px; height: 70%;
     background: linear-gradient(180deg, var(--green-500), var(--green-700));
     border-radius: 12px;
     box-shadow: inset -2px -3px 6px rgba(0,0,0,0.3);
@@ -834,67 +1037,46 @@
   .billy-strap.left  { left: 20px; }
   .billy-strap.right { right: 20px; }
 
-  /* Logo */
   .billy-logo {
-    position: absolute;
-    top: 42%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 52px;
-    height: 52px;
-    background: #ffffff;
-    border-radius: 50%;
+    position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    background: #fff; border-radius: 50%;
     border: 2px solid var(--green-500);
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 4;
   }
   .billy-logo-inner {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #ffffff;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: #fff;
     border: 1.5px solid var(--green-500);
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     position: relative;
   }
   .billy-logo-inner::before {
     content: '';
     position: absolute;
-    width: 20px; height: 20px;
-    border-radius: 50%;
+    width: 20px; height: 20px; border-radius: 50%;
     border: 1.5px solid var(--green-500);
   }
   .billy-logo-inner::after {
     content: '';
     position: absolute;
-    width: 6px; height: 6px;
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     background: var(--green-500);
   }
   .billy-logo-text {
-    position: absolute;
-    bottom: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 6px;
-    font-weight: 700;
+    position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+    font-size: 6px; font-weight: 700;
     color: var(--gray-800);
     letter-spacing: 0.3px;
-    text-align: center;
-    line-height: 1.1;
-    z-index: 4;
-    white-space: nowrap;
+    text-align: center; line-height: 1.1;
+    z-index: 4; white-space: nowrap;
   }
 
-  /* Braços com detalhes verdes nas luvas */
   .billy-arm {
-    position: absolute;
-    top: 195px;
-    width: 44px;
-    height: 130px;
+    position: absolute; top: 195px;
+    width: 44px; height: 130px;
     border-radius: 22px;
     transition: transform var(--t);
     transform-origin: top center;
@@ -904,10 +1086,8 @@
   .billy-arm.right { right: 20px; }
 
   .billy-sleeve {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 55%;
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 55%;
     background: linear-gradient(180deg, #ffffff, #f0f0f0);
     border-radius: 22px 22px 10px 10px;
     border: 2px solid #d0d0d0;
@@ -915,18 +1095,13 @@
   }
   .billy-sleeve::after {
     content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0; right: 0;
-    height: 6px;
+    position: absolute; bottom: -2px; left: 0; right: 0; height: 6px;
     background: linear-gradient(180deg, var(--green-500), var(--green-600));
     border-radius: 3px;
   }
   .billy-glove {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%;
-    height: 55%;
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 55%;
     background: linear-gradient(180deg, var(--gray-400), var(--gray-600));
     border-radius: 10px 10px 22px 22px;
     border: 2px solid var(--gray-600);
@@ -934,69 +1109,40 @@
   }
   .billy-glove::before {
     content: '';
-    position: absolute;
-    top: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 3px;
+    position: absolute; top: 4px; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 3px;
     background: var(--green-500);
     border-radius: 2px;
   }
 
-  .billy-body.waving .billy-arm.right {
-    animation: wave 0.5s ease-in-out infinite alternate;
-  }
-  @keyframes wave {
-    from { transform: rotate(-10deg); }
-    to   { transform: rotate(35deg); }
-  }
-
-  /* Pernas com detalhes verdes nos bolsos */
   .billy-legs {
-    position: absolute;
-    top: 300px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 110px;
-    display: flex;
-    gap: 14px;
-    justify-content: center;
+    position: absolute; top: 300px; left: 50%; transform: translateX(-50%);
+    width: 160px; height: 110px;
+    display: flex; gap: 14px; justify-content: center;
     z-index: 1;
   }
-  @media (max-width: 600px) {
-    .billy-legs { width: 130px; top: 250px; height: 90px; }
-  }
+  @media (max-width: 600px) { .billy-legs { width: 130px; top: 250px; height: 90px; } }
 
   .billy-leg {
     position: relative;
-    width: 62px;
-    height: 100%;
+    width: 62px; height: 100%;
     background: linear-gradient(180deg, var(--gray-400) 0%, var(--gray-500) 100%);
     border-radius: 18px 18px 12px 12px;
     border: 2px solid var(--gray-600);
     box-shadow: inset -4px -5px 10px rgba(0,0,0,0.25);
   }
-
   .billy-leg::after {
     content: '';
-    position: absolute;
-    bottom: 30%;
-    right: -4px;
-    width: 20px;
-    height: 26px;
+    position: absolute; bottom: 30%; right: -4px;
+    width: 20px; height: 26px;
     background: var(--gray-600);
     border-radius: 4px 10px 10px 4px;
     box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3);
   }
   .billy-leg::before {
     content: '';
-    position: absolute;
-    bottom: 30%;
-    right: -4px;
-    width: 20px;
-    height: 6px;
+    position: absolute; bottom: 30%; right: -4px;
+    width: 20px; height: 6px;
     background: var(--green-500);
     border-radius: 4px 10px 0 0;
     z-index: 1;
@@ -1005,12 +1151,8 @@
   .billy-leg.left::before { right: auto; left: -4px; border-radius: 10px 4px 0 0; }
 
   .billy-boot {
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 76px;
-    height: 32px;
+    position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+    width: 76px; height: 32px;
     background: linear-gradient(180deg, var(--gray-500), var(--gray-600));
     border-radius: 40% 40% 30% 30% / 60% 60% 40% 40%;
     border: 2px solid var(--gray-600);
@@ -1018,54 +1160,39 @@
   }
   .billy-boot::before {
     content: '';
-    position: absolute;
-    top: 6px; left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 3px;
+    position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    width: 40px; height: 3px;
     background: var(--green-500);
     border-radius: 50%;
     opacity: 0.8;
   }
 
   .billy-mood-bubble {
-    position: absolute;
-    top: 20px;
-    right: -10px;
-    background: #fff;
-    color: var(--gray-900);
+    position: absolute; top: 20px; right: -10px;
+    background: #fff; color: var(--gray-900);
     padding: 10px 14px;
     border-radius: 50%;
     font-size: 32px;
     box-shadow: var(--sh-md);
     border: 2px solid var(--green-500);
-    opacity: 0;
-    transform: scale(0.5);
+    opacity: 0; transform: scale(0.5);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 15;
   }
-  .billy-mood-bubble.show {
-    opacity: 1;
-    transform: scale(1);
-  }
+  .billy-mood-bubble.show { opacity: 1; transform: scale(1); }
 
   .billy-shadow {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 220px;
-    height: 30px;
+    position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
+    width: 220px; height: 30px;
     background: radial-gradient(ellipse, rgba(0,0,0,0.5), transparent 70%);
     border-radius: 50%;
     filter: blur(8px);
     z-index: 0;
   }
 
-  /* Stats */
+  /* Stats bar */
   .stats-bar {
-    display: flex;
-    gap: 10px;
+    display: flex; gap: 10px;
     background: rgba(38, 38, 38, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -1075,51 +1202,53 @@
     box-shadow: var(--sh-md);
     z-index: 15;
   }
-  @media (max-width: 500px) {
-    .stats-bar { padding: 8px 12px; gap: 8px; }
-  }
+  @media (max-width: 500px) { .stats-bar { padding: 8px 12px; gap: 8px; } }
 
-  .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    min-width: 60px;
-  }
-  .stat-label {
-    font-size: 0.65rem;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-  }
+  .stat { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; }
+  .stat-label { font-size: 0.65rem; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
   .stat-bar {
-    width: 60px;
-    height: 6px;
+    width: 60px; height: 6px;
     background: var(--gray-800);
     border-radius: var(--r-full);
     overflow: hidden;
     border: 1px solid var(--gray-700);
   }
   .stat-fill {
-    height: 100%;
-    border-radius: var(--r-full);
+    height: 100%; border-radius: var(--r-full);
     transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s;
     background: linear-gradient(90deg, var(--green-600), var(--green-400));
   }
   .stat-fill.low { background: linear-gradient(90deg, #b94a4a, #d96464); }
   .stat-fill.mid { background: linear-gradient(90deg, #b98a2a, var(--warn)); }
 
-  /* ============================================================
-     BARRA DE AÇÕES
-     ============================================================ */
-  .action-bar {
+  /* Coins bar */
+  .coins-bar {
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
+    top: 20px; left: 20px;
+    padding: 10px 18px;
+    background: linear-gradient(135deg, var(--gold-600), var(--gold-500));
+    border-radius: var(--r-full);
+    border: 2px solid var(--gold-400);
+    color: #3a2a00;
+    font-weight: 800;
+    font-size: 1rem;
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 6px 18px rgba(240, 180, 41, 0.4);
+    z-index: 30;
+  }
+  .coins-bar .coin-icon {
+    font-size: 1.3rem;
+    animation: coinSpin 2s ease-in-out infinite;
+  }
+  @keyframes coinSpin {
+    0%, 100% { transform: rotateY(0deg); }
+    50%      { transform: rotateY(180deg); }
+  }
+
+  /* ================= BARRA DE AÇÕES ================= */
+  .action-bar {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px;
     background: rgba(38, 38, 38, 0.92);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -1136,16 +1265,14 @@
 
   .action-btn {
     flex-shrink: 0;
-    width: 60px;
-    height: 60px;
+    width: 60px; height: 60px;
     border-radius: 50%;
     border: 1px solid var(--gray-700);
     background: var(--gray-850);
     color: var(--text-0);
     font-size: 24px;
     cursor: pointer;
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     transition: all var(--t);
     position: relative;
   }
@@ -1153,20 +1280,14 @@
     background: var(--green-500);
     border-color: var(--green-400);
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(42, 110, 1, 0.6);
+    box-shadow: 0 8px 20px rgba(42, 156, 1, 0.6);
   }
   .action-btn:active { transform: translateY(0) scale(0.95); }
 
   .action-btn .btn-label {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.65rem;
-    color: var(--text-2);
-    white-space: nowrap;
-    font-weight: 600;
-    letter-spacing: 0.3px;
+    position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+    font-size: 0.65rem; color: var(--text-2);
+    white-space: nowrap; font-weight: 600; letter-spacing: 0.3px;
     pointer-events: none;
   }
   @media (max-width: 500px) {
@@ -1174,21 +1295,14 @@
     .action-btn .btn-label { display: none; }
   }
 
-  /* ============================================================
-     CONTROLES
-     ============================================================ */
+  /* ================= CONTROLES ================= */
   .top-controls {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 8px;
-    z-index: 30;
+    position: fixed; top: 20px; right: 20px;
+    display: flex; gap: 8px; z-index: 30;
   }
 
   .ctrl-btn {
-    width: 44px;
-    height: 44px;
+    width: 44px; height: 44px;
     border-radius: var(--r-md);
     border: 1px solid rgba(255,255,255,0.3);
     background: rgba(38, 38, 38, 0.75);
@@ -1196,8 +1310,7 @@
     color: var(--text-1);
     font-size: 18px;
     cursor: pointer;
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     transition: all var(--t);
     box-shadow: var(--sh-sm);
   }
@@ -1208,48 +1321,32 @@
     transform: translateY(-2px);
   }
 
-  /* Botão de voltar (aparece só em cenários fechados) */
   .back-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
+    position: fixed; top: 20px; left: 20px;
     padding: 12px 20px;
     border-radius: var(--r-full);
     border: 1px solid var(--green-500);
     background: rgba(38, 38, 38, 0.9);
     backdrop-filter: blur(10px);
     color: var(--text-0);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.9rem; font-weight: 600;
     cursor: pointer;
-    display: none;
-    align-items: center;
-    gap: 8px;
+    display: none; align-items: center; gap: 8px;
     transition: all var(--t);
-    z-index: 30;
+    z-index: 29;
     box-shadow: var(--sh-md);
   }
   .back-btn.show { display: flex; }
-  .back-btn:hover {
-    background: var(--green-500);
-    transform: translateY(-2px);
-  }
+  .back-btn:hover { background: var(--green-500); transform: translateY(-2px); }
 
-  /* ============================================================
-     CHAT
-     ============================================================ */
+  /* ================= CHAT ================= */
   .chat-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 400px;
-    max-width: 100vw;
+    position: fixed; top: 0; right: 0;
+    height: 100%; width: 400px; max-width: 100vw;
     background: linear-gradient(180deg, var(--gray-850), var(--gray-900));
     border-left: 1px solid var(--gray-700);
     box-shadow: -20px 0 50px rgba(0,0,0,0.6);
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     transform: translateX(100%);
     transition: transform var(--t-slow);
     z-index: 100;
@@ -1259,41 +1356,26 @@
   .chat-head {
     padding: 16px 20px;
     border-bottom: 1px solid var(--gray-700);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(180deg, rgba(42, 110, 1, 0.15), transparent);
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.15), transparent);
   }
-  .chat-head h2 {
-    font-size: 1rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .chat-head h2 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
   .chat-head h2 .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 8px; height: 8px; border-radius: 50%;
     background: var(--green-500);
-    box-shadow: 0 0 0 3px rgba(42, 110, 1, 0.25);
+    box-shadow: 0 0 0 3px rgba(42, 156, 1, 0.25);
     animation: dotBlink 2s ease-in-out infinite;
   }
   @keyframes dotBlink { 50% { opacity: 0.5; } }
 
   .chat-body {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1; overflow-y: auto;
     padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: flex; flex-direction: column; gap: 12px;
   }
 
   .msg {
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
+    display: flex; gap: 10px; align-items: flex-end;
     max-width: 88%;
     animation: msgIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -1305,12 +1387,9 @@
   .msg.user  { align-self: flex-end; flex-direction: row-reverse; }
 
   .msg-avatar {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
+    width: 34px; height: 34px; flex-shrink: 0;
     border-radius: 10px;
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     font-size: 18px;
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
@@ -1329,23 +1408,18 @@
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
     color: var(--text-0);
-    word-wrap: break-word;
-    overflow-wrap: anywhere;
+    word-wrap: break-word; overflow-wrap: anywhere;
   }
   .msg.billy .bubble {
     border-top-left-radius: 4px;
-    background: linear-gradient(180deg, rgba(42, 110, 1, 0.22), rgba(42, 110, 1, 0.10));
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.22), rgba(42, 156, 1, 0.10));
     border-color: var(--green-600);
   }
-  .msg.user .bubble {
-    border-top-right-radius: 4px;
-    color: var(--text-1);
-  }
+  .msg.user .bubble { border-top-right-radius: 4px; color: var(--text-1); }
 
   .typing { display: inline-flex; gap: 4px; padding: 4px 2px; }
   .typing span {
-    width: 6px; height: 6px;
-    border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 50%;
     background: var(--green-400);
     animation: typing 1.2s infinite ease-in-out;
   }
@@ -1358,8 +1432,7 @@
 
   .chat-input {
     padding: 14px 16px;
-    display: flex;
-    gap: 8px;
+    display: flex; gap: 8px;
     background: var(--gray-850);
     border-top: 1px solid var(--gray-700);
   }
@@ -1375,10 +1448,7 @@
     transition: all var(--t);
     user-select: text;
   }
-  .chat-input input:focus {
-    border-color: var(--green-500);
-    box-shadow: var(--sh-glow);
-  }
+  .chat-input input:focus { border-color: var(--green-500); box-shadow: var(--sh-glow); }
   .chat-input input::placeholder { color: var(--text-3); }
 
   .send-btn {
@@ -1389,14 +1459,10 @@
     color: #fff;
     font-size: 16px;
     cursor: pointer;
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     transition: all var(--t);
   }
-  .send-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 14px rgba(42, 110, 1, 0.6);
-  }
+  .send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 14px rgba(42, 156, 1, 0.6); }
 
   .close-btn {
     width: 34px; height: 34px;
@@ -1406,8 +1472,7 @@
     color: var(--text-1);
     font-size: 15px;
     cursor: pointer;
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     transition: all var(--t);
   }
   .close-btn:hover {
@@ -1417,35 +1482,27 @@
     transform: rotate(90deg);
   }
 
-  /* ============================================================
-     MODAIS
-     ============================================================ */
+  /* ================= MODAIS ================= */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(10, 10, 10, 0.9);
     backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 16px;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; visibility: hidden;
     transition: all var(--t);
     z-index: 200;
   }
   .modal-overlay.active { opacity: 1; visibility: visible; }
 
   .modal {
-    width: 100%;
-    max-width: 600px;
+    width: 100%; max-width: 620px;
     max-height: 90vh;
     background: linear-gradient(180deg, var(--gray-850), var(--gray-900));
     border: 1px solid var(--green-600);
     border-radius: var(--r-lg);
     box-shadow: var(--sh-lg);
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     transform: translateY(20px) scale(0.95);
     transition: all var(--t-slow);
     overflow: hidden;
@@ -1455,20 +1512,12 @@
   .modal-head {
     padding: 14px 20px;
     border-bottom: 1px solid var(--gray-700);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(180deg, rgba(42, 110, 1, 0.18), transparent);
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.18), transparent);
   }
-  .modal-head h3 {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .modal-head h3 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
   .modal-head .badge {
-    font-size: 0.68rem;
-    padding: 3px 8px;
+    font-size: 0.68rem; padding: 3px 8px;
     border-radius: var(--r-full);
     background: var(--green-700);
     color: var(--green-100);
@@ -1476,61 +1525,142 @@
     font-weight: 600;
   }
   .modal-head .close-btn { margin-left: auto; }
-  .modal-body {
-    padding: 20px;
-    overflow-y: auto;
-    flex: 1;
-  }
+  .modal-body { padding: 20px; overflow-y: auto; flex: 1; }
 
-  /* ============ MENU DE COMIDAS ============ */
-  .food-grid {
+  /* ============ LOJA / SHOP ============ */
+  .shop-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, var(--gold-600), var(--gold-500));
+    border-radius: var(--r-md);
+    color: #3a2a00;
+    font-weight: 800;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(240, 180, 41, 0.3);
+  }
+  .shop-header .shop-coins {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 1.15rem;
+  }
+  .shop-header .shop-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.95rem;
+  }
+  .shop-tabs {
+    display: flex; gap: 6px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--gray-700);
+    padding-bottom: 10px;
+  }
+  .shop-tab {
+    padding: 8px 14px;
+    border-radius: var(--r-full);
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+    color: var(--text-2);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--t);
+  }
+  .shop-tab.active {
+    background: var(--green-600);
+    border-color: var(--green-500);
+    color: #fff;
+  }
+  .shop-tab:hover { border-color: var(--green-500); }
+
+  .shop-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    margin-top: 12px;
   }
-  @media (max-width: 500px) {
-    .food-grid { grid-template-columns: repeat(3, 1fr); }
-  }
+  @media (max-width: 500px) { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
 
-  .food-item {
+  .shop-item {
     padding: 14px 8px;
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
     border-radius: var(--r-md);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
     cursor: pointer;
     transition: all var(--t);
     color: var(--text-0);
+    position: relative;
   }
-  .food-item:hover {
-    background: var(--green-700);
+  .shop-item:hover:not(.owned) {
+    background: var(--gray-700);
+    border-color: var(--gold-500);
+    transform: translateY(-3px);
+  }
+  .shop-item.owned {
+    background: rgba(42, 156, 1, 0.15);
     border-color: var(--green-500);
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: var(--sh-glow);
+    opacity: 0.6;
   }
-  .food-item .food-emoji {
-    font-size: 32px;
+  .shop-item.cant-afford {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
-  .food-item .food-name {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--text-1);
-    text-align: center;
+  .shop-item .shop-emoji { font-size: 34px; }
+  .shop-item .shop-name {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--text-1); text-align: center;
   }
-  .food-item .food-value {
+  .shop-item .shop-price {
+    font-size: 0.72rem; font-weight: 800;
+    color: var(--gold-400);
+    display: flex; align-items: center; gap: 3px;
+  }
+  .shop-item .shop-owned-badge {
+    position: absolute; top: 6px; right: 6px;
+    background: var(--green-600);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--r-full);
+  }
+  .shop-item .shop-restore {
     font-size: 0.62rem;
     color: var(--green-300);
     font-weight: 700;
   }
 
-  /* ============ JOGOS ============ */
+  .inventory-list {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .inv-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 12px;
+    background: var(--gray-800);
+    border: 1px solid var(--gray-700);
+    border-radius: var(--r-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-1);
+    cursor: pointer;
+    transition: all var(--t);
+  }
+  .inv-item:hover {
+    background: var(--green-700);
+    border-color: var(--green-500);
+    transform: scale(1.05);
+  }
+  .inv-item .inv-emoji { font-size: 20px; }
+  .inv-item .inv-count {
+    background: var(--green-600);
+    color: #fff;
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    border-radius: var(--r-full);
+    font-weight: 800;
+  }
+
+  /* ============ FEEDBACK ============ */
   .game-desc {
     padding: 12px 16px;
-    background: rgba(42, 110, 1, 0.12);
+    background: rgba(42, 156, 1, 0.12);
     border-left: 3px solid var(--green-500);
     border-radius: var(--r-sm);
     font-size: 0.85rem;
@@ -1566,25 +1696,23 @@
     font-weight: 600;
     cursor: pointer;
     transition: all var(--t);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
   }
-  .btn:hover {
-    background: var(--gray-700);
-    border-color: var(--green-500);
-    transform: translateY(-1px);
-  }
+  .btn:hover { background: var(--gray-700); border-color: var(--green-500); transform: translateY(-1px); }
   .btn-primary {
     background: linear-gradient(135deg, var(--green-500), var(--green-700));
     border-color: var(--green-600);
     color: #fff;
-    box-shadow: 0 4px 14px rgba(42, 110, 1, 0.5);
+    box-shadow: 0 4px 14px rgba(42, 156, 1, 0.5);
   }
-  .btn-primary:hover {
-    background: linear-gradient(135deg, var(--green-400), var(--green-600));
-    box-shadow: 0 6px 20px rgba(42, 110, 1, 0.7);
+  .btn-primary:hover { background: linear-gradient(135deg, var(--green-400), var(--green-600)); box-shadow: 0 6px 20px rgba(42, 156, 1, 0.7); }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+    border-color: var(--gold-400);
+    color: #3a2a00;
+    font-weight: 800;
   }
+  .btn-gold:hover { filter: brightness(1.1); }
 
   .feedback {
     margin-top: 16px;
@@ -1598,93 +1726,47 @@
     color: var(--text-1);
     transition: all var(--t);
   }
-  .feedback.success {
-    background: rgba(42, 110, 1, 0.22);
-    border-color: var(--green-500);
-    color: var(--green-200);
-  }
-  .feedback.error {
-    background: rgba(217, 100, 100, 0.15);
-    border-color: rgba(217, 100, 100, 0.5);
-    color: #e89c9c;
-  }
-  .feedback.hint {
-    background: rgba(224, 179, 74, 0.15);
-    border-color: rgba(224, 179, 74, 0.5);
-    color: #ecc987;
-  }
+  .feedback.success { background: rgba(42, 156, 1, 0.22); border-color: var(--green-500); color: var(--green-200); }
+  .feedback.error { background: rgba(217, 100, 100, 0.15); border-color: rgba(217, 100, 100, 0.5); color: #e89c9c; }
+  .feedback.hint { background: rgba(224, 179, 74, 0.15); border-color: rgba(224, 179, 74, 0.5); color: #ecc987; }
 
   .guess-display { text-align: center; padding: 18px 0; }
-  .guess-range {
-    font-size: 0.75rem;
-    color: var(--text-2);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .guess-number {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--green-400);
-    line-height: 1;
-    text-shadow: 0 4px 20px rgba(42, 110, 1, 0.6);
-  }
+  .guess-range { font-size: 0.75rem; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .guess-number { font-size: 3rem; font-weight: 800; color: var(--green-400); line-height: 1; text-shadow: 0 4px 20px rgba(42, 156, 1, 0.6); }
   .guess-attempts {
-    margin-top: 8px;
-    display: inline-flex;
-    gap: 6px;
+    margin-top: 8px; display: inline-flex; gap: 6px;
     padding: 5px 12px;
     border-radius: var(--r-full);
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
-    font-size: 0.78rem;
-    color: var(--text-2);
+    font-size: 0.78rem; color: var(--text-2);
   }
   .guess-controls, .math-inputs {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 16px;
-    flex-wrap: wrap;
+    display: flex; gap: 10px; justify-content: center; align-items: center;
+    margin-top: 16px; flex-wrap: wrap;
   }
 
-  .memory-stats {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  .memory-stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
   .stat-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    display: inline-flex; align-items: center; gap: 6px;
     padding: 6px 14px;
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
     border-radius: var(--r-full);
-    font-size: 0.8rem;
-    color: var(--text-1);
-    font-weight: 600;
+    font-size: 0.8rem; color: var(--text-1); font-weight: 600;
   }
   .stat-pill strong { color: var(--green-300); }
 
   .memory-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    max-width: 420px;
-    margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; max-width: 420px; margin: 0 auto;
   }
   .mem-card {
     aspect-ratio: 1/1;
     border-radius: var(--r-md);
     border: 1px solid var(--gray-700);
     background: linear-gradient(135deg, var(--gray-800), var(--gray-850));
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     font-size: clamp(22px, 4vw, 32px);
     cursor: pointer;
     transition: all var(--t);
@@ -1699,7 +1781,7 @@
     border-color: var(--green-500);
   }
   .mem-card.matched {
-    background: rgba(42, 110, 1, 0.3);
+    background: rgba(42, 156, 1, 0.3);
     border-color: var(--green-400);
     cursor: default;
     animation: matchPop 0.4s ease;
@@ -1712,33 +1794,24 @@
   .mem-card .back-icon { font-size: 18px; color: var(--gray-500); opacity: 0.7; }
 
   .math-display {
-    text-align: center;
-    padding: 24px 16px;
-    background: linear-gradient(180deg, rgba(42, 110, 1, 0.12), transparent);
+    text-align: center; padding: 24px 16px;
+    background: linear-gradient(180deg, rgba(42, 156, 1, 0.12), transparent);
     border-radius: var(--r-md);
     border: 1px solid var(--gray-700);
     margin-bottom: 16px;
   }
   .math-question {
-    font-size: 2.6rem;
-    font-weight: 800;
+    font-size: 2.6rem; font-weight: 800;
     color: var(--green-400);
     letter-spacing: -1px;
-    text-shadow: 0 4px 20px rgba(42, 110, 1, 0.5);
+    text-shadow: 0 4px 20px rgba(42, 156, 1, 0.5);
   }
 
-  /* ============ TOAST E EFEITOS ============ */
+  /* ============ TOAST ============ */
   .toast-container {
-    position: fixed;
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 300;
-    pointer-events: none;
-    align-items: center;
+    position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 300; pointer-events: none; align-items: center;
   }
   .toast {
     padding: 10px 20px;
@@ -1747,41 +1820,35 @@
     border: 1px solid var(--green-500);
     border-radius: var(--r-full);
     color: var(--text-0);
-    font-size: 0.88rem;
-    font-weight: 600;
+    font-size: 0.88rem; font-weight: 600;
     box-shadow: var(--sh-md);
     animation: toastIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    white-space: nowrap;
-    max-width: 90vw;
+    white-space: nowrap; max-width: 90vw;
   }
   @keyframes toastIn {
     from { opacity: 0; transform: translateY(-20px) scale(0.9); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
   }
   .toast.fade-out { animation: toastOut 0.4s ease forwards; }
-  @keyframes toastOut {
-    to { opacity: 0; transform: translateY(-15px) scale(0.95); }
-  }
+  @keyframes toastOut { to { opacity: 0; transform: translateY(-15px) scale(0.95); } }
 
+  .toast.gold { border-color: var(--gold-400); background: linear-gradient(135deg, rgba(240,180,41,0.95), rgba(201,138,12,0.95)); color: #3a2a00; }
+
+  /* ============ GAME PICKER ============ */
   .game-picker {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(10, 10, 10, 0.85);
     backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 20px;
     z-index: 150;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 0; visibility: hidden;
     transition: all var(--t);
   }
   .game-picker.active { opacity: 1; visibility: visible; }
 
   .picker-panel {
-    width: 100%;
-    max-width: 500px;
+    width: 100%; max-width: 500px;
     background: linear-gradient(180deg, var(--gray-850), var(--gray-900));
     border: 1px solid var(--green-600);
     border-radius: var(--r-lg);
@@ -1792,27 +1859,14 @@
   }
   .game-picker.active .picker-panel { transform: scale(1); }
 
-  .picker-panel h3 {
-    text-align: center;
-    font-size: 1.1rem;
-    margin-bottom: 18px;
-    color: var(--green-300);
-  }
-  .picker-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 16px;
-  }
+  .picker-panel h3 { text-align: center; font-size: 1.1rem; margin-bottom: 18px; color: var(--green-300); }
+  .picker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
   .picker-item {
     padding: 16px 8px;
     background: var(--gray-800);
     border: 1px solid var(--gray-700);
     border-radius: var(--r-md);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
     cursor: pointer;
     transition: all var(--t);
     color: var(--text-0);
@@ -1824,15 +1878,9 @@
     box-shadow: var(--sh-glow);
   }
   .picker-item .icon { font-size: 32px; }
-  .picker-item .name {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-align: center;
-    color: var(--text-1);
-  }
+  .picker-item .name { font-size: 0.75rem; font-weight: 600; text-align: center; color: var(--text-1); }
   .picker-close {
-    width: 100%;
-    padding: 12px;
+    width: 100%; padding: 12px;
     border-radius: var(--r-md);
     border: 1px solid var(--gray-700);
     background: var(--gray-800);
@@ -1843,11 +1891,10 @@
   }
   .picker-close:hover { background: var(--gray-700); }
 
+  /* ============ EFEITOS ============ */
   .flying-item {
-    position: fixed;
-    font-size: 40px;
-    pointer-events: none;
-    z-index: 250;
+    position: fixed; font-size: 40px;
+    pointer-events: none; z-index: 250;
     animation: flyToBilly 1s cubic-bezier(0.4, 0, 0.6, 1) forwards;
   }
   @keyframes flyToBilly {
@@ -1856,10 +1903,8 @@
   }
 
   .heart-float {
-    position: fixed;
-    font-size: 28px;
-    pointer-events: none;
-    z-index: 250;
+    position: fixed; font-size: 28px;
+    pointer-events: none; z-index: 250;
     animation: heartUp 1.4s ease-out forwards;
   }
   @keyframes heartUp {
@@ -1869,12 +1914,10 @@
   }
 
   .bubble-float {
-    position: fixed;
-    border-radius: 50%;
+    position: fixed; border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), rgba(150,200,255,0.4));
     border: 1px solid rgba(255,255,255,0.5);
-    pointer-events: none;
-    z-index: 250;
+    pointer-events: none; z-index: 250;
     animation: bubbleUp 2s ease-out forwards;
   }
   @keyframes bubbleUp {
@@ -1883,12 +1926,9 @@
   }
 
   .zzz {
-    position: fixed;
-    font-size: 32px;
-    font-weight: 800;
+    position: fixed; font-size: 32px; font-weight: 800;
     color: #d8c8f0;
-    pointer-events: none;
-    z-index: 250;
+    pointer-events: none; z-index: 250;
     text-shadow: 0 0 15px rgba(216, 200, 240, 0.8);
     animation: zzzFloat 3s ease-out infinite;
   }
@@ -1898,11 +1938,19 @@
     100% { opacity: 0; transform: translate(40px, -120px) scale(1.3); }
   }
 
+  .coin-float {
+    position: fixed; font-size: 26px;
+    pointer-events: none; z-index: 250;
+    animation: coinUp 1.6s ease-out forwards;
+  }
+  @keyframes coinUp {
+    0% { opacity: 1; transform: translateY(0) scale(0.6) rotate(0); }
+    60% { opacity: 1; transform: translateY(-60px) scale(1.1) rotate(360deg); }
+    100% { opacity: 0; transform: translateY(-120px) scale(0.9) rotate(720deg); }
+  }
+
   .hint {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
     padding: 10px 20px;
     background: rgba(38, 38, 38, 0.9);
     backdrop-filter: blur(10px);
@@ -1914,15 +1962,9 @@
     animation: hintPulse 3s ease-in-out infinite;
     pointer-events: none;
   }
-  @keyframes hintPulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
-  }
-  @media (max-width: 500px) {
-    .hint { font-size: 0.72rem; padding: 8px 14px; bottom: 90px; }
-  }
+  @keyframes hintPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+  @media (max-width: 500px) { .hint { font-size: 0.72rem; padding: 8px 14px; bottom: 90px; } }
 
-  /* Ajustes responsivos */
   @media (max-width: 600px) {
     .sun { width: 70px; height: 70px; top: 30px; right: 40px; }
     .tree.t-left { width: 100px; height: 170px; }
@@ -1931,6 +1973,10 @@
     .kitchen-stove { width: 100px; height: 70px; }
     .bedroom-bed { width: 240px; height: 130px; }
     .bedroom-window { width: 100px; height: 120px; }
+    .bathroom-mirror { width: 90px; height: 120px; }
+    .bathroom-sink { width: 80px; }
+    .bathroom-toilet { width: 70px; height: 90px; }
+    .bathroom-box { width: 160px; height: 170px; }
   }
 </style>
 </head>
@@ -1938,7 +1984,7 @@
 
 <div class="scene" id="scene">
 
-  <!-- ============ CENÁRIO JARDIM ============ -->
+  <!-- ============ JARDIM ============ -->
   <div class="scene-garden" id="sceneGarden">
     <div class="sky"></div>
     <div class="sun"></div>
@@ -1962,52 +2008,85 @@
       <div class="rock" style="left: 88%; width: 40px; height: 28px;"></div>
       <div class="rock" style="left: 55%; width: 25px; height: 18px;"></div>
 
-      <div class="flower" style="left: 12%; bottom: 15px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
-      <div class="flower f-pink" style="left: 22%; bottom: 8px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
-      <div class="flower f-yellow" style="left: 32%; bottom: 20px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
-      <div class="flower f-white" style="left: 68%; bottom: 12px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
-      <div class="flower f-pink" style="left: 82%; bottom: 18px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
-      <div class="flower f-yellow" style="left: 92%; bottom: 6px;">
-        <div class="flower-stem"></div><div class="flower-petal"></div>
-      </div>
+      <div class="flower" style="left: 12%; bottom: 15px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
+      <div class="flower f-pink" style="left: 22%; bottom: 8px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
+      <div class="flower f-yellow" style="left: 32%; bottom: 20px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
+      <div class="flower f-white" style="left: 68%; bottom: 12px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
+      <div class="flower f-pink" style="left: 82%; bottom: 18px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
+      <div class="flower f-yellow" style="left: 92%; bottom: 6px;"><div class="flower-stem"></div><div class="flower-petal"></div></div>
 
       <div id="grassContainer"></div>
     </div>
 
-    <div class="tree t-left">
-      <div class="tree-trunk"></div>
-      <div class="tree-crown"></div>
-    </div>
-    <div class="tree t-right">
-      <div class="tree-trunk"></div>
-      <div class="tree-crown"></div>
-    </div>
+    <div class="tree t-left"><div class="tree-trunk"></div><div class="tree-crown"></div></div>
+    <div class="tree t-right"><div class="tree-trunk"></div><div class="tree-crown"></div></div>
 
     <div id="pollenContainer"></div>
   </div>
 
-  <!-- ============ CENÁRIO COZINHA ============ -->
+  <!-- ============ COZINHA ============ -->
   <div class="scene-kitchen" id="sceneKitchen">
     <div class="kitchen-wall"></div>
-    <div class="kitchen-cabinet"></div>
-    <div class="kitchen-fridge"></div>
-    <div class="kitchen-stove"></div>
+
+    <!-- quadro -->
+    <div class="kitchen-painting"></div>
+    <!-- relógio -->
+    <div class="kitchen-clock"></div>
+    <!-- armário superior -->
+    <div class="kitchen-cabinet">
+      <div class="kitchen-cabinet-handle" style="top: 20%; left: 12px;"></div>
+      <div class="kitchen-cabinet-handle" style="top: 70%; left: 12px;"></div>
+      <div class="kitchen-cabinet-handle" style="top: 20%; right: 12px;"></div>
+      <div class="kitchen-cabinet-handle" style="top: 70%; right: 12px;"></div>
+    </div>
+
+    <!-- geladeira (clicável - abre loja) -->
+    <div class="kitchen-fridge" id="fridge" title="Clique para abrir a loja">
+      <div class="kitchen-fridge-shop-badge">🛒 LOJA</div>
+      <div class="kitchen-fridge-handle-bottom"></div>
+    </div>
+
+    <!-- micro-ondas -->
+    <div class="kitchen-microwave"></div>
+
+    <!-- fogão -->
+    <div class="kitchen-stove">
+      <div class="kitchen-stove-flame" id="stoveFlame"></div>
+    </div>
+
+    <!-- panela -->
+    <div class="kitchen-pot"></div>
+
+    <!-- pia -->
     <div class="kitchen-sink"></div>
+
+    <!-- bancada -->
     <div class="kitchen-counter"></div>
+
+    <!-- fruteira -->
+    <div class="kitchen-fruit-bowl">
+      <div class="kitchen-fruit apple"></div>
+      <div class="kitchen-fruit orange"></div>
+      <div class="kitchen-fruit banana"></div>
+      <div class="kitchen-fruit grape"></div>
+      <div class="kitchen-fruit grape2"></div>
+    </div>
+
+    <!-- toalha de mesa -->
+    <div class="kitchen-towel"></div>
+
+    <!-- planta -->
+    <div class="kitchen-plant">
+      <div class="kitchen-plant-leaf l1"></div>
+      <div class="kitchen-plant-leaf l2"></div>
+      <div class="kitchen-plant-leaf l3"></div>
+      <div class="kitchen-plant-pot"></div>
+    </div>
+
     <div class="kitchen-floor"></div>
   </div>
 
-  <!-- ============ CENÁRIO QUARTO ============ -->
+  <!-- ============ QUARTO ============ -->
   <div class="scene-bedroom" id="sceneBedroom">
     <div class="bedroom-wall"></div>
     <div class="bedroom-window">
@@ -2031,6 +2110,43 @@
     <div class="bedroom-floor"></div>
   </div>
 
+  <!-- ============ BANHEIRO ============ -->
+  <div class="scene-bathroom" id="sceneBathroom">
+    <div class="bathroom-wall"></div>
+
+    <!-- espelho -->
+    <div class="bathroom-mirror"></div>
+
+    <!-- toalha -->
+    <div class="bathroom-towel"></div>
+
+    <!-- chuveiro -->
+    <div class="bathroom-shower-head"></div>
+
+    <!-- jatos de água -->
+    <div class="bathroom-water" id="bathroomWater"></div>
+
+    <!-- box -->
+    <div class="bathroom-box"></div>
+
+    <!-- pia -->
+    <div class="bathroom-sink">
+      <div class="bathroom-sink-basin"></div>
+      <div class="bathroom-sink-faucet"></div>
+    </div>
+
+    <!-- vaso -->
+    <div class="bathroom-toilet">
+      <div class="bathroom-toilet-tank"></div>
+      <div class="bathroom-toilet-seat"></div>
+    </div>
+
+    <!-- bolhas -->
+    <div class="bathroom-bubbles" id="bathroomBubbles"></div>
+
+    <div class="bathroom-floor"></div>
+  </div>
+
   <!-- ============ BILLY ============ -->
   <div class="billy-stage" id="billyStage">
     <div class="billy-wrapper" id="billyWrapper">
@@ -2042,12 +2158,8 @@
           <div class="billy-ear left"></div>
           <div class="billy-ear right"></div>
           <div class="billy-face">
-            <div class="billy-eye left">
-              <div class="billy-pupil" id="pupilL"></div>
-            </div>
-            <div class="billy-eye right">
-              <div class="billy-pupil" id="pupilR"></div>
-            </div>
+            <div class="billy-eye left"><div class="billy-pupil" id="pupilL"></div></div>
+            <div class="billy-eye right"><div class="billy-pupil" id="pupilR"></div></div>
             <div class="billy-mouth" id="billyMouth"></div>
           </div>
         </div>
@@ -2061,14 +2173,8 @@
           <div class="billy-hem"></div>
         </div>
 
-        <div class="billy-arm left">
-          <div class="billy-sleeve"></div>
-          <div class="billy-glove"></div>
-        </div>
-        <div class="billy-arm right">
-          <div class="billy-sleeve"></div>
-          <div class="billy-glove"></div>
-        </div>
+        <div class="billy-arm left"><div class="billy-sleeve"></div><div class="billy-glove"></div></div>
+        <div class="billy-arm right"><div class="billy-sleeve"></div><div class="billy-glove"></div></div>
 
         <div class="billy-legs">
           <div class="billy-leg left"><div class="billy-boot"></div></div>
@@ -2090,6 +2196,10 @@
         <div class="stat-label">😴 Sono</div>
         <div class="stat-bar"><div class="stat-fill" id="sleepBar" style="width:100%"></div></div>
       </div>
+      <div class="stat">
+        <div class="stat-label">🧼 Limpo</div>
+        <div class="stat-bar"><div class="stat-fill" id="cleanBar" style="width:100%"></div></div>
+      </div>
     </div>
   </div>
 
@@ -2097,7 +2207,13 @@
 
 </div>
 
-<!-- CONTROLES -->
+<!-- MOEDAS -->
+<div class="coins-bar">
+  <span class="coin-icon">🪙</span>
+  <span id="coinsDisplay">0</span>
+</div>
+
+<!-- CONTROLES TOPO -->
 <div class="top-controls">
   <button class="ctrl-btn" id="btnChat" title="Conversar">💬</button>
   <button class="ctrl-btn" id="btnSurprise" title="Surpresa">✨</button>
@@ -2109,12 +2225,13 @@
 <!-- BARRA DE AÇÕES -->
 <div class="action-bar">
   <button class="action-btn" data-action="feed" title="Alimentar">🍎<span class="btn-label">Comer</span></button>
-  <button class="action-btn" data-action="pet" title="Fazer carinho">🤚<span class="btn-label">Carinho</span></button>
+  <button class="action-btn" data-action="pet" title="Carinho">🤚<span class="btn-label">Carinho</span></button>
   <button class="action-btn" data-action="tickle" title="Cócegas">🪶<span class="btn-label">Cócegas</span></button>
   <button class="action-btn" data-action="play" title="Brincar">🎾<span class="btn-label">Brincar</span></button>
+  <button class="action-btn" data-action="bath" title="Banho">🛁<span class="btn-label">Banho</span></button>
   <button class="action-btn" data-action="sleep" title="Dormir">💤<span class="btn-label">Dormir</span></button>
   <button class="action-btn" data-action="dance" title="Dançar">🎵<span class="btn-label">Dançar</span></button>
-  <button class="action-btn" data-action="games" title="Minigames">🎮<span class="btn-label">Jogos</span></button>
+  <button class="action-btn" data-action="games" title="Jogos">🎮<span class="btn-label">Jogos</span></button>
 </div>
 
 <!-- CHAT -->
@@ -2145,21 +2262,27 @@
   </div>
 </div>
 
-<!-- MODAL COMIDAS -->
-<div class="modal-overlay" id="foodModal">
+<!-- LOJA (abre pela geladeira) -->
+<div class="modal-overlay" id="shopModal">
   <div class="modal">
     <div class="modal-head">
       <h3>
-        <span>🍽️</span>
-        <span>O que o Billy vai comer?</span>
+        <span>🛒</span>
+        <span>Loja do Billy</span>
+        <span class="badge">mercado</span>
       </h3>
-      <button class="close-btn" id="btnCloseFood">✕</button>
+      <button class="close-btn" id="btnCloseShop">✕</button>
     </div>
     <div class="modal-body">
-      <div class="game-desc">
-        Escolha um alimento para alimentar o <strong>Billy Byte</strong>. Cada comida restaura uma quantidade diferente de fome!
+      <div class="shop-header">
+        <div class="shop-title">🛍️ Compre comidinhas pro Billy</div>
+        <div class="shop-coins">🪙 <span id="shopCoins">0</span></div>
       </div>
-      <div class="food-grid" id="foodGrid"></div>
+      <div class="shop-tabs">
+        <div class="shop-tab active" data-tab="shop">Loja</div>
+        <div class="shop-tab" data-tab="inventory">Inventário</div>
+      </div>
+      <div id="shopContent"></div>
     </div>
   </div>
 </div>
@@ -2177,7 +2300,7 @@
 
 <script>
 /* ================================================================
-   BILLY BYTE — Mascote das Escolas do Futuro
+   BILLY BYTE — Mascote das Escolas do Futuro (v2)
    ================================================================ */
 (function () {
   'use strict';
@@ -2197,12 +2320,9 @@
     return a;
   }
 
-  /* ============================================================
-     TEMPO REAL: FOME ZERA EM 45 MIN, SONO EM 1H30
-     ============================================================ */
-  const FOME_DURACAO_MS = 45 * 60 * 1000;        // 45 minutos
-  const SONO_DURACAO_MS = 90 * 60 * 1000;        // 1 hora e 30 minutos
-  const TICK_MS = 1000;                           // atualiza a cada 1s
+  const FOME_DURACAO_MS = 45 * 60 * 1000;
+  const SONO_DURACAO_MS = 90 * 60 * 1000;
+  const SUJEIRA_DURACAO_MS = 60 * 60 * 1000;
 
   /* ============================================================
      ESTADO
@@ -2211,9 +2331,13 @@
     hunger: 100,
     happy: 80,
     sleep: 100,
+    clean: 100,
+    coins: 30,
     sleeping: false,
-    currentScene: 'garden',  // garden | kitchen | bedroom
-    lastTick: Date.now()
+    currentScene: 'garden',
+    lastTick: Date.now(),
+    inventory: {},   // { foodId: qtd }
+    ownedFoods: []   // ids já comprados pelo menos 1 vez
   };
 
   /* ============================================================
@@ -2222,22 +2346,18 @@
   const scenes = {
     garden: $('#sceneGarden'),
     kitchen: $('#sceneKitchen'),
-    bedroom: $('#sceneBedroom')
+    bedroom: $('#sceneBedroom'),
+    bathroom: $('#sceneBathroom')
   };
 
   const btnBack = $('#btnBack');
-  const billyStage = $('#billyStage');
 
   function switchScene(sceneName) {
     if (state.currentScene === sceneName) return;
-
-    // Esconde todas as cenas
     Object.values(scenes).forEach(s => {
       s.classList.remove('active');
       if (s.id === 'sceneGarden') s.classList.remove('hidden');
     });
-
-    // Mostra a cena nova
     if (sceneName === 'garden') {
       scenes.garden.classList.remove('hidden');
       btnBack.classList.remove('show');
@@ -2246,15 +2366,16 @@
       scenes[sceneName].classList.add('active');
       btnBack.classList.add('show');
     }
-
     state.currentScene = sceneName;
+
+    // liga/desliga água
+    const water = $('#bathroomWater');
+    if (water) water.classList.toggle('on', sceneName === 'bathroom' && state.showering);
   }
 
   btnBack.addEventListener('click', () => {
-    if (state.sleeping) {
-      // Se estiver dormindo, primeiro acorda
-      wakeUp();
-    }
+    if (state.showering) stopShower();
+    if (state.sleeping) wakeUp();
     switchScene('garden');
   });
 
@@ -2267,15 +2388,17 @@
   const hungerBar = $('#hungerBar');
   const happyBar = $('#happyBar');
   const sleepBar = $('#sleepBar');
+  const cleanBar = $('#cleanBar');
   const hintEl = $('#hint');
   const toastContainer = $('#toastContainer');
+  const coinsDisplay = $('#coinsDisplay');
 
   /* ============================================================
      TOAST
      ============================================================ */
-  function showToast(text, duration = 2200) {
+  function showToast(text, duration = 2200, gold = false) {
     const t = document.createElement('div');
-    t.className = 'toast';
+    t.className = 'toast' + (gold ? ' gold' : '');
     t.textContent = text;
     toastContainer.appendChild(t);
     setTimeout(() => {
@@ -2302,12 +2425,29 @@
     hungerBar.style.width = state.hunger + '%';
     happyBar.style.width = state.happy + '%';
     sleepBar.style.width = state.sleep + '%';
-    [hungerBar, happyBar, sleepBar].forEach(bar => {
+    cleanBar.style.width = state.clean + '%';
+    [hungerBar, happyBar, sleepBar, cleanBar].forEach(bar => {
       const val = parseFloat(bar.style.width);
       bar.classList.remove('low', 'mid');
       if (val < 25) bar.classList.add('low');
       else if (val < 55) bar.classList.add('mid');
     });
+    coinsDisplay.textContent = state.coins;
+    const sc = $('#shopCoins');
+    if (sc) sc.textContent = state.coins;
+  }
+
+  function addCoins(amount) {
+    state.coins += amount;
+    updateStats();
+    const r = billyWrapper.getBoundingClientRect();
+    const coin = document.createElement('div');
+    coin.className = 'coin-float';
+    coin.textContent = '🪙';
+    coin.style.left = (r.left + r.width / 2 + rand(-40, 40)) + 'px';
+    coin.style.top = (r.top + 80) + 'px';
+    document.body.appendChild(coin);
+    setTimeout(() => coin.remove(), 1700);
   }
 
   /* ============================================================
@@ -2326,6 +2466,12 @@
     setTimeout(() => billyBody.classList.remove('happy'), dur);
   }
   function billyWave() { animateBilly('waving', 1800); }
+  function billyJump() { animateBilly('jumping', 700); }
+  function billyShake() { animateBilly('shaking', 500); }
+  function billyLaugh() { animateBilly('laughing', 1400); }
+  function billyEat() { animateBilly('eating', 1200); }
+  function billySad() { animateBilly('sad', 1800); }
+  function billyExcited() { animateBilly('excited', 1500); }
 
   /* ============================================================
      EFEITOS
@@ -2407,10 +2553,14 @@
     dance: ["Vem dançar comigo! 🎵", "Olha meus passos!", "A música me contagia!", "Dançar é bom demais!"],
     surprise: ["Surpresa! 🎉", "Olha o que eu sei fazer!", "Uhuuu! Que legal!", "Adoro surpresas! ✨"],
     hungry: ["Tô com fome... 🍖", "Minha barriga tá roncando!", "Comida, por favor!", "Quando a gente vai comer?"],
-    sleepy: ["Tô com soninho... 😴", "Preciso dormir...", "Que sono!", "Meus olhinhos estão pesados..."]
+    sleepy: ["Tô com soninho... 😴", "Preciso dormir...", "Que sono!", "Meus olhinhos estão pesados..."],
+    dirty: ["Tô precisando de banho! 🚿", "Que sujinha!", "Me leva pro banheiro!", "Tô cheirando mal! 😅"],
+    bath: ["Ai que delícia! 🛁", "Água quentinha!", "Limpinho de novo!", "Adoro banho! 🫧", "Splash splash!"],
+    bathDone: ["Prontinho! Cheiroso!", "Que banho gostoso!", "Agora sim, limpinho! ✨"]
   };
 
   function billySpeak(key) {
+    if (state.sleeping) return;
     const text = pick(billyDialogs[key] || ["Hmm..."]);
     billyTalk();
     addChatMessage(text, 'billy');
@@ -2418,48 +2568,108 @@
   }
 
   /* ============================================================
-     COMIDAS
+     COMIDAS / LOJA
      ============================================================ */
-  const foods = [
-    { emoji: '🍎', name: 'Maçã', value: 15 },
-    { emoji: '🍌', name: 'Banana', value: 15 },
-    { emoji: '🍕', name: 'Pizza', value: 30 },
-    { emoji: '🍔', name: 'Hambúrguer', value: 35 },
-    { emoji: '🍟', name: 'Batata Frita', value: 20 },
-    { emoji: '🍫', name: 'Chocolate', value: 25 },
-    { emoji: '🍩', name: 'Donut', value: 25 },
-    { emoji: '🍪', name: 'Biscoito', value: 15 },
-    { emoji: '🥗', name: 'Salada', value: 20 },
-    { emoji: '🍜', name: 'Lámen', value: 30 },
-    { emoji: '🍦', name: 'Sorvete', value: 20 },
-    { emoji: '🥛', name: 'Leite', value: 10 }
+  const foodsCatalog = [
+    { id: 'apple',    emoji: '🍎', name: 'Maçã',        price: 5,  value: 15 },
+    { id: 'banana',   emoji: '🍌', name: 'Banana',      price: 5,  value: 15 },
+    { id: 'bread',    emoji: '🍞', name: 'Pão',         price: 6,  value: 18 },
+    { id: 'milk',     emoji: '🥛', name: 'Leite',       price: 6,  value: 12 },
+    { id: 'cookie',   emoji: '🍪', name: 'Biscoito',    price: 7,  value: 15 },
+    { id: 'fries',    emoji: '🍟', name: 'Batata',      price: 10, value: 22 },
+    { id: 'icecream', emoji: '🍦', name: 'Sorvete',     price: 10, value: 20 },
+    { id: 'choco',    emoji: '🍫', name: 'Chocolate',   price: 12, value: 25 },
+    { id: 'donut',    emoji: '🍩', name: 'Donut',       price: 12, value: 25 },
+    { id: 'salad',    emoji: '🥗', name: 'Salada',      price: 13, value: 22 },
+    { id: 'pizza',    emoji: '🍕', name: 'Pizza',       price: 20, value: 35 },
+    { id: 'burger',   emoji: '🍔', name: 'Hambúrguer',  price: 22, value: 40 },
+    { id: 'ramen',    emoji: '🍜', name: 'Lámen',       price: 18, value: 30 }
   ];
 
-  function buildFoodGrid() {
-    const grid = $('#foodGrid');
-    grid.innerHTML = '';
-    foods.forEach((food, idx) => {
-      const item = document.createElement('div');
-      item.className = 'food-item';
-      item.innerHTML = `
-        <div class="food-emoji">${food.emoji}</div>
-        <div class="food-name">${food.name}</div>
-        <div class="food-value">+${food.value} fome</div>
-      `;
-      item.addEventListener('click', (e) => {
-        eatFood(food, e);
+  let shopTab = 'shop';
+
+  function openShop() {
+    $('#shopModal').classList.add('active');
+    renderShop();
+  }
+  function closeShop() { $('#shopModal').classList.remove('active'); }
+
+  function renderShop() {
+    const content = $('#shopContent');
+    content.innerHTML = '';
+
+    if (shopTab === 'shop') {
+      const grid = document.createElement('div');
+      grid.className = 'shop-grid';
+      foodsCatalog.forEach(food => {
+        const item = document.createElement('div');
+        item.className = 'shop-item';
+        const owned = state.ownedFoods.includes(food.id);
+        const canAfford = state.coins >= food.price;
+        if (!canAfford) item.classList.add('cant-afford');
+        item.innerHTML = `
+          ${owned ? '<div class="shop-owned-badge">✓</div>' : ''}
+          <div class="shop-emoji">${food.emoji}</div>
+          <div class="shop-name">${food.name}</div>
+          <div class="shop-price">🪙 ${food.price}</div>
+          <div class="shop-restore">+${food.value} fome</div>
+        `;
+        item.addEventListener('click', () => buyFood(food));
+        grid.appendChild(item);
       });
-      grid.appendChild(item);
-    });
+      content.appendChild(grid);
+    } else {
+      const inv = state.inventory;
+      const ids = Object.keys(inv).filter(k => inv[k] > 0);
+      if (ids.length === 0) {
+        content.innerHTML = '<div class="feedback hint" style="margin-top:0">Seu inventário está vazio! Compre comidinhas na loja. 🛒</div>';
+        return;
+      }
+      const list = document.createElement('div');
+      list.className = 'inventory-list';
+      ids.forEach(id => {
+        const food = foodsCatalog.find(f => f.id === id);
+        if (!food) return;
+        const item = document.createElement('div');
+        item.className = 'inv-item';
+        item.innerHTML = `
+          <span class="inv-emoji">${food.emoji}</span>
+          <span>${food.name}</span>
+          <span class="inv-count">${inv[id]}</span>
+        `;
+        item.title = 'Clique pra dar pro Billy';
+        item.addEventListener('click', () => consumeFood(food));
+        list.appendChild(item);
+      });
+      content.appendChild(list);
+      const tip = document.createElement('div');
+      tip.className = 'feedback hint';
+      tip.style.marginTop = '14px';
+      tip.textContent = '💡 Clique num item pra dar pro Billy!';
+      content.appendChild(tip);
+    }
   }
 
-  function eatFood(food, event) {
-    closeFoodModal();
-    if (state.hunger >= 100) {
-      showToast("Billy já está satisfeito! 😊");
+  function buyFood(food) {
+    if (state.coins < food.price) {
+      showToast('Moedas insuficientes! 🪙');
+      billyShake();
       return;
     }
-    // Spawn comida voando do centro do modal
+    state.coins -= food.price;
+    state.inventory[food.id] = (state.inventory[food.id] || 0) + 1;
+    if (!state.ownedFoods.includes(food.id)) state.ownedFoods.push(food.id);
+    updateStats();
+    showToast(`Comprou ${food.emoji} ${food.name}!`, 1600, true);
+    renderShop();
+  }
+
+  function consumeFood(food) {
+    if (state.hunger >= 100) { showToast('Billy já está satisfeito! 😊'); return; }
+    if ((state.inventory[food.id] || 0) <= 0) return;
+    state.inventory[food.id]--;
+    closeShop();
+    billyEat();
     spawnFlyingItem(food.emoji, window.innerWidth / 2, window.innerHeight / 2);
     setTimeout(() => {
       state.hunger = clamp(state.hunger + food.value, 0, 100);
@@ -2472,27 +2682,29 @@
     }, 900);
   }
 
-  function openFoodModal() {
-    $('#foodModal').classList.add('active');
-  }
-  function closeFoodModal() {
-    $('#foodModal').classList.remove('active');
-  }
-  $('#btnCloseFood').addEventListener('click', closeFoodModal);
-  $('#foodModal').addEventListener('click', (e) => {
-    if (e.target === $('#foodModal')) closeFoodModal();
+  $('#btnCloseShop').addEventListener('click', closeShop);
+  $('#shopModal').addEventListener('click', e => { if (e.target === $('#shopModal')) closeShop(); });
+  $$('.shop-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      $$('.shop-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      shopTab = tab.dataset.tab;
+      renderShop();
+    });
+  });
+
+  $('#fridge').addEventListener('click', () => {
+    if (state.currentScene !== 'kitchen') switchScene('kitchen');
+    openShop();
   });
 
   /* ============================================================
      AÇÕES
      ============================================================ */
-  function actionFeed(e) {
+  function actionFeed() {
     if (state.sleeping) return;
-    if (state.hunger >= 100) { showToast("Billy já está satisfeito! 😊"); return; }
-    // Vai para a cozinha
     switchScene('kitchen');
-    // Abre o menu de comidas
-    openFoodModal();
+    setTimeout(() => openShop(), 400);
   }
 
   function actionPet() {
@@ -2503,6 +2715,7 @@
     showMood('💚');
     billyHappy();
     spawnHearts(5);
+    addCoins(1);
   }
 
   function actionTickle() {
@@ -2512,10 +2725,9 @@
     updateStats();
     billySpeak('tickle');
     showMood('😂');
-    billyBody.style.transform = 'rotate(-5deg)';
-    setTimeout(() => billyBody.style.transform = 'rotate(5deg)', 120);
-    setTimeout(() => billyBody.style.transform = 'rotate(0)', 240);
+    billyLaugh();
     spawnHearts(4);
+    addCoins(1);
   }
 
   function actionPlay() {
@@ -2524,60 +2736,14 @@
     state.happy = clamp(state.happy + 15, 0, 100);
     state.sleep = clamp(state.sleep - 10, 0, 100);
     state.hunger = clamp(state.hunger - 5, 0, 100);
+    state.clean = clamp(state.clean - 5, 0, 100);
     updateStats();
     billySpeak('play');
     showMood('🎾');
     spawnBubbles(10);
     billyWave();
-  }
-
-  function putToSleep() {
-    if (state.sleeping) return;
-    state.sleeping = true;
-    billyBody.classList.add('sleeping');
-    billySpeak('sleep');
-    showMood('💤');
-    // Vai para o quarto
-    switchScene('bedroom');
-
-    // Gera Zzz periodicamente
-    const zzzInterval = setInterval(() => {
-      if (!state.sleeping) { clearInterval(zzzInterval); return; }
-      spawnZzz();
-    }, 1200);
-
-    // Recupera sono gradualmente
-    const sleepRecover = setInterval(() => {
-      if (!state.sleeping) { clearInterval(sleepRecover); return; }
-      state.sleep = clamp(state.sleep + 1, 0, 100);
-      updateStats();
-      if (state.sleep >= 100) {
-        clearInterval(sleepRecover);
-        // Acorda automaticamente
-        setTimeout(() => {
-          if (state.sleeping) wakeUp();
-        }, 500);
-      }
-    }, 800);
-  }
-
-  function wakeUp() {
-    if (!state.sleeping) return;
-    state.sleeping = false;
-    billyBody.classList.remove('sleeping');
-    billySpeak('wake');
-    showMood('🌞');
-    billyHappy(1500);
-    // Volta ao jardim
-    switchScene('garden');
-  }
-
-  function actionSleep() {
-    if (state.sleeping) {
-      wakeUp();
-      return;
-    }
-    putToSleep();
+    billyJump();
+    addCoins(2);
   }
 
   function actionDance() {
@@ -2593,6 +2759,139 @@
       step++;
       if (step > 12) { clearInterval(iv); billyBody.style.transform = ''; }
     }, 100);
+    addCoins(2);
+  }
+
+  /* ============================================================
+     BANHO
+     ============================================================ */
+  state.showering = false;
+  let showerInterval = null;
+
+  function actionBath() {
+    if (state.sleeping) return;
+    if (state.clean >= 95) {
+      showToast('Billy já está limpinho! 🛁');
+      return;
+    }
+    if (state.currentScene !== 'bathroom') {
+      switchScene('bathroom');
+      showToast('Vamos pro banheiro! 🚿');
+    }
+    setTimeout(() => startShower(), 500);
+  }
+
+  function startShower() {
+    if (state.showering) return;
+    state.showering = true;
+    billyBody.classList.add('showering');
+    const water = $('#bathroomWater');
+    if (water) water.classList.add('on');
+    // gera gotas
+    generateWaterDrops();
+    // gera bolhas
+    generateBathBubbles();
+    billySpeak('bath');
+    showMood('🫧');
+
+    showerInterval = setInterval(() => {
+      state.clean = clamp(state.clean + 3, 0, 100);
+      state.happy = clamp(state.happy + 1, 0, 100);
+      updateStats();
+      if (Math.random() > 0.7) generateBathBubbles();
+      if (state.clean >= 100) {
+        stopShower();
+        billySpeak('bathDone');
+        showMood('✨');
+        billyHappy(1500);
+        spawnHearts(6);
+        addCoins(3);
+        showToast('Billy tomou banho! +3 🪙', 2000, true);
+      }
+    }, 300);
+  }
+
+  function stopShower() {
+    state.showering = false;
+    billyBody.classList.remove('showering');
+    const water = $('#bathroomWater');
+    if (water) water.classList.remove('on');
+    if (showerInterval) { clearInterval(showerInterval); showerInterval = null; }
+  }
+
+  function generateWaterDrops() {
+    const water = $('#bathroomWater');
+    if (!water) return;
+    water.innerHTML = '';
+    for (let i = 0; i < 15; i++) {
+      const d = document.createElement('div');
+      d.className = 'bathroom-drop';
+      d.style.left = rand(0, 100) + '%';
+      d.style.height = rand(15, 40) + 'px';
+      d.style.animationDelay = (Math.random() * 0.8) + 's';
+      d.style.animationDuration = (0.6 + Math.random() * 0.5) + 's';
+      water.appendChild(d);
+    }
+  }
+
+  function generateBathBubbles() {
+    const container = $('#bathroomBubbles');
+    if (!container) return;
+    for (let i = 0; i < 5; i++) {
+      const b = document.createElement('div');
+      b.className = 'bathroom-bubble';
+      const size = rand(15, 40);
+      b.style.width = size + 'px';
+      b.style.height = size + 'px';
+      b.style.left = rand(5, 25) + '%';
+      b.style.top = rand(50, 80) + '%';
+      b.style.animationDelay = (Math.random() * 1.5) + 's';
+      b.style.animationDuration = (2.5 + Math.random() * 1.5) + 's';
+      container.appendChild(b);
+      setTimeout(() => b.remove(), 4000);
+    }
+  }
+
+  /* ============================================================
+     DORMIR / ACORDAR
+     ============================================================ */
+  function putToSleep() {
+    if (state.sleeping) return;
+    state.sleeping = true;
+    billyBody.classList.add('sleeping');
+    billySpeak('sleep');
+    showMood('💤');
+    switchScene('bedroom');
+
+    const zzzInterval = setInterval(() => {
+      if (!state.sleeping) { clearInterval(zzzInterval); return; }
+      spawnZzz();
+    }, 1200);
+
+    const sleepRecover = setInterval(() => {
+      if (!state.sleeping) { clearInterval(sleepRecover); return; }
+      state.sleep = clamp(state.sleep + 1, 0, 100);
+      updateStats();
+      if (state.sleep >= 100) {
+        clearInterval(sleepRecover);
+        setTimeout(() => { if (state.sleeping) wakeUp(); }, 500);
+      }
+    }, 800);
+  }
+
+  function wakeUp() {
+    if (!state.sleeping) return;
+    state.sleeping = false;
+    billyBody.classList.remove('sleeping');
+    billySpeak('wake');
+    showMood('🌞');
+    billyHappy(1500);
+    switchScene('garden');
+  }
+
+  function actionSleep() {
+    if (state.sleeping) wakeUp();
+    else putToSleep();
   }
 
   function actionSurprise() {
@@ -2600,8 +2899,11 @@
     billySpeak('surprise');
     showMood('✨');
     billyHappy();
+    billyExcited();
+    billyJump();
     spawnHearts(6);
     spawnBubbles(6);
+    addCoins(1);
   }
 
   /* ============================================================
@@ -2653,7 +2955,6 @@
   $('#btnPickerClose').addEventListener('click', () => gamePicker.classList.remove('active'));
   gamePicker.addEventListener('click', e => { if (e.target === gamePicker) gamePicker.classList.remove('active'); });
 
-  /* JOGO 1: ADIVINHA */
   function initGuessGame(root) {
     let secret = rand(1, 100);
     let attempts = 0;
@@ -2694,6 +2995,8 @@
         fb.className = 'feedback success';
         fb.textContent = `🎉 Acertou! Era ${secret}. Usou ${attempts} tentativa(s)!`;
         showMood('🎉'); spawnHearts(5);
+        addCoins(5);
+        showToast('+5 🪙 pelo acerto!', 1800, true);
         secret = rand(1, 100); attempts = 0;
         ac.textContent = '0'; ad.textContent = '?'; input.value = '';
       } else if (val < secret) {
@@ -2715,7 +3018,6 @@
     setTimeout(() => input.focus(), 100);
   }
 
-  /* JOGO 2: MEMÓRIA */
   const memSymbols = ['🟢','🟩','💚','🍀','🌲','🐢','🐸','🥝'];
   function initMemoryGame(root) {
     const symbols = pickN(memSymbols, 6);
@@ -2737,10 +3039,7 @@
     const pe = $('#mPairs', root);
     const me = $('#mMoves', root);
 
-    function update() {
-      pe.textContent = `${s.matched} / 6`;
-      me.textContent = s.moves;
-    }
+    function update() { pe.textContent = `${s.matched} / 6`; me.textContent = s.moves; }
 
     function render() {
       grid.innerHTML = '';
@@ -2781,6 +3080,8 @@
             fb.className = 'feedback success';
             fb.textContent = `🎉 Parabéns! ${s.moves} movimentos!`;
             showMood('🏆'); spawnHearts(6);
+            addCoins(6);
+            showToast('+6 🪙 pelo jogo!', 1800, true);
           } else {
             fb.className = 'feedback success';
             fb.textContent = '✅ Par encontrado!';
@@ -2806,7 +3107,6 @@
     return r;
   }
 
-  /* JOGO 3: MATEMÁTICA */
   function initMathGame(root) {
     const s = { correct: 0, total: 0, a: 0, b: 0, op: '+', answer: 0 };
     root.innerHTML = `
@@ -2853,6 +3153,7 @@
         fb.className = 'feedback success';
         fb.textContent = `🎉 Acertou! ${s.a} ${s.op} ${s.b} = ${s.answer}`;
         showMood('✅'); spawnHearts(2); update();
+        addCoins(2);
         setTimeout(newQ, 700);
       } else {
         fb.className = 'feedback error';
@@ -2867,7 +3168,7 @@
   }
 
   /* ============================================================
-     CHAT IA — CORRIGIDO
+     CHAT
      ============================================================ */
   const chatPanel = $('#chatPanel');
   const chatBody = $('#chatBody');
@@ -2906,95 +3207,41 @@
     ]),
 
     matchOi: (text) => {
-      // Normaliza texto
-      const clean = text.toLowerCase()
-        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z\s]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-      // Regex robusto para "oi" seguido de 1 a 10 "i"s como palavra isolada
+      const clean = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z\s]/g, ' ').replace(/\s+/g, ' ').trim();
       const matches = [...clean.matchAll(/\boi{1,9}\b|\boi{10}\b/g)];
       if (matches.length === 0) return null;
-
-      // Extrai o maior número de "i"s
       let maxIs = 1;
       matches.forEach(m => {
         const word = m[0];
-        const iCount = word.length - 1; // subtrai o "o"
+        const iCount = word.length - 1;
         if (iCount > maxIs) maxIs = iCount;
       });
-
-      if (maxIs === 1) return { r: [
-        "Oi! 😊", "Oi! Como você está?", "Oi! Tava com saudade!",
-        "Oi! Que bom te ver!", "Oi! Vamos conversar?"
-      ]};
-      if (maxIs <= 3) return { r: [
-        `O${'i'.repeat(maxIs)}! Animado hoje! 😄`,
-        `O${'i'.repeat(maxIs)}! Gostei do entusiasmo!`,
-        `O${'i'.repeat(maxIs)}! Contagiou o Billy!`
-      ]};
-      if (maxIs <= 6) return { r: [
-        `O${'i'.repeat(maxIs)}!! Quantos "i"s! 😆`,
-        `O${'i'.repeat(maxIs)}!! Adorei a energia!`,
-        `O${'i'.repeat(maxIs)}!! Isso sim é saudação!`
-      ]};
-      if (maxIs <= 9) return { r: [
-        `O${'i'.repeat(maxIs)}!!! Impressionante! 🏆`,
-        `O${'i'.repeat(maxIs)}!!! Quase um recorde!`,
-        `O${'i'.repeat(maxIs)}!!! Você quebrou meu medidor!`
-      ]};
-      return { r: [
-        `O${'i'.repeat(maxIs)}!!!! MÁXIMO! 👑`,
-        `O${'i'.repeat(maxIs)}!!!! LENDÁRIO! 🏆`,
-        `O${'i'.repeat(maxIs)}!!!! Você é o mestre do "oi"!`
-      ]};
+      if (maxIs === 1) return { r: ["Oi! 😊", "Oi! Como você está?", "Oi! Tava com saudade!", "Oi! Que bom te ver!", "Oi! Vamos conversar?"]};
+      if (maxIs <= 3) return { r: [`O${'i'.repeat(maxIs)}! Animado hoje! 😄`, `O${'i'.repeat(maxIs)}! Gostei do entusiasmo!`, `O${'i'.repeat(maxIs)}! Contagiou o Billy!`]};
+      if (maxIs <= 6) return { r: [`O${'i'.repeat(maxIs)}!! Quantos "i"s! 😆`, `O${'i'.repeat(maxIs)}!! Adorei a energia!`, `O${'i'.repeat(maxIs)}!! Isso sim é saudação!`]};
+      if (maxIs <= 9) return { r: [`O${'i'.repeat(maxIs)}!!! Impressionante! 🏆`, `O${'i'.repeat(maxIs)}!!! Quase um recorde!`, `O${'i'.repeat(maxIs)}!!! Você quebrou meu medidor!`]};
+      return { r: [`O${'i'.repeat(maxIs)}!!!! MÁXIMO! 👑`, `O${'i'.repeat(maxIs)}!!!! LENDÁRIO! 🏆`, `O${'i'.repeat(maxIs)}!!!! Você é o mestre do "oi"!`]};
     },
 
     interpret: (input) => {
       if (!input || !input.trim()) return "Hmm... você não disse nada! 😅";
-
       const text = input.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       const clean = text.replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 
-      // Verifica sequência de "oi" primeiro
       const oi = billyAI.matchOi(input);
       if (oi) return pick(oi.r);
 
-      // Saudações gerais
-      if (/^(ola|eae|e ai|hey|hello|bom dia|boa tarde|boa noite|oie)\b/.test(clean)) {
-        return billyAI.greetings();
-      }
+      if (/^(ola|eae|e ai|hey|hello|bom dia|boa tarde|boa noite|oie)\b/.test(clean)) return billyAI.greetings();
       if (/(como (voce|vc) (esta|ta|vai))|(tudo bem)|(beleza)|(como vai)|(td bem)/.test(clean)) {
-        return pick([
-          "Estou bem! E você?",
-          "Tudo ótimo! Brincando no jardim.",
-          "Super bem! Obrigado por perguntar.",
-          "Tô feliz! Cada conversa é especial!"
-        ]);
+        return pick(["Estou bem! E você?", "Tudo ótimo! Brincando no jardim.", "Super bem! Obrigado por perguntar.", "Tô feliz! Cada conversa é especial!"]);
       }
       if (/(qual (e )?(o )?seu nome)|(seu nome)|(como (se )?chama)|(quem (e|é) voce)/.test(clean)) {
-        if (/quem (e|é)/.test(clean)) {
-          return pick([
-            "Sou o Billy Byte, mascote das Escolas do Futuro! 🤖",
-            "Sou uma IA amigável criada pra te fazer companhia!",
-            "Me chamo Billy Byte! Prazer em te conhecer!"
-          ]);
-        }
-        return pick([
-          "Meu nome é Billy Byte! 🤖",
-          "Sou o Billy Byte, mascote das Escolas do Futuro!",
-          "Billy Byte! Mas pode me chamar de Billy!",
-          "Billy Byte! Prazer em te conhecer! 😊"
-        ]);
+        if (/quem (e|é)/.test(clean)) return pick(["Sou o Billy Byte, mascote das Escolas do Futuro! 🤖", "Sou uma IA amigável criada pra te fazer companhia!", "Me chamo Billy Byte! Prazer em te conhecer!"]);
+        return pick(["Meu nome é Billy Byte! 🤖", "Sou o Billy Byte, mascote das Escolas do Futuro!", "Billy Byte! Mas pode me chamar de Billy!", "Billy Byte! Prazer em te conhecer! 😊"]);
       }
       if (/(quantos anos)|(qual (a )?sua idade)/.test(clean)) {
-        return pick([
-          "Tenho 5 aninhos virtuais!",
-          "Cinco anos de imaginação!",
-          "Sou jovem pra sempre! 😄",
-          "Idade? Ah, digamos que sou bem novinho!"
-        ]);
+        return pick(["Tenho 5 aninhos virtuais!", "Cinco anos de imaginação!", "Sou jovem pra sempre! 😄", "Idade? Ah, digamos que sou bem novinho!"]);
       }
       if (/(piada)|(conta (uma|algo))|(engracad[oa])|(me faz rir)/.test(clean)) {
         return pick([
@@ -3007,31 +3254,28 @@
         ]);
       }
       if (/(obrigad[oa])|(valeu)|(thanks)|(agradeco)/.test(clean)) {
-        return pick([
-          "De nada! 😊", "Imagina!", "Por nada! Sempre às ordens.",
-          "Fico feliz em ajudar!", "Tamo junto!"
-        ]);
+        return pick(["De nada! 😊", "Imagina!", "Por nada! Sempre às ordens.", "Fico feliz em ajudar!", "Tamo junto!"]);
       }
       if (/(tchau)|(adeus)|(ate logo)|(ate mais)|(xau)|(flw)|(falou)/.test(clean)) {
-        return pick([
-          "Tchau! Volte logo! 👋",
-          "Até mais! 💚",
-          "Tchauzinho! Espero você em breve!",
-          "Foi ótimo conversar!"
-        ]);
+        return pick(["Tchau! Volte logo! 👋", "Até mais! 💚", "Tchauzinho! Espero você em breve!", "Foi ótimo conversar!"]);
       }
       if (/(jogar|jogo|minigame|brincar|brincadeira)/.test(clean)) {
-        return pick([
-          "Adoro jogos! Clica no botão 🎮 pra escolher um!",
-          "Tem 3 minigames esperando por você!",
-          "Vamos jogar! Clica no 🎮 ali embaixo."
-        ]);
+        return pick(["Adoro jogos! Clica no botão 🎮 pra escolher um!", "Tem 3 minigames esperando por você!", "Vamos jogar! Clica no 🎮 ali embaixo."]);
+      }
+      if (/(banho|tomar banho|limpar|sujo|sujeira)/.test(clean)) {
+        return pick(["Preciso de banho! Clica em 🛁 pra me levar ao banheiro!", "O banheiro tá pronto! Vem me dar banho! 🚿", "Adoro banho! Clica em 🛁!"]);
+      }
+      if (/(loja|comprar|mercado|geladeira)/.test(clean)) {
+        return pick(["Clica na geladeira 🧊 na cozinha pra abrir a loja!", "Tem comidinhas na loja! Clica na geladeira!", "Você pode comprar comida na geladeira! 🛒"]);
+      }
+      if (/(moeda|dinheiro|coin)/.test(clean)) {
+        return pick([`Você tem ${state.coins} moedas! 🪙`, "Ganhe moedas cuidando de mim! 💰", "Cada carinho dá moedinha! 🪙"]);
       }
       if (/(ajuda|help|o que (voce|vc) (faz|sabe))|(como funciona)/.test(clean)) {
-        return "Sou o Billy Byte! Posso conversar, jogar minigames e você pode cuidar de mim! 🎮";
+        return "Sou o Billy Byte! Posso conversar, jogar minigames, tomar banho e você pode comprar comida pra mim! 🎮🛁🛒";
       }
       if (/(comida|comer|fome|alimento)/.test(clean)) {
-        return "Tô sempre com fome! Clica em 🍎 pra me alimentar!";
+        return "Tô sempre com fome! Abre a geladeira 🧊 na cozinha e compra comida pra mim!";
       }
       if (/(dormir|sono|soninho)/.test(clean)) {
         return "Ando com soninho... Clica em 💤 pra eu tirar uma soneca!";
@@ -3040,29 +3284,14 @@
         return "Adoro carinho! Clica em 🤚 pra me dar um carinho! 💚";
       }
       if (/(feliz|alegre|contente|felicidade)/.test(clean)) {
-        return pick([
-          "Fico feliz quando você conversa comigo! 😊",
-          "Cada mensagem sua me deixa mais feliz!",
-          "Adoro nossa amizade! 💚"
-        ]);
+        return pick(["Fico feliz quando você conversa comigo! 😊", "Cada mensagem sua me deixa mais feliz!", "Adoro nossa amizade! 💚"]);
       }
       if (input.endsWith('?')) {
-        return pick([
-          "Boa pergunta! Deixa eu pensar...",
-          "Hmm, não tenho certeza, mas posso tentar descobrir!",
-          "Que pergunta interessante!",
-          "Adoro perguntas! Isso me faz pensar."
-        ]);
+        return pick(["Boa pergunta! Deixa eu pensar...", "Hmm, não tenho certeza, mas posso tentar descobrir!", "Que pergunta interessante!", "Adoro perguntas! Isso me faz pensar."]);
       }
       return pick([
-        "Legal! Me conta mais!",
-        "Interessante!",
-        "Sério? Que bacana!",
-        "Entendi! Continue...",
-        "Adoro conversar com você!",
-        "Uau!",
-        "Boa! E o que mais?",
-        "Você é muito divertido!"
+        "Legal! Me conta mais!", "Interessante!", "Sério? Que bacana!", "Entendi! Continue...",
+        "Adoro conversar com você!", "Uau!", "Boa! E o que mais?", "Você é muito divertido!"
       ]);
     }
   };
@@ -3072,7 +3301,6 @@
     if (isSending) return;
     const text = chatInput.value.trim();
     if (!text) return;
-
     isSending = true;
     addChatMessage(text, 'user');
     chatInput.value = '';
@@ -3102,10 +3330,7 @@
 
   btnSend.addEventListener('click', sendChat);
   chatInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      sendChat();
-    }
+    if (e.key === 'Enter') { e.preventDefault(); sendChat(); }
   });
 
   /* ============================================================
@@ -3139,13 +3364,14 @@
      BARRA DE AÇÕES
      ============================================================ */
   $$('.action-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const a = btn.dataset.action;
       switch (a) {
-        case 'feed':   actionFeed(e); break;
+        case 'feed':   actionFeed(); break;
         case 'pet':    actionPet(); break;
         case 'tickle': actionTickle(); break;
         case 'play':   actionPlay(); break;
+        case 'bath':   actionBath(); break;
         case 'sleep':  actionSleep(); break;
         case 'dance':  actionDance(); break;
         case 'games':  gamePicker.classList.add('active'); break;
@@ -3156,12 +3382,10 @@
 
   $('#btnSurprise').addEventListener('click', actionSurprise);
   $('#btnReset').addEventListener('click', () => {
-    state.hunger = 100;
-    state.happy = 80;
-    state.sleep = 100;
-    state.sleeping = false;
-    state.lastTick = Date.now();
+    state.hunger = 100; state.happy = 80; state.sleep = 100; state.clean = 100;
+    state.sleeping = false; state.showering = false; state.lastTick = Date.now();
     billyBody.classList.remove('sleeping');
+    stopShower();
     switchScene('garden');
     updateStats();
     showToast('Billy reiniciado! ↻');
@@ -3170,8 +3394,6 @@
 
   /* ============================================================
      TICK DE TEMPO REAL
-     Fome zera em 45 min = 2.22%/min = 0.037%/s
-     Sono zera em 90 min = 1.11%/min = 0.0185%/s
      ============================================================ */
   function tickStats() {
     const now = Date.now();
@@ -3179,45 +3401,28 @@
     state.lastTick = now;
 
     if (state.sleeping) {
-      // Enquanto dorme, sono recupera (aumenta) — não decai
-      // Recuperação: 100% em ~90s dormindo
-      state.sleep += (elapsed / 1000) * 1.1;
-      state.sleep = clamp(state.sleep, 0, 100);
+      state.sleep = clamp(state.sleep + (elapsed / 1000) * 1.1, 0, 100);
       updateStats();
       return;
     }
 
-    // Fome: decai 100% em 45 min = 2700000 ms
-    const hungerDecay = (elapsed / FOME_DURACAO_MS) * 100;
-    state.hunger = clamp(state.hunger - hungerDecay, 0, 100);
-
-    // Sono: decai 100% em 90 min = 5400000 ms
-    const sleepDecay = (elapsed / SONO_DURACAO_MS) * 100;
-    state.sleep = clamp(state.sleep - sleepDecay, 0, 100);
-
-    // Felicidade decai mais devagar: 100% em ~3h
-    const happyDecay = (elapsed / (180 * 60 * 1000)) * 100;
-    state.happy = clamp(state.happy - happyDecay, 0, 100);
-
+    state.hunger = clamp(state.hunger - (elapsed / FOME_DURACAO_MS) * 100, 0, 100);
+    state.sleep = clamp(state.sleep - (elapsed / SONO_DURACAO_MS) * 100, 0, 100);
+    state.happy = clamp(state.happy - (elapsed / (180 * 60 * 1000)) * 100, 0, 100);
+    state.clean = clamp(state.clean - (elapsed / SUJEIRA_DURACAO_MS) * 100, 0, 100);
     updateStats();
 
-    // Reações automáticas
-    if (state.hunger < 20 && Math.random() > 0.7) {
-      showMood('🍖');
-      if (Math.random() > 0.5) billySpeak('hungry');
-    }
-    if (state.sleep < 20 && Math.random() > 0.7) {
-      showMood('😴');
-      if (Math.random() > 0.5) billySpeak('sleepy');
-    }
-    if (state.sleep <= 5 && !state.sleeping) {
-      // Billy dorme automaticamente se sono chegar a 5
-      showToast("Billy dormiu de tanto sono! 💤");
-      putToSleep();
+    if (state.hunger < 20 && Math.random() > 0.7) { showMood('🍖'); if (Math.random() > 0.5) billySpeak('hungry'); }
+    if (state.sleep < 20 && Math.random() > 0.7) { showMood('😴'); if (Math.random() > 0.5) billySpeak('sleepy'); }
+    if (state.clean < 25 && Math.random() > 0.75) { showMood('🧼'); if (Math.random() > 0.5) billySpeak('dirty'); }
+    if (state.sleep <= 5 && !state.sleeping) { showToast("Billy dormiu de tanto sono! 💤"); putToSleep(); }
+
+    // idle animations
+    if (Math.random() > 0.97 && !billyBody.classList.contains('jumping') && !billyBody.classList.contains('sleeping')) {
+      billyJump();
     }
   }
 
-  // Tick a cada 1 segundo
   setInterval(tickStats, 1000);
 
   /* ============================================================
@@ -3227,9 +3432,8 @@
     const container = $('#grassContainer');
     if (!container) return;
     container.innerHTML = '';
-    const count = 60;
     const greens = ['#aed581', '#8bc34a', '#7cb342', '#689f38', '#558b2f'];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < 60; i++) {
       const blade = document.createElement('div');
       blade.className = 'grass-blade';
       const h = rand(10, 28);
@@ -3264,20 +3468,19 @@
     generateGrass();
     generatePollen();
     buildPicker();
-    buildFoodGrid();
     updateStats();
 
     setTimeout(() => {
-      addChatMessage("Oi! Eu sou o Billy Byte, mascote das Escolas do Futuro! 🤖 Estou aqui no jardim! Use os botões abaixo pra cuidar de mim!", 'billy');
+      addChatMessage("Oi! Eu sou o Billy Byte! 🤖 Agora tenho banheiro, cozinha nova e uma LOJA! Clica na geladeira 🧊 pra comprar comida pra mim!", 'billy');
     }, 800);
 
-    setTimeout(() => { if (hintEl) hintEl.style.display = 'none'; }, 6000);
+    setTimeout(() => { if (hintEl) hintEl.style.display = 'none'; }, 7000);
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
-      closeFoodModal();
+      closeShop();
       gamePicker.classList.remove('active');
       chatPanel.classList.remove('open');
     }
